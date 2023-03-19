@@ -50,7 +50,7 @@
 
 ## 4.战斗系统
 
-        战斗系统相关的类图如下：<img title="" src="file:///E:/章鱼开发文件/code16/ClassDiagram1.png" alt="ClassDiagram1" style="zoom:100%;">
+        战斗系统相关的类图如下：<img title="" src="https://github.com/BIGZ-Elements-Studio/Code16/blob/main/ClassDiagram1.png" alt="ClassDiagram1" style="zoom:100%;">
 
 
 
