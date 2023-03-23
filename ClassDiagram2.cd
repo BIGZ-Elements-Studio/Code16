@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CollectRole" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAgAAIEABAAAAQAAAAAAAABAACAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\CollectRole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CollectWeapon">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAICCAAAAAABA=</HashCode>
+      <FileName>Assets\Scripts\CollectRole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CollectSkill" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAEAAAAAAACACAAAAAAQgAAACAAAAQABA=</HashCode>
+      <FileName>Assets\Scripts\CollectRole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LeadingRole">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="LeadingRole.NaturalAttribute" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\LeadingRole.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="LeadingRole.FightingAttribute" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\LeadingRole.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgEAAAAAAAAAAAAEAAAABAABAAAAAQAA=</HashCode>
+      <FileName>Assets\Scripts\LeadingRole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAABAAAAAAAAAAAAAAAAEAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\Mono\Controller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyController" Collapsed="true">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Mono\EnemyController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerController" Collapsed="true">
+    <Position X="3.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAIgIIACQEIAAEAAAAAAAADAAACAAAQQAgBAAIAgA=</HashCode>
+      <FileName>Assets\Scripts\Mono\PlayerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSky.SimplePlayerController">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAgIAAiAEIAAkAAAAAAAABMAAAAAAAQAgAAAAgAI=</HashCode>
+      <FileName>Assets\Wizard - 2D Character\Demo\SimplePlayerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSky.WizDemo1">
+    <Position X="9" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAgAAAAAgAAAAAAAAAIAABAAAAQAAIAAAoEI=</HashCode>
+      <FileName>Assets\Wizard - 2D Character\Demo\WizDemo1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="CollectRoleMode">
+    <Position X="5.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAEAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\CollectRole.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Microsoft YaHei UI" Size="9.08" />
+</ClassDiagram>
