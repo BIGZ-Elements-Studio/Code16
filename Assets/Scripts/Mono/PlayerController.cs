@@ -1,5 +1,6 @@
 using UnityEngine;
 
+/// <remarks>角色控制类，主要用来控制角色的状态</remarks>
 public class PlayerController : Controller
 {
 
