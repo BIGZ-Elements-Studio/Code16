@@ -14,7 +14,7 @@ public class PlayerConfig
     public float JumpVelocity = 3;
 }
 
-///<remarks>配置类，用来将一些成员公开在unity面板上，有利于策划调节参数<para>继承自MonoBehaviour，且继承该类的脚本需要挂载到相应的游戏对象上！</para></remarks>
+///<remarks>配置类，用来将一些成员公开序列化在unity面板上，有利于策划调节参数<para>继承自MonoBehaviour，且继承该类的脚本需要挂载到相应的游戏对象上！</para></remarks>
 public class Config : MonoBehaviour
 {
     public static PlayerConfig PlayerConfig { get => _instance._playerConfig; }
