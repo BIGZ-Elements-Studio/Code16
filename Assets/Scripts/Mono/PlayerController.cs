@@ -22,14 +22,17 @@ public class PlayerController : Controller
         base.AddState(stateName);
         _stateStart = true;
         if (SkeletonAnimationData.Data.ContainsKey("Player_" + stateName))
-            nowEntry = skeletonAnimation.AnimationState.SetAnimation(SkeletonAnimationData.Data["Player_" + stateName]);
+            nowEntry = skeletonAnimation.state.SetAnimation(SkeletonAnimationData.Data["Player_" + stateName]);
         switch (stateName)
         {
             default:
                 break;
         }
     }
-
+    /// <summary>
+    /// 改变状态方法，可以移除当前状态并且跳转到下一个状态<para>同时更新当前状态（string nowState）并且重置状态时间（float stateTime）</para>
+    /// </summary>
+    /// <param name="stateName">string 状态名，即对应状态的函数名（注意请不要打错！）</param>
     public void ChangeState(string stateName)
     {
         if (!string.IsNullOrEmpty(nowState))
@@ -47,12 +50,12 @@ public class PlayerController : Controller
     }
     protected override void Update()
     {
-        stateTime= Time.deltaTime;
+        stateTime+= Time.deltaTime;
         base.Update();
 
     }
 
-    //待机状态
+    //#待机状态#
     void IdleState()
     {
         if (InputController.DirectionAxis != Vector2.zero)
@@ -72,7 +75,7 @@ public class PlayerController : Controller
             ChangeState("SkillState");
         }
     }
-    //移动状态
+    //#移动状态#
     void WalkState()
     {
         rb.velocity = (InputController.DirectionAxis * Config.PlayerConfig.WalkSpeed).SetYToZ();
@@ -105,7 +108,7 @@ public class PlayerController : Controller
             ChangeState("SkillState");
         }
     }
-    //跑步状态
+    //#跑步状态#
     void RunState()
     {
         rb.velocity = (InputController.DirectionAxis * Config.PlayerConfig.RunSpeed).SetYToZ();
@@ -138,7 +141,7 @@ public class PlayerController : Controller
             ChangeState("SkillState");
         }
     }
-    //跳跃状态
+    //#跳跃状态#
     void JumpState()
     {
         if (_stateStart)
@@ -160,6 +163,7 @@ public class PlayerController : Controller
             ChangeState("AttackState");
         }
     }
+    //#攻击状态#
     void AttackState()
     {
         if (_stateStart)
@@ -169,6 +173,7 @@ public class PlayerController : Controller
             _stateStart = false;
         }
     }
+    //#技能状态#
     void SkillState()
     {
         if (_stateStart)
@@ -178,37 +183,37 @@ public class PlayerController : Controller
             _stateStart = false;
         }
     }
-    //闪避状态
+    //#闪避状态#
     void DodgeState()
     {
 
     }
-    //僵直状态
+    //#僵直状态#
     void RigidityState()
     {
         //TODO
     }
-    //被控制状态
+    //#被控制状态#
     void ControlledState()
     {
         //TODO
     }
-    //攻击蓄力状态
+    //#攻击蓄力状态#
     void AttackContinueState()
     {
         //TODO
     }
-    //攻击释放状态
+    //#攻击释放状态#
     void AttackReleaseState()
     {
         //TODO
     }
-    //技能蓄力状态
+    //#技能蓄力状态#
     void SkillContinueState()
     {
         //TODO
     }
-    //技能释放状态
+    //#技能释放状态#
     void SkillReleaseState()
     {
         //TODO

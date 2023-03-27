@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-/// <remarks>控制基类（请勿随意修改），用来提供基本的控制成员，如：<para>当前状态Action state</para><para>添加状态虚方法void AddState(string stateName)</para><para>移除状态虚方法 void RemoveState(string stateName)等</para></remarks>
+/// <remarks>控制基类（请勿修改），用来提供基本的控制成员<para>继承自MonoBehaviour，且继承该类的脚本需要挂载到相应的游戏对象上！</para></remarks>
 public abstract class Controller : MonoBehaviour
 {
     protected Action state;
