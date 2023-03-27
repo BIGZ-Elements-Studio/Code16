@@ -7,7 +7,7 @@ using System.Reflection;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-/// <remarks>角色控制类，主要用来控制角色的状态</remarks>
+/// <remarks>角色控制类，主要用来控制角色的状态,其中状态以方法的形式呈现</remarks>
 public class PlayerController : Controller
 {
     SkeletonAnimation skeletonAnimation;
@@ -15,6 +15,7 @@ public class PlayerController : Controller
     string nowState;
     bool _stateStart;
     TrackEntry nowEntry;
+    float stateTime=0;
 
     public override void AddState(string stateName)
     {
@@ -34,6 +35,7 @@ public class PlayerController : Controller
         if (!string.IsNullOrEmpty(nowState))
             RemoveState(nowState);
         AddState(stateName);
+        stateTime = 0;
         nowState = stateName;
     }
     protected override void Start()
@@ -45,7 +47,9 @@ public class PlayerController : Controller
     }
     protected override void Update()
     {
+        stateTime= Time.deltaTime;
         base.Update();
+
     }
 
     //待机状态
@@ -61,11 +65,11 @@ public class PlayerController : Controller
         }
         if (InputController.Fire1 > 0)
         {
-            ChangeState("Attack");
+            ChangeState("AttackState");
         }
         if (InputController.Fire2 > 0)
         {
-            ChangeState("Skill");
+            ChangeState("SkillState");
         }
     }
     //移动状态
@@ -94,11 +98,11 @@ public class PlayerController : Controller
         }
         if (InputController.Fire1 > 0)
         {
-            ChangeState("Attack");
+            ChangeState("AttackState");
         }
         if (InputController.Fire2 > 0)
         {
-            ChangeState("Skill");
+            ChangeState("SkillState");
         }
     }
     //跑步状态
@@ -127,11 +131,11 @@ public class PlayerController : Controller
         }
         if (InputController.Fire1 > 0)
         {
-            ChangeState("Attack");
+            ChangeState("AttackState");
         }
         if (InputController.Fire2 > 0)
         {
-            ChangeState("Skill");
+            ChangeState("SkillState");
         }
     }
     //跳跃状态
@@ -153,10 +157,10 @@ public class PlayerController : Controller
         }
         if (InputController.Fire1 > 0)
         {
-            ChangeState("Attack");
+            ChangeState("AttackState");
         }
     }
-    void Attack()
+    void AttackState()
     {
         if (_stateStart)
         {
@@ -165,7 +169,7 @@ public class PlayerController : Controller
             _stateStart = false;
         }
     }
-    void Skill()
+    void SkillState()
     {
         if (_stateStart)
         {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 
+
+/// <remarks>÷˜Ω« Ù–‘¿‡</remarks>
 public class LeadingRole
 {
     public PlayerController playerController;
