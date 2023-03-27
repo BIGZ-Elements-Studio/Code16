@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //对Input的进一步封装
+/// <remarks>输入控制类，用来封装Input的函数（有关按键的操作请封装在此类），有利于后续改键</remarks>
 public class InputController : Controller
 {
     static InputController _instance;
