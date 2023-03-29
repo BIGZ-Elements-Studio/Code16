@@ -2,23 +2,13 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-<<<<<<< HEAD
-  serializedVersion: 6
-=======
   serializedVersion: 8
->>>>>>> remotes/origin/爱德华
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Knight
+  m_Name: Knight_InsideMask
   m_Shader: {fileID: 4800000, guid: 1e8a610c9e01c3648bac42585e5fc676, type: 3}
-<<<<<<< HEAD
-  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-=======
   m_ValidKeywords:
   - _STRAIGHT_ALPHA_INPUT
   m_InvalidKeywords:
@@ -27,7 +17,6 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
->>>>>>> remotes/origin/爱德华
   m_CustomRenderQueue: -1
   stringTagMap:
     AlphaDepth: true
@@ -80,10 +69,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-<<<<<<< HEAD
-=======
     m_Ints: []
->>>>>>> remotes/origin/爱德华
     m_Floats:
     - PixelSnap: 0
     - _BlendAmount: 0
@@ -104,13 +90,10 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-<<<<<<< HEAD
-=======
     - _OutlineMipLevel: 0
     - _OutlineReferenceTexWidth: 1024
     - _OutlineSmoothness: 1
     - _OutlineWidth: 3
->>>>>>> remotes/origin/爱德华
     - _Parallax: 0.02
     - _RenderQueue: 0
     - _Saturation: 1
@@ -119,20 +102,15 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Stencil: 0
-    - _StencilComp: 8
+    - _StencilComp: 4
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilRef: 1
     - _StencilWriteMask: 255
-<<<<<<< HEAD
-    - _StraightAlphaInput: 0
-    - _UVSec: 0
-=======
     - _StraightAlphaInput: 1
     - _ThresholdEnd: 0.25
     - _UVSec: 0
     - _Use8Neighbourhood: 1
->>>>>>> remotes/origin/爱德华
     - _UseUIAlphaClip: 0
     - _ZWrite: 0
     m_Colors:
@@ -140,10 +118,6 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FillColor: {r: 1, g: 1, b: 1, a: 1}
-<<<<<<< HEAD
-    - _OverlayColor: {r: 0, g: 0, b: 0, a: 0}
-=======
     - _OutlineColor: {r: 1, g: 1, b: 0, a: 1}
     - _OverlayColor: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
->>>>>>> remotes/origin/爱德华
