@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //ÓÃÓÚ´æ´¢¹Ç÷À¶¯»­ĞÅÏ¢ ÒÔ±ãµ÷ÓÃ
-<<<<<<< HEAD
 /// <remarks>·â×°spine¹Ç÷À¶¯»­Êı¾İÀà£¬ÓÃÀ´·â×°Ò»Ğ©¹Ç÷À¶¯»­µÄÉèÖÃÊı¾İ£º<para>ÉèÖÃ¶¯»­µÄ¹ìµÀ¡¢¶¯»­Ãû³Æ¡¢ÊÇ·ñÑ­»·</para></remarks>
-=======
-/// <remarks>·â×°spine¹Ç÷À¶¯»­Êı¾İ½á¹¹Ìå£¬ÓÃÀ´·â×°Ò»Ğ©¹Ç÷À¶¯»­µÄÉèÖÃÊı¾İ£º<para>ÉèÖÃ¶¯»­µÄ¹ìµÀ¡¢¶¯»­Ãû³Æ¡¢ÊÇ·ñÑ­»·</para></remarks>
->>>>>>> remotes/origin/çˆ±å¾·å
 public struct SkeletonAnimationData
 {
     public static Dictionary<string, SkeletonAnimationData> Data = new Dictionary<string, SkeletonAnimationData>()
