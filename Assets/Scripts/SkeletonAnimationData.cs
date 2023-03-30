@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //用于存储骨骼动画信息 以便调用
-/// <remarks>封装spine骨骼动画数据类，用来封装一些骨骼动画的设置数据：<para>设置动画的轨道、动画名称、是否循环</para></remarks>
+/// <remarks>封装spine骨骼动画结构体，用来封装一些骨骼动画的设置数据：<para>设置动画的轨道、动画名称、是否循环</para></remarks>
 public struct SkeletonAnimationData
 {
     public static Dictionary<string, SkeletonAnimationData> Data = new Dictionary<string, SkeletonAnimationData>()
