@@ -4,7 +4,10 @@ using UnityEngine;
 /// <remarks>拓展工具类，如：<para>对Spine动画的封装方法</para><para>将坐标的Y,Z值互换的方法等</para></remarks>
 public static class ExtensionFunction
 {
-    //扩展方法：对Spine动画的封装
+    /// <summary>
+    /// 停止当前spine动画，并且播放新动画，
+    /// </summary>
+    //http://zh.esotericsoftware.com/spine-api-reference#AnimationState-setAnimation参考网站
     public static Spine.TrackEntry SetAnimation(this Spine.AnimationState animationState, SkeletonAnimationData data)
     {
         return animationState.SetAnimation(data.trackIndex, data.animationName, data.loop);
