@@ -7,6 +7,7 @@ using System.Reflection;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
+/// <remarks>角色控制类，主要用来控制角色的状态,其中状态以方法的形式呈现</remarks>
 public class PlayerController : Controller
 {
     SkeletonAnimation skeletonAnimation;
@@ -14,13 +15,17 @@ public class PlayerController : Controller
     string nowState;
     bool _stateStart;
     TrackEntry nowEntry;
+    float stateTime=0;
+
 
     public override void AddState(string stateName)
     {
         base.AddState(stateName);
         _stateStart = true;
         if (SkeletonAnimationData.Data.ContainsKey("Player_" + stateName))
+
             nowEntry = skeletonAnimation.AnimationState.SetAnimation(SkeletonAnimationData.Data["Player_" + stateName]);
+
         switch (stateName)
         {
             default:
@@ -33,6 +38,7 @@ public class PlayerController : Controller
         if (!string.IsNullOrEmpty(nowState))
             RemoveState(nowState);
         AddState(stateName);
+
         nowState = stateName;
     }
     protected override void Start()
@@ -44,10 +50,14 @@ public class PlayerController : Controller
     }
     protected override void Update()
     {
+        stateTime+= Time.deltaTime;
         base.Update();
+
     }
 
-    //����״̬
+
+    //待机状态
+
     void IdleState()
     {
         if (InputController.DirectionAxis != Vector2.zero)
@@ -67,7 +77,8 @@ public class PlayerController : Controller
             ChangeState("Skill");
         }
     }
-    //�ƶ�״̬
+    //移动状态
+
     void WalkState()
     {
         rb.velocity = (InputController.DirectionAxis * Config.PlayerConfig.WalkSpeed).SetYToZ();
@@ -100,7 +111,7 @@ public class PlayerController : Controller
             ChangeState("Skill");
         }
     }
-    //�ܲ�״̬
+    //跑步状态
     void RunState()
     {
         rb.velocity = (InputController.DirectionAxis * Config.PlayerConfig.RunSpeed).SetYToZ();
@@ -133,7 +144,8 @@ public class PlayerController : Controller
             ChangeState("Skill");
         }
     }
-    //��Ծ״̬
+    //跳跃状态
+
     void JumpState()
     {
         if (_stateStart)
@@ -156,6 +168,7 @@ public class PlayerController : Controller
         }
     }
     void Attack()
+
     {
         if (_stateStart)
         {
@@ -165,6 +178,7 @@ public class PlayerController : Controller
         }
     }
     void Skill()
+
     {
         if (_stateStart)
         {
@@ -173,37 +187,39 @@ public class PlayerController : Controller
             _stateStart = false;
         }
     }
-    //����״̬
+
+    //闪避状态
+
     void DodgeState()
     {
 
     }
-    //��ֱ״̬
+    //#僵直状态#
     void RigidityState()
     {
         //TODO
     }
-    //������״̬
+    //#被控制状态#
     void ControlledState()
     {
         //TODO
     }
-    //��������״̬
+    //#攻击蓄力状态#
     void AttackContinueState()
     {
         //TODO
     }
-    //�����ͷ�״̬
+    //#攻击释放状态#
     void AttackReleaseState()
     {
         //TODO
     }
-    //��������״̬
+    //#技能蓄力状态#
     void SkillContinueState()
     {
         //TODO
     }
-    //�����ͷ�״̬
+    //#技能释放状态#
     void SkillReleaseState()
     {
         //TODO

@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CollectRole" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAgAAIEABAAAAQAAAAAAAABAACAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\CollectRole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CollectWeapon" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAICCAAAAAABA=</HashCode>
+      <FileName>Assets\Scripts\CollectRole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CollectSkill" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAEAAAAAAACACAAAAAAQgAAACAAAAQABA=</HashCode>
+      <FileName>Assets\Scripts\CollectRole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExtensionFunction" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAI=</HashCode>
+      <FileName>Assets\Scripts\ExtensionFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LeadingRole" Collapsed="true">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgEAAAAAAAAAAAAEAAAABAABAAAAAQAA=</HashCode>
+      <FileName>Assets\Scripts\LeadingRole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerConfig" Collapsed="true">
+    <Position X="7.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Mono\Config.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Config" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAIAAAAAAACAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Mono\Config.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAABAAAAAAAAAAAAAAAAEAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\Mono\Controller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyController" Collapsed="true">
+    <Position X="0.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Mono\EnemyController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InputController" Collapsed="true">
+    <Position X="3" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASEADCEACACAAAAAACAAAAAAAAAAAAEAAAAAAAAABA=</HashCode>
+      <FileName>Assets\Scripts\Mono\InputController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerController" Collapsed="true">
+    <Position X="5.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQgIAAIACQQBAAEAIAAAAAAAAAACAgMwAAABAAICiE=</HashCode>
+      <FileName>Assets\Scripts\Mono\PlayerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskManager" Collapsed="true">
+    <Position X="9.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEACAAACBAAAAAAAAAAAAAAAAAAAAAAAQAAAAAIAA=</HashCode>
+      <FileName>Assets\Scripts\Mono\TaskManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="SkeletonAnimationData" Collapsed="true">
+    <Position X="7.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAQAAAAAAAAAAAAABAAAgAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\SkeletonAnimationData.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="CollectRoleMode" Collapsed="true">
+    <Position X="7.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAEAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\CollectRole.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>

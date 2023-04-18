@@ -1,20 +1,22 @@
 using System;
 using UnityEngine;
 
+
 public static class ExtensionFunction
 {
-    //À©Õ¹·½·¨£º¶ÔSpine¶¯»­µÄ·â×°
+    //æ‰©å±•æ–¹æ³•ï¼šå¯¹SpineåŠ¨ç”»çš„å°è£…
+
     public static Spine.TrackEntry SetAnimation(this Spine.AnimationState animationState, SkeletonAnimationData data)
     {
         return animationState.SetAnimation(data.trackIndex, data.animationName, data.loop);
     }
 
-    //À©Õ¹·½·¨£º½«×ø±êµÄY,ZÖµ»¥»»
+    //æ‰©å±•æ–¹æ³•ï¼šå°†åæ ‡çš„Y,Zå€¼äº’æ¢
     public static Vector3 SetYToZ(this Vector3 vector3)
     {
         return new Vector3(vector3.x, vector3.z, vector3.y);
     }
-    //À©Õ¹·½·¨£º½«¶şÎ»×ø±êµÄYÖµ¸³ÓèÈıÎ¬µÄZÖµ
+    //æ‰©å±•æ–¹æ³•ï¼šå°†äºŒä½åæ ‡çš„Yå€¼èµ‹äºˆä¸‰ç»´çš„Zå€¼
     public static Vector3 SetYToZ(this Vector2 vector2)
     {
         return new Vector3(vector2.x, 0, vector2.y);
