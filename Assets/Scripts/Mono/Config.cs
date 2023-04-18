@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-//Íæ¼ÒÅäÖÃĞÅÏ¢
+//ç©å®¶é…ç½®ä¿¡æ¯
 [Serializable]
 public class PlayerConfig
 {
@@ -14,7 +14,8 @@ public class PlayerConfig
     public float JumpVelocity = 3;
 }
 
-///<remarks>ÅäÖÃÀà£¬ÓÃÀ´½«Ò»Ğ©³ÉÔ±¹«¿ªĞòÁĞ»¯ÔÚunityÃæ°åÉÏ£¬ÓĞÀûÓÚ²ß»®µ÷½Ú²ÎÊı<para>¼Ì³Ğ×ÔMonoBehaviour£¬ÇÒ¼Ì³Ğ¸ÃÀàµÄ½Å±¾ĞèÒª¹ÒÔØµ½ÏàÓ¦µÄÓÎÏ·¶ÔÏóÉÏ£¡</para></remarks>
+///<remarks>é…ç½®ç±»ï¼Œç”¨æ¥å°†ä¸€äº›æˆå‘˜å…¬å¼€åºåˆ—åŒ–åœ¨unityé¢æ¿ä¸Šï¼Œæœ‰åˆ©äºç­–åˆ’è°ƒèŠ‚å‚æ•°<para>ç»§æ‰¿è‡ªMonoBehaviourï¼Œä¸”ç»§æ‰¿è¯¥ç±»çš„è„šæœ¬éœ€è¦æŒ‚è½½åˆ°ç›¸åº”çš„æ¸¸æˆå¯¹è±¡ä¸Šï¼</para></remarks>
+
 public class Config : MonoBehaviour
 {
     public static PlayerConfig PlayerConfig { get => _instance._playerConfig; }

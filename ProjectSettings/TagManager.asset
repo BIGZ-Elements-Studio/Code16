@@ -3,12 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-<<<<<<< HEAD
-  tags: []
-=======
   tags:
   - Plane
->>>>>>> remotes/origin/爱德华
   layers:
   - Default
   - TransparentFX

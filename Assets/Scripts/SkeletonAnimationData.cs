@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//ÓÃÓÚ´æ´¢¹Ç÷À¶¯»­ĞÅÏ¢ ÒÔ±ãµ÷ÓÃ
-/// <remarks>·â×°spine¹Ç÷À¶¯»­½á¹¹Ìå£¬ÓÃÀ´·â×°Ò»Ğ©¹Ç÷À¶¯»­µÄÉèÖÃÊı¾İ£º<para>ÉèÖÃ¶¯»­µÄ¹ìµÀ¡¢¶¯»­Ãû³Æ¡¢ÊÇ·ñÑ­»·</para></remarks>
+//ç”¨äºå­˜å‚¨éª¨éª¼åŠ¨ç”»ä¿¡æ¯ ä»¥ä¾¿è°ƒç”¨
+/// <remarks>å°è£…spineéª¨éª¼åŠ¨ç”»ç»“æ„ä½“ï¼Œç”¨æ¥å°è£…ä¸€äº›éª¨éª¼åŠ¨ç”»çš„è®¾ç½®æ•°æ®ï¼š<para>è®¾ç½®åŠ¨ç”»çš„è½¨é“ã€åŠ¨ç”»åç§°ã€æ˜¯å¦å¾ªç¯</para></remarks>
+
 public struct SkeletonAnimationData
 {
     public static Dictionary<string, SkeletonAnimationData> Data = new Dictionary<string, SkeletonAnimationData>()

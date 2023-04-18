@@ -7,7 +7,7 @@ using System.Reflection;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-/// <remarks>½ÇÉ«¿ØÖÆÀà£¬Ö÷ÒªÓÃÀ´¿ØÖÆ½ÇÉ«µÄ×´Ì¬,ÆäÖĞ×´Ì¬ÒÔ·½·¨µÄĞÎÊ½³ÊÏÖ</remarks>
+/// <remarks>è§’è‰²æ§åˆ¶ç±»ï¼Œä¸»è¦ç”¨æ¥æ§åˆ¶è§’è‰²çš„çŠ¶æ€,å…¶ä¸­çŠ¶æ€ä»¥æ–¹æ³•çš„å½¢å¼å‘ˆç°</remarks>
 public class PlayerController : Controller
 {
     SkeletonAnimation skeletonAnimation;
@@ -17,28 +17,28 @@ public class PlayerController : Controller
     TrackEntry nowEntry;
     float stateTime=0;
 
+
     public override void AddState(string stateName)
     {
         base.AddState(stateName);
         _stateStart = true;
         if (SkeletonAnimationData.Data.ContainsKey("Player_" + stateName))
-            nowEntry = skeletonAnimation.state.SetAnimation(SkeletonAnimationData.Data["Player_" + stateName]);
+
+            nowEntry = skeletonAnimation.AnimationState.SetAnimation(SkeletonAnimationData.Data["Player_" + stateName]);
+
         switch (stateName)
         {
             default:
                 break;
         }
     }
-    /// <summary>
-    /// ¸Ä±ä×´Ì¬·½·¨£¬¿ÉÒÔÒÆ³ıµ±Ç°×´Ì¬²¢ÇÒÌø×ªµ½ÏÂÒ»¸ö×´Ì¬<para>Í¬Ê±¸üĞÂµ±Ç°×´Ì¬£¨string nowState£©²¢ÇÒÖØÖÃ×´Ì¬Ê±¼ä£¨float stateTime£©</para>
-    /// </summary>
-    /// <param name="stateName">string ×´Ì¬Ãû£¬¼´¶ÔÓ¦×´Ì¬µÄº¯ÊıÃû£¨×¢ÒâÇë²»Òª´ò´í£¡£©</param>
+
     public void ChangeState(string stateName)
     {
         if (!string.IsNullOrEmpty(nowState))
             RemoveState(nowState);
         AddState(stateName);
-        stateTime = 0;
+
         nowState = stateName;
     }
     protected override void Start()
@@ -55,7 +55,9 @@ public class PlayerController : Controller
 
     }
 
-    //#´ı»ú×´Ì¬#
+
+    //å¾…æœºçŠ¶æ€
+
     void IdleState()
     {
         if (InputController.DirectionAxis != Vector2.zero)
@@ -68,14 +70,15 @@ public class PlayerController : Controller
         }
         if (InputController.Fire1 > 0)
         {
-            ChangeState("AttackState");
+            ChangeState("Attack");
         }
         if (InputController.Fire2 > 0)
         {
-            ChangeState("SkillState");
+            ChangeState("Skill");
         }
     }
-    //#ÒÆ¶¯×´Ì¬#
+    //ç§»åŠ¨çŠ¶æ€
+
     void WalkState()
     {
         rb.velocity = (InputController.DirectionAxis * Config.PlayerConfig.WalkSpeed).SetYToZ();
@@ -101,14 +104,14 @@ public class PlayerController : Controller
         }
         if (InputController.Fire1 > 0)
         {
-            ChangeState("AttackState");
+            ChangeState("Attack");
         }
         if (InputController.Fire2 > 0)
         {
-            ChangeState("SkillState");
+            ChangeState("Skill");
         }
     }
-    //#ÅÜ²½×´Ì¬#
+    //è·‘æ­¥çŠ¶æ€
     void RunState()
     {
         rb.velocity = (InputController.DirectionAxis * Config.PlayerConfig.RunSpeed).SetYToZ();
@@ -134,14 +137,15 @@ public class PlayerController : Controller
         }
         if (InputController.Fire1 > 0)
         {
-            ChangeState("AttackState");
+            ChangeState("Attack");
         }
         if (InputController.Fire2 > 0)
         {
-            ChangeState("SkillState");
+            ChangeState("Skill");
         }
     }
-    //#ÌøÔ¾×´Ì¬#
+    //è·³è·ƒçŠ¶æ€
+
     void JumpState()
     {
         if (_stateStart)
@@ -160,11 +164,11 @@ public class PlayerController : Controller
         }
         if (InputController.Fire1 > 0)
         {
-            ChangeState("AttackState");
+            ChangeState("Attack");
         }
     }
-    //#¹¥»÷×´Ì¬#
-    void AttackState()
+    void Attack()
+
     {
         if (_stateStart)
         {
@@ -173,8 +177,8 @@ public class PlayerController : Controller
             _stateStart = false;
         }
     }
-    //#¼¼ÄÜ×´Ì¬#
-    void SkillState()
+    void Skill()
+
     {
         if (_stateStart)
         {
@@ -183,37 +187,39 @@ public class PlayerController : Controller
             _stateStart = false;
         }
     }
-    //#ÉÁ±Ü×´Ì¬#
+
+    //é—ªé¿çŠ¶æ€
+
     void DodgeState()
     {
 
     }
-    //#½©Ö±×´Ì¬#
+    //#åƒµç›´çŠ¶æ€#
     void RigidityState()
     {
         //TODO
     }
-    //#±»¿ØÖÆ×´Ì¬#
+    //#è¢«æ§åˆ¶çŠ¶æ€#
     void ControlledState()
     {
         //TODO
     }
-    //#¹¥»÷ĞîÁ¦×´Ì¬#
+    //#æ”»å‡»è“„åŠ›çŠ¶æ€#
     void AttackContinueState()
     {
         //TODO
     }
-    //#¹¥»÷ÊÍ·Å×´Ì¬#
+    //#æ”»å‡»é‡Šæ”¾çŠ¶æ€#
     void AttackReleaseState()
     {
         //TODO
     }
-    //#¼¼ÄÜĞîÁ¦×´Ì¬#
+    //#æŠ€èƒ½è“„åŠ›çŠ¶æ€#
     void SkillContinueState()
     {
         //TODO
     }
-    //#¼¼ÄÜÊÍ·Å×´Ì¬#
+    //#æŠ€èƒ½é‡Šæ”¾çŠ¶æ€#
     void SkillReleaseState()
     {
         //TODO
