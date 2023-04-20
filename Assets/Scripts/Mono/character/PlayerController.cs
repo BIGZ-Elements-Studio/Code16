@@ -53,20 +53,38 @@ public class PlayerController : Controller
         stateTime+= Time.deltaTime;
         base.Update();
 
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            changeMode(true);
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            changeMode(false);
+        }
+
     }
 
+    void changeMode(bool IfTo2d)
+    {
+        if (!IfTo2d)
+        {
+            ChangeState("IdleState");
+        }
+        else
+        {
+            ChangeState("IdleTwoD");
 
+        }
+    }
+
+    #region 3d
+    //没有改完但是大概意思是3d不能有任何ChangeState（2d state情况）
     //待机状态
-
     void IdleState()
     {
         if (InputController.DirectionAxis != Vector2.zero)
         {
             ChangeState("WalkState");
-        }
-        if (InputController.Space > 0)
-        {
-            ChangeState("JumpState");
         }
         if (InputController.Fire1 > 0)
         {
@@ -98,10 +116,6 @@ public class PlayerController : Controller
         {
             ChangeState("RunState");
         }
-        if (InputController.Space > 0)
-        {
-            ChangeState("JumpState");
-        }
         if (InputController.Fire1 > 0)
         {
             ChangeState("Attack");
@@ -131,10 +145,6 @@ public class PlayerController : Controller
         {
             ChangeState("WalkState");
         }
-        if (InputController.Space > 0)
-        {
-            ChangeState("JumpState");
-        }
         if (InputController.Fire1 > 0)
         {
             ChangeState("Attack");
@@ -144,29 +154,7 @@ public class PlayerController : Controller
             ChangeState("Skill");
         }
     }
-    //跳跃状态
 
-    void JumpState()
-    {
-        if (_stateStart)
-        {
-            rb.AddForce(new Vector3(0, Config.PlayerConfig.JumpVelocity, 0), ForceMode.VelocityChange);
-            _stateStart = false;
-        }
-        rb.velocity = (InputController.DirectionAxis * Config.PlayerConfig.RunSpeed).SetYToZ() + new Vector3(0, rb.velocity.y, 0);
-        if (InputController.DirectionAxis.x > 0)
-        {
-            transform.rotation = new Quaternion(0, 0, 0, 1);
-        }
-        if (InputController.DirectionAxis.x < 0)
-        {
-            transform.rotation = new Quaternion(0, 1, 0, 0);
-        }
-        if (InputController.Fire1 > 0)
-        {
-            ChangeState("Attack");
-        }
-    }
     void Attack()
 
     {
@@ -232,4 +220,65 @@ public class PlayerController : Controller
             ChangeState("IdleState");
         }
     }
+    #endregion
+
+    #region 2D
+    //没有改完但是大概意思是2d不能有任何ChangeState（3d state情况）
+    void moveTwoD()
+    {
+        rb.velocity =new Vector3((InputController.DirectionAxis * Config.PlayerConfig.RunSpeed).SetYToZ().x,0,0) ;
+        if (InputController.DirectionAxis.x > 0)
+        {
+            transform.rotation = new Quaternion(0, 0, 0, 1);
+        }
+        if (InputController.DirectionAxis.x < 0)
+        {
+            transform.rotation = new Quaternion(0, 1, 0, 0);
+        }
+        if (InputController.DirectionAxis == Vector2.zero)
+        {
+            ChangeState("IdleTwoD");
+        }
+        if (InputController.Space > 0)
+        {
+            ChangeState("JumpStateTwoD");
+        }
+    }
+    //跳跃状态
+
+    void JumpStateTwoD()
+    {
+        if (_stateStart)
+        {
+            rb.AddForce(new Vector3(0, Config.PlayerConfig.JumpVelocity, 0), ForceMode.VelocityChange);
+            _stateStart = false;
+        }
+        rb.velocity = (InputController.DirectionAxis * Config.PlayerConfig.RunSpeed).SetYToZ() + new Vector3(0, rb.velocity.y, 0);
+        if (InputController.DirectionAxis.x > 0)
+        {
+            transform.rotation = new Quaternion(0, 0, 0, 1);
+        }
+        if (InputController.DirectionAxis.x < 0)
+        {
+            transform.rotation = new Quaternion(0, 1, 0, 0);
+        }
+    }
+    void IdleTwoD()
+    {
+        if (_stateStart)
+        {
+            rb.AddForce(new Vector3(0, Config.PlayerConfig.JumpVelocity, 0), ForceMode.VelocityChange);
+            _stateStart = false;
+        }
+        rb.velocity = (InputController.DirectionAxis * Config.PlayerConfig.RunSpeed).SetYToZ() + new Vector3(0, rb.velocity.y, 0);
+        if (InputController.DirectionAxis.x > 0)
+        {
+            transform.rotation = new Quaternion(0, 0, 0, 1);
+        }
+        if (InputController.DirectionAxis.x < 0)
+        {
+            transform.rotation = new Quaternion(0, 1, 0, 0);
+        }
+    }
+    #endregion 
 }
