@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d598390b6ebaf15479d584aef99339cf, type: 3}
+  m_Name: "\u89D2\u82722d\u72B6\u6001"
+  m_EditorClassIdentifier: 
+  stateBehaviors:
+  - stateName: move
+    priority: 1
+    conditions:
+    - rid: 4829176271431794688
+    showConditions: 1
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - stateName: jump
+    priority: 3
+    conditions:
+    - rid: 4829176271431794690
+    - rid: 4829176271431794693
+    showConditions: 1
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - stateName: idle
+    priority: 0
+    conditions: []
+    showConditions: 1
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - stateName: in air
+    priority: 2
+    conditions:
+    - rid: 4829176271431794694
+    showConditions: 1
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  ConditionVariables:
+  - rid: 4829176270802386944
+  - rid: 4829176270802386945
+  - rid: 4829176271431794691
+  references:
+    version: 2
+    RefIds:
+    - rid: 4829176270802386944
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u79FB\u52A8"
+        type: 0
+    - rid: 4829176270802386945
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u8DF3\u8DC3"
+        type: 0
+    - rid: 4829176271431794688
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u79FB\u52A8"
+        conditionValue: 1
+    - rid: 4829176271431794690
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u8DF3\u8DC3"
+        conditionValue: 1
+    - rid: 4829176271431794691
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u89E6\u5730"
+        type: 0
+    - rid: 4829176271431794693
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u89E6\u5730"
+        conditionValue: 1
+    - rid: 4829176271431794694
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u89E6\u5730"
+        conditionValue: 0
