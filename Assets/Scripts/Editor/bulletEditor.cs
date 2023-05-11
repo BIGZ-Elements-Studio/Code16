@@ -50,6 +50,10 @@ public class GizmoWireBoxEditor : Editor
 
     private void DrawTimeline(Bullet bullet)
     {
+        if (bullet.interval<0.1)
+        {
+            return;
+        }
         // Calculate timeline start and end points based on bullet's delay, interval, and last properties
         float totalTime = bullet.delay + bullet.time + bullet.last;
         float timelineStart = Time.realtimeSinceStartup - bullet.delay;

@@ -38,8 +38,13 @@ namespace CombatSystem
             while (totalTimePassed <= time)
             {
                 Damage();
-
-                yield return new WaitForSeconds(interval);
+                if (interval>0.1) {
+                    yield return new WaitForSeconds(interval);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(0.1f);
+                }
                 totalTimePassed += Time.deltaTime;
             }
             yield return new WaitForSeconds(last);
@@ -77,7 +82,7 @@ namespace CombatSystem
 
             if (critcAtk)
             {
-                return damage * critcAtkDamage / 100;
+                return damage * (100+critcAtkDamage) / 100;
             }
             else
             {

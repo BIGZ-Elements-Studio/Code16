@@ -33,7 +33,27 @@ namespace CombatSystem
         public void Damage(DamageObject damage)
         {
             HP -= damage.damage;
-
+            if (type==Type.enemy) {
+                if (damage.Critic)
+                {
+                    VisualEffectController.DoDamagePopUp(damage.damage, VisualEffectController.DamagePopUpType.criticDamage,transform.position);
+                }
+                else
+                {
+                    VisualEffectController.DoDamagePopUp(damage.damage, VisualEffectController.DamagePopUpType.damage, transform.position);
+                }
+                
+            }
+            if (type == Type.player)
+            {
+                if (damage.damage>0) {
+                    VisualEffectController.DoDamagePopUp(damage.damage, VisualEffectController.DamagePopUpType.damagePlayer, transform.position);
+                }
+                else
+                {
+                    VisualEffectController.DoDamagePopUp(damage.damage, VisualEffectController.DamagePopUpType.cure, transform.position);
+                }
+            }
             // Check if HP is below 0 and reset it to 0
             if (HP < 0)
             {
