@@ -41,10 +41,8 @@ public class BehaviorControllerEditor : Editor
                 }
             if (showBehaviorList)
             {
-                MethodInfo[] coroutineMethods = typeof(CharacterControlCoroutine).Assembly.GetTypes()
-                .Where(t => t.IsSubclassOf(typeof(CharacterControlCoroutine)))
-                .SelectMany(t => t.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
-                .Where(m => m.ReturnType == typeof(IEnumerator)).ToArray();
+                MethodInfo[] coroutineMethods = controller.targetCode.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                  .Where(m => m.ReturnType == typeof(IEnumerator)).ToArray();
 
                 // Loop over the coroutineList and display a dropdown list of coroutine methods for each item
                 for (int i = 0; i < controller.CoroutineList.Count; i++)
@@ -68,7 +66,6 @@ public class BehaviorControllerEditor : Editor
                     {
                         // Create a delegate for the selected coroutine method and add it to the coroutineList
                         var method = coroutineMethods[selectedIndex];
-                        //Func<IEnumerator> coroutineDelegate = (Func<IEnumerator>)Delegate.CreateDelegate(typeof(Func<IEnumerator>), controller.targetCode, method.Name);
                         controller.CoroutineList[i] = method.Name;
                     }
                 }
@@ -90,7 +87,6 @@ public class BehaviorControllerEditor : Editor
                     else if (behaviorObject.ConditionVariables[i] is BoolVariable)
                     {
                         bool j = EditorGUILayout.Toggle(behaviorObject.ConditionVariables[i].name, controller.varibleValues[i]==1);
-                        Debug.Log(behaviorObject.ConditionVariables[i].name);
                         controller.setBoolVariable(behaviorObject.ConditionVariables[i].name, j);
                     }
 

@@ -19,7 +19,7 @@ namespace oct.generatedBehavior
         [SerializeField]
         bool v;
         [SerializeField]
-        PlayerController PlayerControllerr;
+        PlayerAttribute PlayerControllerr;
 
         [SpineAnimation]
       public  string runa;
@@ -51,7 +51,7 @@ namespace oct.generatedBehavior
             PlayerControllerr.speed = 8;
             PlayerControllerr.SetAnimation(runa);
             lockState(true);
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.1f);
             lockState(false);
         }
 

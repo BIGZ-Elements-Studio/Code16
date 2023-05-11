@@ -146,6 +146,7 @@ public class BehaviorObjectEditor : Editor
 
     #endregion
     #region DrawVariable
+    
     private void DrawVariable()
     {
         EditorGUILayout.LabelField("±‰¡ø");

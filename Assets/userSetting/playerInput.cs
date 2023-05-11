@@ -174,6 +174,109 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""In2d"",
+            ""id"": ""75f44fa9-2adb-46d4-8ba0-ce2f0108ac4d"",
+            ""actions"": [
+                {
+                    ""name"": ""move"",
+                    ""type"": ""Value"",
+                    ""id"": ""15df24dc-5255-4ab8-9c2b-b0ff26824937"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""1cf58906-1aa8-4f80-94ca-3aa844709e72"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""919f705e-f3f5-4849-b90c-ad65c5841cf5"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""431a8908-3b48-4967-be54-70ff37ad6a8b"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""051b5f65-86c8-4898-9e5c-846b49a8bce6"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""8bbaaa1a-a5e1-4c78-9d6e-862a2d09479c"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""6b31ee2d-3dd9-4e16-93b5-26f7c0830c49"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""31b56775-032f-40b1-97a6-04d393eb6f6b"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9ef07e51-57d5-4f8c-9188-6ef93d1d5e94"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -185,6 +288,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_In3d_ultraSkill = m_In3d.FindAction("ultraSkill", throwIfNotFound: true);
         m_In3d_dash = m_In3d.FindAction("dash", throwIfNotFound: true);
         m_In3d_atk = m_In3d.FindAction("atk", throwIfNotFound: true);
+        // In2d
+        m_In2d = asset.FindActionMap("In2d", throwIfNotFound: true);
+        m_In2d_move = m_In2d.FindAction("move", throwIfNotFound: true);
+        m_In2d_jump = m_In2d.FindAction("jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -320,6 +427,60 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public In3dActions @In3d => new In3dActions(this);
+
+    // In2d
+    private readonly InputActionMap m_In2d;
+    private List<IIn2dActions> m_In2dActionsCallbackInterfaces = new List<IIn2dActions>();
+    private readonly InputAction m_In2d_move;
+    private readonly InputAction m_In2d_jump;
+    public struct In2dActions
+    {
+        private @PlayerInput m_Wrapper;
+        public In2dActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @move => m_Wrapper.m_In2d_move;
+        public InputAction @jump => m_Wrapper.m_In2d_jump;
+        public InputActionMap Get() { return m_Wrapper.m_In2d; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(In2dActions set) { return set.Get(); }
+        public void AddCallbacks(IIn2dActions instance)
+        {
+            if (instance == null || m_Wrapper.m_In2dActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_In2dActionsCallbackInterfaces.Add(instance);
+            @move.started += instance.OnMove;
+            @move.performed += instance.OnMove;
+            @move.canceled += instance.OnMove;
+            @jump.started += instance.OnJump;
+            @jump.performed += instance.OnJump;
+            @jump.canceled += instance.OnJump;
+        }
+
+        private void UnregisterCallbacks(IIn2dActions instance)
+        {
+            @move.started -= instance.OnMove;
+            @move.performed -= instance.OnMove;
+            @move.canceled -= instance.OnMove;
+            @jump.started -= instance.OnJump;
+            @jump.performed -= instance.OnJump;
+            @jump.canceled -= instance.OnJump;
+        }
+
+        public void RemoveCallbacks(IIn2dActions instance)
+        {
+            if (m_Wrapper.m_In2dActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IIn2dActions instance)
+        {
+            foreach (var item in m_Wrapper.m_In2dActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_In2dActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public In2dActions @In2d => new In2dActions(this);
     public interface IIn3dActions
     {
         void OnRun(InputAction.CallbackContext context);
@@ -327,5 +488,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnUltraSkill(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnAtk(InputAction.CallbackContext context);
+    }
+    public interface IIn2dActions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }

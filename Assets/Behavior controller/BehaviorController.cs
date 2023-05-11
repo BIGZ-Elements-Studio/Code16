@@ -21,7 +21,7 @@ namespace codeTesting
 
         public int storedState { get { return _storedState; }set { if (_storedState!= storedState) { bufferInputProcess = StartCoroutine(bufferInputed()); } _storedState = value; } }
         [SerializeField]
-        int _storedState;
+       public int _storedState;
 
 
         public BehaviorObject behaviorObject;
@@ -29,7 +29,7 @@ namespace codeTesting
         public delegate IEnumerator MyDelegate();
 
         [SerializeField]
-        PlayerController PlayerController;
+        PlayerAttribute PlayerController;
         //可以把这个改成string还是deleagate还是什么的，反正把method和对应的状态绑定就行
         public CharacterControlCoroutine targetCode;
         [HideInInspector]
@@ -86,6 +86,7 @@ namespace codeTesting
         }
         private void changtoState(int index)
         {
+            
             Func<IEnumerator> coroutineDelegate = (Func<IEnumerator>)Delegate.CreateDelegate(typeof(Func<IEnumerator>), targetCode, CoroutineList[index]);
             if (behaviorObject.stateBehaviors[index].AllowReEnterDuringProcess)
             {
@@ -114,7 +115,7 @@ namespace codeTesting
             targetCode.UnLockState += () => LockState = false;
         }
         // 检查条件并切换状态
-        private void CheakCondition()
+        public void CheakCondition()
         {
             // 找到优先级最高的符合所有条件的状态
             int stateBehavior = -1;
@@ -141,7 +142,12 @@ namespace codeTesting
             {
                 
                 if (LockState) {
-                    if (behaviorObject.stateBehaviors[stateBehavior].allowBufferedInput&& storedState==-1)
+                    if (behaviorObject.stateBehaviors[stateBehavior].priority> behaviorObject.stateBehaviors[currentState].priority)
+                    {
+                        _LockState = false;
+                        changtoState(stateBehavior);
+                    }
+                    else if (behaviorObject.stateBehaviors[stateBehavior].allowBufferedInput && storedState == -1)
                     {
                         storedState = stateBehavior;
                     }
@@ -157,45 +163,51 @@ namespace codeTesting
         // 设置浮点数类型的条件变量的值
         public bool setFloatVariable(string VariableName, float result)
         {
-            ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
-            if (f != null && f is FloatVariable)
-            {
-                int Index = behaviorObject.ConditionVariables.IndexOf(f);
-                varibleValues[Index] = result;
-                CheakCondition();
-                return true;
+            if (enabled) {
+                ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
+                if (f != null && f is FloatVariable)
+                {
+                    int Index = behaviorObject.ConditionVariables.IndexOf(f);
+                    varibleValues[Index] = result;
+                    CheakCondition();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
-            {
-                return false;
-            }
-
+            return false;
         }
 
         // 设置布尔类型的条件变量的值
         public bool setBoolVariable(string VariableName, bool result)
         {
-            ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
-            if (f != null && f is BoolVariable)
+            if (enabled)
             {
-                int Index = behaviorObject.ConditionVariables.IndexOf(f);
-                //   ((BoolVariable)f).value = result;
-                if (result)
+                ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
+                if (f != null && f is BoolVariable)
                 {
-                    varibleValues[Index] = 1;
+                    int Index = behaviorObject.ConditionVariables.IndexOf(f);
+                    //   ((BoolVariable)f).value = result;
+                    if (result)
+                    {
+                        varibleValues[Index] = 1;
+                    }
+                    else
+                    {
+                        varibleValues[Index] = 0;
+                    }
+
+                    CheakCondition();
+                    return true;
                 }
                 else
                 {
-                    varibleValues[Index] = 0;
+                    return false;
                 }
-                
-                CheakCondition();
-                return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         // 检查条件是否满足

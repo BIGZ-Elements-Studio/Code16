@@ -7,7 +7,7 @@ using UnityEngine;
 /// <remarks>÷˜Ω« Ù–‘¿‡</remarks>
 public class LeadingRole
 {
-    //public PlayerController playerController;
+    //public PlayerAttribute playerController;
     public NaturalAttribute naturalAttribute;
     public FightingAttribute fightingAttribute;
     public List<CollectRole> collectRoles;

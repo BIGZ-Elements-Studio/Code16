@@ -19,7 +19,7 @@ namespace oct.generatedBehavior
         [SerializeField]
         bool v;
         [SerializeField]
-        PlayerController PlayerControllerr;
+        PlayerAttribute PlayerControllerr;
 
         [SpineAnimation]
       public  string runa;
