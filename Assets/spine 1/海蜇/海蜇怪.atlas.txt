@@ -1,0 +1,83 @@
+
+海蜇怪.png
+size: 2048,1204
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+a 2
+  rotate: false
+  xy: 0, 651
+  size: 1039, 553
+  orig: 1039, 553
+  offset: 0, 0
+  index: -1
+a 5
+  rotate: true
+  xy: 1040, 677
+  size: 527, 479
+  orig: 529, 479
+  offset: 1, 0
+  index: -1
+a8
+  rotate: false
+  xy: 1208, 585
+  size: 207, 90
+  orig: 207, 90
+  offset: 0, 0
+  index: -1
+claw1
+  rotate: true
+  xy: 1628, 1
+  size: 393, 420
+  orig: 654, 497
+  offset: 261, 0
+  index: -1
+claw2
+  rotate: true
+  xy: 1258, 16
+  size: 354, 508
+  orig: 354, 508
+  offset: 0, 0
+  index: -1
+claw3
+  rotate: false
+  xy: 1521, 735
+  size: 426, 469
+  orig: 426, 469
+  offset: 0, 0
+  index: -1
+claw4
+  rotate: false
+  xy: 1521, 371
+  size: 456, 363
+  orig: 456, 363
+  offset: 0, 0
+  index: -1
+tentacle1
+  rotate: true
+  xy: 478, 311
+  size: 113, 1042
+  orig: 113, 1067
+  offset: 0, 0
+  index: -1
+tentacle2
+  rotate: true
+  xy: 0, 196
+  size: 113, 1008
+  orig: 113, 1008
+  offset: 0, 0
+  index: -1
+tentacle3
+  rotate: true
+  xy: 0, 423
+  size: 113, 1053
+  orig: 113, 1053
+  offset: 0, 0
+  index: -1
+tentacle5
+  rotate: true
+  xy: 0, 537
+  size: 112, 1206
+  orig: 112, 1206
+  offset: 0, 0
+  index: -1
