@@ -16,6 +16,8 @@ namespace codeTesting
             inputActions.Enable();
             inputActions.In3d.run.performed += ctx => { controller3d.setBoolVariable("ÒÆ¶¯", true); };
             inputActions.In3d.run.canceled += ctx => { controller3d.setBoolVariable("ÒÆ¶¯", false); };
+            inputActions.In3d.dash.performed += ctx => { controller3d.setBoolVariable("ÉÁ±Ü", true); };
+            inputActions.In3d.dash.canceled += ctx => { controller3d.setBoolVariable("ÉÁ±Ü", false); };
             inputActions.In3d.atk.performed += ctx => { controller3d.setBoolVariable("¹¥»÷", true); };
             inputActions.In3d.atk.canceled += ctx => { controller3d.setBoolVariable("¹¥»÷", false); };
 

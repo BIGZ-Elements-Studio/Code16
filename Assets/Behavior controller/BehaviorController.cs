@@ -29,9 +29,9 @@ namespace codeTesting
         public delegate IEnumerator MyDelegate();
 
         [SerializeField]
-        PlayerAttribute PlayerController;
+     //   PlayerAttribute PlayerController;
         //可以把这个改成string还是deleagate还是什么的，反正把method和对应的状态绑定就行
-        public CharacterControlCoroutine targetCode;
+        public MoveableControlCoroutine targetCode;
         [HideInInspector]
         public List<string> CoroutineList = new List<string>();
         [HideInInspector]
@@ -83,18 +83,28 @@ namespace codeTesting
 
             }
 
+        }        
+        private void Start()
+        {
+            targetCode.LockState += () => LockState=true;
+            targetCode.UnLockState += () => LockState = false;
+            CheakCondition();
         }
         private void changtoState(int index)
         {
-            
+            currentState = index;
             Func<IEnumerator> coroutineDelegate = (Func<IEnumerator>)Delegate.CreateDelegate(typeof(Func<IEnumerator>), targetCode, CoroutineList[index]);
-            if (behaviorObject.stateBehaviors[index].AllowReEnterDuringProcess)
+            if (behaviorObject.stateBehaviors[index].effect)
             {
-                PlayerController.SetState(coroutineDelegate);
+                StartCoroutine(coroutineDelegate());
+            }
+          else  if (behaviorObject.stateBehaviors[index].AllowReEnterDuringProcess)
+            {
+                SetState(coroutineDelegate);
             }
             else
             {
-                PlayerController.ChangeState(coroutineDelegate);
+                ChangeState(coroutineDelegate);
             }
         }
 
@@ -109,57 +119,7 @@ namespace codeTesting
             _storedState = -1;
         }
 
-        private void Start()
-        {
-            targetCode.LockState += () => LockState=true;
-            targetCode.UnLockState += () => LockState = false;
-        }
-        // 检查条件并切换状态
-        public void CheakCondition()
-        {
-            // 找到优先级最高的符合所有条件的状态
-            int stateBehavior = -1;
-            for (int i = 0; i < behaviorObject.stateBehaviors.Count; i++)
-            {
-                bool allConditionsMet = true;
-                foreach (var condition in behaviorObject.stateBehaviors[i].conditions)
-                {
-                    if (!CheckCondition(condition))
-                    {
-                        allConditionsMet = false;
-                        break;
-                    }
-                }
-                if (allConditionsMet && (stateBehavior == -1 || behaviorObject.stateBehaviors[i].priority > behaviorObject.stateBehaviors[stateBehavior].priority))
-                {
-                    stateBehavior = i;
-                }
-            }
-            currentState = stateBehavior;
-            // 如果找到了状态，执行其对应的行为
-            //更改这一块的实现方式来匹配主程的addstate（“”）模式
-            if (stateBehavior != -1)
-            {
-                
-                if (LockState) {
-                    if (behaviorObject.stateBehaviors[stateBehavior].priority> behaviorObject.stateBehaviors[currentState].priority)
-                    {
-                        _LockState = false;
-                        changtoState(stateBehavior);
-                    }
-                    else if (behaviorObject.stateBehaviors[stateBehavior].allowBufferedInput && storedState == -1)
-                    {
-                        storedState = stateBehavior;
-                    }
-                }
-                else
-                {
-                    changtoState(stateBehavior);
-                }
-            }
-
-        }
-
+        #region 设置变量
         // 设置浮点数类型的条件变量的值
         public bool setFloatVariable(string VariableName, float result)
         {
@@ -209,8 +169,80 @@ namespace codeTesting
             }
             return false;
         }
+        public void setBoolVariablewNoReturnType(string VariableName, bool result)
+        {
+            setBoolVariable( VariableName,  result);
+        }
+        public void setFloatVariableNoReturnTyp(string VariableName, float result)
+        {
+            setFloatVariable(VariableName, result);
+        }
 
+        public void changeBoolForFrame(string target, bool result)
+        {
+            StartCoroutine(Process( target,  result));
+        }
+        IEnumerator Process(string target, bool result)
+        {
+            setBoolVariable(target, result);
+            yield return null;
+            setBoolVariable(target, !result);
+        }
+        #endregion
         // 检查条件是否满足
+
+        // 检查条件并切换状态
+        #region 检查条件
+        public void CheakCondition()
+        {
+            // 找到优先级最高的符合所有条件的状态
+            int stateBehavior = -1;
+            for (int i = 0; i < behaviorObject.stateBehaviors.Count; i++)
+            {
+                bool allConditionsMet = true;
+                foreach (var condition in behaviorObject.stateBehaviors[i].conditions)
+                {
+                    if (!CheckCondition(condition))
+                    {
+                        allConditionsMet = false;
+                        break;
+                    }
+                }
+                if (allConditionsMet && (stateBehavior == -1 || behaviorObject.stateBehaviors[i].priority > behaviorObject.stateBehaviors[stateBehavior].priority))
+                {
+                    stateBehavior = i;
+                    if (behaviorObject.stateBehaviors[i].effect)
+                    {
+                        changtoState(stateBehavior);
+                        return;
+                    }
+                }
+            }
+
+            // 如果找到了状态，执行其对应的行为
+            //更改这一块的实现方式来匹配主程的addstate（“”）模式
+            if (stateBehavior != -1)
+            {
+
+                if (LockState)
+                {
+                    if (behaviorObject.stateBehaviors[stateBehavior].priority > behaviorObject.stateBehaviors[currentState].priority)
+                    {
+                        _LockState = false;
+                        changtoState(stateBehavior);
+                    }
+                    else if (behaviorObject.stateBehaviors[stateBehavior].allowBufferedInput && storedState == -1)
+                    {
+                        storedState = stateBehavior;
+                    }
+                }
+                else
+                {
+                    changtoState(stateBehavior);
+                }
+            }
+
+        }
         private bool CheckCondition(Condition condition)
         {
             if (condition is BoolCondition)
@@ -232,6 +264,6 @@ namespace codeTesting
                 return false;
             }
         }
-
+        #endregion
     }
 }

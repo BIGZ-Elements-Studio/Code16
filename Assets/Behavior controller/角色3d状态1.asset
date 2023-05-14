@@ -15,26 +15,31 @@ MonoBehaviour:
   stateBehaviors:
   - stateName: run
     priority: 1
+    effect: 0
     conditions:
     - rid: 4152961250104442882
     showConditions: 1
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
   - stateName: dash
-    priority: 5
+    priority: 6
+    effect: 0
     conditions:
     - rid: 4152961250104442887
+    - rid: 4829176287206572044
     showConditions: 1
     allowBufferedInput: 1
     AllowReEnterDuringProcess: 0
   - stateName: idle
     priority: 0
+    effect: 0
     conditions: []
     showConditions: 1
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - stateName: atk
+  - stateName: "\u653B\u51FB1"
     priority: 2
+    effect: 0
     conditions:
     - rid: 4152961250104442888
     showConditions: 1
@@ -42,6 +47,7 @@ MonoBehaviour:
     AllowReEnterDuringProcess: 1
   - stateName: E
     priority: 2
+    effect: 0
     conditions:
     - rid: 4152961250104442889
     showConditions: 1
@@ -49,11 +55,43 @@ MonoBehaviour:
     AllowReEnterDuringProcess: 0
   - stateName: Q
     priority: 2
+    effect: 0
     conditions:
     - rid: 4152961250104442890
     - rid: 4152961250104442892
     showConditions: 1
     allowBufferedInput: 1
+    AllowReEnterDuringProcess: 0
+  - stateName: "\u6253\u65AD"
+    priority: 5
+    effect: 0
+    conditions:
+    - rid: 4829176279541481480
+    - rid: 4829176287206572033
+    - rid: 4829176287206572037
+    - rid: 4829176287206572041
+    showConditions: 1
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - stateName: "\u51FB\u98DE"
+    priority: 6
+    effect: 0
+    conditions:
+    - rid: 4829176279541481481
+    - rid: 4829176287206572034
+    - rid: 4829176287206572038
+    - rid: 4829176287206572042
+    showConditions: 1
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 1
+  - stateName: "\u95EA\u907F\u6210\u529F"
+    priority: 7
+    effect: 1
+    conditions:
+    - rid: 4829176287206572039
+    - rid: 4829176287206572040
+    showConditions: 1
+    allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
   ConditionVariables:
   - rid: 4829176268193267720
@@ -62,6 +100,10 @@ MonoBehaviour:
   - rid: 4829176268193267723
   - rid: 4829176268193267724
   - rid: 4829176268969738241
+  - rid: 4829176279541481476
+  - rid: 4829176287206572032
+  - rid: 4829176287206572035
+  - rid: 4829176287206572036
   references:
     version: 2
     RefIds:
@@ -126,3 +168,80 @@ MonoBehaviour:
       data:
         name: "\u79FB\u52A8"
         type: 0
+    - rid: 4829176279541481476
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u88AB\u6253"
+        type: 0
+    - rid: 4829176279541481480
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u88AB\u6253"
+        conditionValue: 1
+    - rid: 4829176279541481481
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u88AB\u6253"
+        conditionValue: 1
+    - rid: 4829176287206572032
+      type: {class: FloatVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u97E7\u6027"
+        type: 1
+    - rid: 4829176287206572033
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u97E7\u6027"
+        conditionValue: 30
+        comparisonType: 2
+    - rid: 4829176287206572034
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u97E7\u6027"
+        conditionValue: 10
+        comparisonType: 2
+    - rid: 4829176287206572035
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u95EA\u907F\u4E2D"
+        type: 0
+    - rid: 4829176287206572036
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u9738\u4F53"
+        type: 0
+    - rid: 4829176287206572037
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u95EA\u907F\u4E2D"
+        conditionValue: 0
+    - rid: 4829176287206572038
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u95EA\u907F\u4E2D"
+        conditionValue: 0
+    - rid: 4829176287206572039
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u95EA\u907F\u4E2D"
+        conditionValue: 1
+    - rid: 4829176287206572040
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u88AB\u6253"
+        conditionValue: 1
+    - rid: 4829176287206572041
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u9738\u4F53"
+        conditionValue: 0
+    - rid: 4829176287206572042
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u9738\u4F53"
+        conditionValue: 0
+    - rid: 4829176287206572044
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u88AB\u6253"
+        conditionValue: 0

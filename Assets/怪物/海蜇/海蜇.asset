@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d598390b6ebaf15479d584aef99339cf, type: 3}
+  m_Name: "\u6D77\u8707"
+  m_EditorClassIdentifier: 
+  stateBehaviors:
+  - stateName: "\u8FFD\u8E2A"
+    priority: 1
+    effect: 0
+    conditions:
+    - rid: 4829176296471789573
+    showConditions: 1
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - stateName: "\u653B\u51FB"
+    priority: 1
+    effect: 0
+    conditions:
+    - rid: 4829176296471789571
+    showConditions: 1
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - stateName: idle
+    priority: 0
+    effect: 0
+    conditions: []
+    showConditions: 0
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - stateName: "\u6253\u98DE"
+    priority: 2
+    effect: 0
+    conditions:
+    - rid: 4829176302386282497
+    showConditions: 1
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  ConditionVariables:
+  - rid: 4829176292198055936
+  - rid: 4829176296471789568
+  - rid: 4829176296471789569
+  - rid: 4829176296471789570
+  - rid: 4829176302386282496
+  references:
+    version: 2
+    RefIds:
+    - rid: 4829176292198055936
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u653B\u51FB"
+        type: 0
+    - rid: 4829176296471789568
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u79FB\u52A8"
+        type: 0
+    - rid: 4829176296471789569
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u6E38\u8361"
+        type: 0
+    - rid: 4829176296471789570
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u8FFD\u8E2A"
+        type: 0
+    - rid: 4829176296471789571
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u653B\u51FB"
+        conditionValue: 1
+    - rid: 4829176296471789573
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u8FFD\u8E2A"
+        conditionValue: 1
+    - rid: 4829176302386282496
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u88AB\u6253"
+        type: 0
+    - rid: 4829176302386282497
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u88AB\u6253"
+        conditionValue: 1

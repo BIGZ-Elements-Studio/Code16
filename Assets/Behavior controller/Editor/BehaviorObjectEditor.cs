@@ -54,9 +54,9 @@ public class BehaviorObjectEditor : Editor
     stateBehavior.allowBufferedInput = EditorGUILayout.Toggle("允许预输入", stateBehavior.allowBufferedInput);
 
     stateBehavior.AllowReEnterDuringProcess = EditorGUILayout.Toggle("允许重新进入", stateBehavior.AllowReEnterDuringProcess);
-
-    // Show the state behavior's conditions.
-    stateBehavior.showConditions = EditorGUILayout.Foldout(stateBehavior.showConditions, "条件");
+        stateBehavior.effect = EditorGUILayout.Toggle("效果", stateBehavior.effect);
+        // Show the state behavior's conditions.
+        stateBehavior.showConditions = EditorGUILayout.Foldout(stateBehavior.showConditions, "条件");
     if (stateBehavior.showConditions)
     {
         EditorGUI.indentLevel++;

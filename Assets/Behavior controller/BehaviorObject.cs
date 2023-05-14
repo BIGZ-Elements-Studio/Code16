@@ -47,7 +47,6 @@ public abstract class ConditionVariable
 [System.Serializable]
 public class FloatVariable : ConditionVariable
 {
-
     public FloatVariable()
     {
         type = ConditionType.FloatVariable;
@@ -58,7 +57,6 @@ public class FloatVariable : ConditionVariable
 [System.Serializable]
 public class BoolVariable : ConditionVariable
 {
-    //public bool value; // 变量值
 }
 
 // 状态行为类，用于表示不同状态下的行为
@@ -66,7 +64,8 @@ public class BoolVariable : ConditionVariable
 public class StateBehavior
 {
     public string stateName; // 状态名
-    public int priority; // 优先级
+    public int priority;// 优先级
+    public bool effect;//不是一个状态，独立于状态轴外触发的效果
     [SerializeField]
     [SerializeReference]
     public List<Condition> conditions; // 条件列表，用于存储不同条件
