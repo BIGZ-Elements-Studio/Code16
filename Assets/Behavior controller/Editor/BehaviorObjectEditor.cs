@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using BehaviorControlling;
 using static FloatCondition;
 
 [CustomEditor(typeof(BehaviorObject))]

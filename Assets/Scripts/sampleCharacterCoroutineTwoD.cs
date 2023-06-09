@@ -1,5 +1,4 @@
-using codeTesting;
-using oct.generatedBehavior;
+using oct.ObjectBehaviors;
 using Spine.Unity;
 using System;
 using System.Collections;
@@ -25,10 +24,13 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
     public IEnumerator jump()
     {
         lockState(true);
+        Debug.Log("jumpppp");
         yield return null;
+        PlayerControllerr.UpdateVelocity = false;
         PlayerControllerr.Rigidbody.velocity = new Vector3(PlayerControllerr.Rigidbody.velocity.x, jumpHight, PlayerControllerr.Rigidbody.velocity.z);
         PlayerControllerr.SetAnimation(jumpc);
         yield return new WaitForSeconds(0.1f);
+        PlayerControllerr.UpdateVelocity = true;
         PlayerControllerr.jump(1);
         lockState(false);
 

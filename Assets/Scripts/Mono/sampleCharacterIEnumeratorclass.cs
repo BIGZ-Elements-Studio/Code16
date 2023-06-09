@@ -1,4 +1,3 @@
-using codeTesting;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +6,7 @@ using System;
 using Unity.Burst.Intrinsics;
 using CombatSystem;
 
-namespace oct.generatedBehavior
+namespace oct.ObjectBehaviors
 {
 
     public class sampleCharacterIEnumeratorclass : MoveableControlCoroutine
@@ -60,10 +59,17 @@ namespace oct.generatedBehavior
             lockState(true);
                 yield return new WaitForSeconds(0.1f);
             lockState(false);
+            while (true)
+                {
+                yield return new WaitForFixedUpdate();
+                PlayerControllerr.SetAnimationTimeScale(PlayerControllerr.attackAttributeController.moveSpeedFactor);
+            }
+            
         }
         #region ÆÕÍ¨¹¥»÷
         public IEnumerator hit()
         {
+            PlayerControllerr.SetAnimationTimeScale(1);
             if (canceling!=null)
             {
                 StopCoroutine(canceling);
@@ -87,33 +93,15 @@ namespace oct.generatedBehavior
             {
                 PlayerControllerr.SetAnimation(atkE);
             }
-           GameObject g= Instantiate(bulletPrefeb);
-            g.transform.position = bulletPosition.position;
-            g.GetComponent<Bullet>().faceRight = PlayerControllerr.faceRight;
-            g.GetComponent<Bullet>().hit.AddListener(Stagger);
+            yield return null;
+            PlayerControllerr.createBullet(bulletPrefeb, bulletPosition,0.1f);
             lockState(true);
                 yield return new WaitForSeconds(1f);
             lockState(false);
             canceling= StartCoroutine(cancelCombo());
 
         }
-
-        private void Stagger(bool arg0)
-        {
-           
-                if (arg0) {
-                StartCoroutine(stopAnimation(0.1f));
-            }
-        }
-        IEnumerator stopAnimation(float time)
-        {
-            PlayerControllerr.skeletonAnimation.timeScale = 0;
-            yield return new WaitForSecondsRealtime(time);
-            PlayerControllerr.skeletonAnimation.timeScale = 1;
-
-        }
         Coroutine canceling;
-
         
         IEnumerator cancelCombo()
         {
@@ -124,16 +112,18 @@ namespace oct.generatedBehavior
         #region ´ò¶Ï
         public IEnumerator disrupt()
         {
-            Debug.Log("dwpecncopwnipenp");
+            PlayerControllerr.SetAnimationTimeScale(1);
             lockState(true);
             PlayerControllerr.speed = 0;
             PlayerControllerr.SetAnimation(stun);
             PlayerControllerr.UpdateVelocity = false;
             yield return new WaitForFixedUpdate();
-            PlayerControllerr.Rigidbody.AddForce(flydirection * 75*0.5f);
-            while (!PlayerControllerr.grounded)
+            PlayerControllerr.Rigidbody.AddForce(flydirection/2);
+            float time = 0;
+            while (time < 0.2 || !PlayerControllerr.grounded)
             {
                 yield return new WaitForFixedUpdate();
+                time += Time.fixedDeltaTime;
             }
             yield return new WaitForSecondsRealtime(0.5f);
             PlayerControllerr.UpdateVelocity = true;
@@ -142,14 +132,17 @@ namespace oct.generatedBehavior
 
         public IEnumerator fly()
         {
+            PlayerControllerr.SetAnimationTimeScale(1);
             lockState(true);
             PlayerControllerr.speed = 0;
             PlayerControllerr.UpdateVelocity = false;
-            PlayerControllerr.Rigidbody.AddForce(flydirection * 75);
+            PlayerControllerr.Rigidbody.AddForce(flydirection);
             PlayerControllerr.SetAnimation(knockup);
             yield return new WaitForFixedUpdate();
-            while (!PlayerControllerr.grounded)
+            float time = 0;
+            while (time < 0.2 || !PlayerControllerr.grounded)
             {
+                time += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
             yield return new WaitForSecondsRealtime(1.3f);
@@ -168,7 +161,8 @@ namespace oct.generatedBehavior
         bool dashEffect;
         public IEnumerator dash()
         {
-            dashEffect=true;
+            PlayerControllerr.SetAnimationTimeScale(1);
+            dashEffect =true;
             lockState(true);
             float time=0;
             PlayerControllerr.speed = 0;
@@ -201,6 +195,7 @@ namespace oct.generatedBehavior
 
         public IEnumerator successfulDash()
         {
+            PlayerControllerr.SetAnimationTimeScale(1);
             if (dashEffect) {
                 yield return null;
                 Debug.Log("!!!!!!!!!!!!!!!!");

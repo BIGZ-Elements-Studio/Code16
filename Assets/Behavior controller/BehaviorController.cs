@@ -3,11 +3,12 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
-using oct.generatedBehavior;
+using oct.ObjectBehaviors;
 using System.Reflection;
 using System;
-namespace codeTesting
+namespace BehaviorControlling
 {
+
     public class BehaviorController : Controller
     {
         [SerializeField]

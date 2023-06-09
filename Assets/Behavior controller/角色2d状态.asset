@@ -15,6 +15,7 @@ MonoBehaviour:
   stateBehaviors:
   - stateName: move
     priority: 1
+    effect: 0
     conditions:
     - rid: 4829176271431794688
     showConditions: 1
@@ -22,6 +23,7 @@ MonoBehaviour:
     AllowReEnterDuringProcess: 0
   - stateName: jump
     priority: 3
+    effect: 0
     conditions:
     - rid: 4829176271431794690
     - rid: 4829176271431794693
@@ -30,12 +32,14 @@ MonoBehaviour:
     AllowReEnterDuringProcess: 0
   - stateName: idle
     priority: 0
+    effect: 0
     conditions: []
     showConditions: 1
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
   - stateName: in air
     priority: 2
+    effect: 0
     conditions:
     - rid: 4829176271431794694
     showConditions: 1

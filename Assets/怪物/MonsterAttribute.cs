@@ -51,4 +51,25 @@ public class MonsterAttribute : MonoBehaviour
     {
         spineAnimationState.SetAnimation(0, s, true);
     }
+    public bool isGrounded()
+    {
+        Vector3 boxCenter = rb.GetComponent<BoxCollider>().bounds.center;
+        Vector3 boxSize = rb.GetComponent<BoxCollider>().size;
+
+        // Use OverlapBox to detect colliders below the box
+        // Shift the box center downwards by 0.05f to ensure it is detecting the ground
+        Collider[] hits = Physics.OverlapBox(boxCenter - new Vector3(0, 0.05f, 0), boxSize / 2f, Quaternion.identity);
+
+        // Loop through all the hits to see if any of them are considered "ground"
+        foreach (Collider hit in hits)
+        {
+
+            if (hit.gameObject != rb && hit.isTrigger == false)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

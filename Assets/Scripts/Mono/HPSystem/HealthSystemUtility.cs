@@ -1,6 +1,6 @@
 namespace CombatSystem
 {
-    public enum Type
+    public enum TargetType
     {
         player, enemy, other
     }

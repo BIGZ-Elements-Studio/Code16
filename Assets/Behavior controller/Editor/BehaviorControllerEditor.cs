@@ -1,11 +1,11 @@
-using oct.generatedBehavior;
+using oct.ObjectBehaviors;
 using UnityEditor;
 using UnityEngine;
 using System.Reflection;
 using System.Linq;
 using System.Collections;
 using System;
-using codeTesting;
+using BehaviorControlling;
 
 [CustomEditor(typeof(BehaviorController))]
 public class BehaviorControllerEditor : Editor
