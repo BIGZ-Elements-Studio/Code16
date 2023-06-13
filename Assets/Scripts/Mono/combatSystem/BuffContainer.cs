@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CombatSystem
 {
@@ -13,7 +14,7 @@ namespace CombatSystem
 
         List<Sprite> BuffIcons = new List<Sprite>();
 
-      
+        public UnityEvent<List<Sprite>> BuffIconChange;
         public void addBuff(Buff buff)
         {
             for(int i =0; i< buffs.Count; i++)
@@ -33,15 +34,19 @@ namespace CombatSystem
         }
 
         // add buff icon Ui
-        public void AddBuffIcon(Sprite Icon)
+        public int AddBuffIcon(Sprite Icon)
         {
             BuffIcons.Add(Icon);
+            BuffIconChange?.Invoke(BuffIcons);
+            return buffs.Count-1;
+           
         }
 
         // remove buff icon Ui
-        public void RemoveBuffIcon(Sprite Icon)
+        public void RemoveBuffIcon(int ID)
         {
-            BuffIcons.Remove(Icon);
+            BuffIcons.RemoveAt(ID);
+            BuffIconChange?.Invoke(BuffIcons);
         }
 
         public void removeBuff(Buff buff)

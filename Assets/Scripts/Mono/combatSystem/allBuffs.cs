@@ -15,6 +15,7 @@ namespace CombatSystem {
         BuffContainer Controller;
         AttackAttributeController c;
         Coroutine Coroutine;
+        int IconId;
         public void initiate(BuffContainer target)
         {
             Controller = target;
@@ -24,12 +25,14 @@ namespace CombatSystem {
                 c.moveSpeedFactor -= 0.5f;
                Coroutine= Controller.StartCoroutine(Wait());
             }
+            IconId= Controller.AddBuffIcon(BuffTable.icons[0]);
         }
         IEnumerator Wait()
         {
             yield return new WaitForSeconds(5);
             c.moveSpeedFactor += 0.5f;
             Controller.removeBuff(this);
+            Controller.RemoveBuffIcon(IconId);
         }
         public void overlayed()
         {
@@ -40,6 +43,7 @@ namespace CombatSystem {
             }
             c.moveSpeedFactor += 0.5f;
             Controller.removeBuff(this);
+            Controller.RemoveBuffIcon(IconId);
         }
 
         public void overlying(Buff overlayedBuff, BuffContainer target)

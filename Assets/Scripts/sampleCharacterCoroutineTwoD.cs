@@ -39,7 +39,6 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
     public IEnumerator idle()
     {
         lockState(false);
-        Debug.Log("!!!");
         yield return null;
         PlayerControllerr.speed = 0;
         

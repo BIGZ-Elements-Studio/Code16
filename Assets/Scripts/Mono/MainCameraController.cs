@@ -16,15 +16,17 @@ public class MainCameraController : MonoBehaviour
     // 3D模式下，相机角度
     public float Angle;
 
-    public float defautFieldOfView;
-
+    public float defautFieldOfView2d;
+    public float defautFieldOfView3d;
     private Vector3 Actualoffset; // 实际使用的偏移量
 
     public Vector3 shakeOffset;
+    public float Z2d;
     public bool is2D { get; private set; } // 当前是否为2D模式
 
     private void Awake()
     {
+        GameModeController.ModeChangediFTo2D += ChangeMode;
         if (Instance == null)
         {
             Instance = this;
@@ -33,6 +35,8 @@ public class MainCameraController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        Instance.Camera.orthographicSize = Instance.defautFieldOfView2d;
+        Instance.Camera2.orthographicSize = Instance.defautFieldOfView2d;
     }
 
     public void SetOffset()
@@ -63,6 +67,8 @@ public class MainCameraController : MonoBehaviour
             Instance.Actualoffset = Instance.offset;
             Instance.Camera.orthographic = false;
             Instance.Camera2.orthographic = false;
+            Instance.Camera.fieldOfView = Instance.defautFieldOfView3d;
+            Instance.Camera2.fieldOfView = Instance.defautFieldOfView3d;
 
         }
         Instance.is2D = targetIs2D;
@@ -71,7 +77,12 @@ public class MainCameraController : MonoBehaviour
     private void Update()
     {
         // 根据偏移量计算相机的目标位置
+        
         Vector3 desiredPosition = target.position + Actualoffset;
+        if (is2D)
+        {
+            desiredPosition = new Vector3(desiredPosition.x, desiredPosition. y, Z2d);
+        }
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
 
         // 将相机的位置设置为平滑后的目标位置
@@ -100,24 +111,17 @@ public class MainCameraController : MonoBehaviour
         {
             float t = elapsedTime / duration;
             Instance.shakeOffset = Vector3.Lerp(shiftObj.desireShift, shiftObj.desireShift,t);
-         //   Instance.Angle = Mathf.Lerp(shiftObj.desireAngle, shiftObj.desireAngle, t);
-          //  Instance.Camera.fieldOfView = Mathf.Lerp(shiftObj.additionalFieldOfView, Instance.defautFieldOfView + shiftObj.additionalFieldOfView, t);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         // Set the camera parameters to their final values
         Instance.shakeOffset = shiftObj.desireShift;
-      //  Instance.Angle = shiftObj.desireAngle;
-    //    Instance.Camera.fieldOfView = Instance.defautFieldOfView + shiftObj.additionalFieldOfView;
-      //  changeCoroutine = null;
         elapsedTime = 0;
         while (elapsedTime < backTime)
         {
             float t = elapsedTime / backTime;
             Instance.shakeOffset = Vector3.Lerp(shiftObj.desireShift,Vector3.zero, t);
-         //   Instance.Angle = Mathf.Lerp(startShiftObj.desireAngle, shiftObj.desireAngle, t);
-          //  Instance.Camera.fieldOfView = Mathf.Lerp(startShiftObj.additionalFieldOfView, Instance.defautFieldOfView + shiftObj.additionalFieldOfView, t);
             elapsedTime += Time.deltaTime;
             yield return null;
         }

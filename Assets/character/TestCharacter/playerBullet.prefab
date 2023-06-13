@@ -88,10 +88,13 @@ MonoBehaviour:
   critcAtkDamage: 75
   faceRight: 0
   affectEnemy: 1
-  affectObject: 0
+  affectObject: 1
   affectPlayer: 0
   origialPoint: {fileID: 3195684264988412996}
   ForceMagnitude: 7000
   hit:
+    m_PersistentCalls:
+      m_Calls: []
+  hitTarget:
     m_PersistentCalls:
       m_Calls: []

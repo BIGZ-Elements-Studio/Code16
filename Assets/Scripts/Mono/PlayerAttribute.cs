@@ -72,6 +72,11 @@ namespace oct.ObjectBehaviors
                 behaviourController2d.storedState = -1;
                 behaviourController2d.CheakCondition();
                 behaviourController2d.setBoolVariable("ดฅตุ", grounded);
+                if (!grounded)
+                {
+                  StartCoroutine(  jumpprocess());
+                }
+
             }
             else
             {
@@ -98,7 +103,6 @@ namespace oct.ObjectBehaviors
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -107,7 +111,8 @@ namespace oct.ObjectBehaviors
 
         private void Awake()
         {
-            
+            flip(true);
+            GameModeController.ModeChangediFTo2D += changeMode;
             //spineAnimationState = skeletonAnimation.AnimationState;
             input = new PlayerInput();
             input.Enable();
@@ -195,6 +200,7 @@ namespace oct.ObjectBehaviors
                 j = !grounded;
             }
             behaviourController2d.setBoolVariable("ดฅตุ",true);
+
         }
     }
 }
