@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace codeTesting
+namespace  BehaviorControlling
 {
     public class PlayerInputReciver : MonoBehaviour
     {

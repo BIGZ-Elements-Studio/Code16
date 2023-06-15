@@ -3,11 +3,14 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
-using oct.generatedBehavior;
+using oct.ObjectBehaviors;
 using System.Reflection;
 using System;
-namespace codeTesting
+using Unity.VisualScripting;
+
+namespace BehaviorControlling
 {
+
     public class BehaviorController : Controller
     {
         [SerializeField]
@@ -90,6 +93,11 @@ namespace codeTesting
             targetCode.UnLockState += () => LockState = false;
             CheakCondition();
         }
+
+        private void OnEnable()
+        {
+            CheakCondition();
+        }
         private void changtoState(int index)
         {
             currentState = index;
@@ -123,7 +131,7 @@ namespace codeTesting
         // 设置浮点数类型的条件变量的值
         public bool setFloatVariable(string VariableName, float result)
         {
-            if (enabled) {
+
                 ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
                 if (f != null && f is FloatVariable)
                 {
@@ -136,15 +144,13 @@ namespace codeTesting
                 {
                     return false;
                 }
-            }
+            
             return false;
         }
 
         // 设置布尔类型的条件变量的值
         public bool setBoolVariable(string VariableName, bool result)
         {
-            if (enabled)
-            {
                 ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
                 if (f != null && f is BoolVariable)
                 {
@@ -166,7 +172,7 @@ namespace codeTesting
                 {
                     return false;
                 }
-            }
+            
             return false;
         }
         public void setBoolVariablewNoReturnType(string VariableName, bool result)
@@ -195,6 +201,10 @@ namespace codeTesting
         #region 检查条件
         public void CheakCondition()
         {
+            if (!enabled)
+            {
+                return;
+            }
             // 找到优先级最高的符合所有条件的状态
             int stateBehavior = -1;
             for (int i = 0; i < behaviorObject.stateBehaviors.Count; i++)

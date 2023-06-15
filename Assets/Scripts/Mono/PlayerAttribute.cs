@@ -1,3 +1,4 @@
+using BehaviorControlling;
 using Spine.Unity;
 using System;
 using System.Collections;
@@ -5,8 +6,10 @@ using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using static UnityEngine.Rendering.DebugUI;
+using CombatSystem;
+using Spine;
 
-namespace codeTesting
+namespace oct.ObjectBehaviors
 {
     public class PlayerAttribute : Controller
     {
@@ -22,7 +25,9 @@ namespace codeTesting
         public PlayerInput input;
         Vector3 direction;
         public float speed;
-        public Spine.AnimationState spineAnimationState { get {return skeletonAnimation.AnimationState; } }
+        [SerializeField]
+       public AttackAttributeController attackAttributeController;
+        Spine.AnimationState spineAnimationState { get {return skeletonAnimation.AnimationState; } }
         [SerializeField]BehaviorController behaviourController2d;
         [SerializeField] BehaviorController behaviourController3d;
         public UnityEvent<string, bool> onDashChange;
@@ -53,6 +58,10 @@ namespace codeTesting
         {
             spineAnimationState.SetAnimation(0,s,true);
         }
+        public void SetAnimationTimeScale(float time)
+        {
+            spineAnimationState.TimeScale=time;
+        }
         #endregion
         public void changeMode(bool to2d)
         {
@@ -63,6 +72,11 @@ namespace codeTesting
                 behaviourController2d.storedState = -1;
                 behaviourController2d.CheakCondition();
                 behaviourController2d.setBoolVariable("´¥µØ", grounded);
+                if (!grounded)
+                {
+                  StartCoroutine(  jumpprocess());
+                }
+
             }
             else
             {
@@ -89,7 +103,6 @@ namespace codeTesting
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -98,11 +111,12 @@ namespace codeTesting
 
         private void Awake()
         {
-            
+            flip(true);
+            GameModeController.ModeChangediFTo2D += changeMode;
             //spineAnimationState = skeletonAnimation.AnimationState;
             input = new PlayerInput();
             input.Enable();
-            input.In3d.run.performed += ctx => {  if (isActiveAndEnabled) { direction = ctx.ReadValue<Vector2>(); } };
+            input.In3d.run.performed += ctx => {  if (isActiveAndEnabled) { direction = (ctx.ReadValue<Vector2>()).normalized; } };
                 
         }
         private void FixedUpdate()
@@ -115,13 +129,16 @@ namespace codeTesting
             {
                 faceRight=false;
             }
-            float i = 0;
-            if (!in2d)
-            {
-                i = direction.y * speed;
-            }
             if (UpdateVelocity) {
-                Rigidbody.velocity = new Vector3(direction.x * speed, Rigidbody.velocity.y, i);
+                if (!in2d)
+                {
+                    Rigidbody.velocity = new Vector3(direction.x * speed* attackAttributeController.moveSpeedFactor, Rigidbody.velocity.y, direction.y * speed* attackAttributeController.moveSpeedFactor);
+                }
+                else
+                {
+                    Rigidbody.velocity = new Vector3(direction.x * speed, Rigidbody.velocity.y,0);
+
+                }
             }
         }
 
@@ -139,10 +156,41 @@ namespace codeTesting
         }
         internal void jump(int v)
         {
-            //controller.Move(Vector3.up*5);
             StartCoroutine(jumpprocess());
         }
+        #region ×Óµ¯
+        internal void createBullet(GameObject bulletPrefeb, Transform bulletPosition,float staggerTime)
+        {
+            GameObject g = Instantiate(bulletPrefeb);
+            g.transform.position = bulletPosition.position;
+            Bullet b = g.GetComponent<Bullet>();
+            b.faceRight = faceRight;
+            b.AtkValue = attackAttributeController.Atk;
+            b.critcAtkRate= attackAttributeController.CritcAtkRate;
+            b.critcAtkDamage= attackAttributeController.CritcAtkDamage;
+            b.hit.AddListener((eventValue) =>
+            {
+                Stagger(eventValue, staggerTime);
+            });
 
+        }
+
+        private void Stagger(bool arg0,float time)
+        {
+
+            if (arg0)
+            {
+                StartCoroutine(stopAnimation(time));
+            }
+        }
+        IEnumerator stopAnimation(float time)
+        {
+            skeletonAnimation.timeScale = 0;
+            yield return new WaitForSecondsRealtime(time);
+            skeletonAnimation.timeScale = 1;
+
+        }
+        #endregion
         private IEnumerator jumpprocess()
         {
             bool j=true;
@@ -152,6 +200,7 @@ namespace codeTesting
                 j = !grounded;
             }
             behaviourController2d.setBoolVariable("´¥µØ",true);
+
         }
     }
 }

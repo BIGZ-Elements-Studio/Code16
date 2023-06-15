@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEditor;
-using codeTesting;
-using UnityEditor.TerrainTools;
+using oct.ObjectBehaviors;
 
 [CustomEditor(typeof(PlayerAttribute))]
 public class PlayerAttributeEditor : Editor

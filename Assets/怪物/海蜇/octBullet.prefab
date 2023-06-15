@@ -136715,6 +136715,7 @@ GameObject:
   - component: {fileID: 3218888676842967188}
   - component: {fileID: 6422025310641102554}
   - component: {fileID: 8592444067133524398}
+  - component: {fileID: 6772656874875869896}
   m_Layer: 0
   m_Name: octBullet
   m_TagString: Untagged
@@ -141535,11 +141536,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BasedOnFixedTime: 0
   delay: 1.3
-  last: 4
+  last: 2
   interval: 0.27
   time: 0
   size: {x: 3.4, y: 5.18, z: 3.43}
-  damage: 100
+  damagePercent: 0
+  AtkValue: 0
   critcAtkRate: 100
   critcAtkDamage: 100
   faceRight: 0
@@ -141547,13 +141549,28 @@ MonoBehaviour:
   affectObject: 0
   affectPlayer: 1
   origialPoint: {fileID: 7804326874513800683}
-  ForceMagnitude: 200
+  ForceMagnitude: 15000
   hit:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8592444067133524398}
         m_TargetAssemblyTypeName: CameraMove, Assembly-CSharp
         m_MethodName: shake
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  hitTarget:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6772656874875869896}
+        m_TargetAssemblyTypeName: CombatSystem.addBuff, Assembly-CSharp
+        m_MethodName: Add
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -141578,6 +141595,19 @@ MonoBehaviour:
   shiftVector: {x: 0, y: -0.05}
   time: 0.03
   backTime: 0.05
+--- !u!114 &6772656874875869896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6174904876368261246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98cbb010d4788004085ec05b237e1d9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buffName: Buff1
 --- !u!1 &6174904876436775172
 GameObject:
   m_ObjectHideFlags: 0
@@ -146609,7 +146639,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6174904876868325346}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -2.64, z: 0}
+  m_LocalPosition: {x: 0, y: -2.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

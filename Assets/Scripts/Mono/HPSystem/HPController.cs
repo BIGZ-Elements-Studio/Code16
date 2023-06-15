@@ -9,7 +9,7 @@ namespace CombatSystem
 {
     public class HPController : MonoBehaviour
     {
-        public Type type;
+        public TargetType type;
         public int HP;
         public int baseHP;
         public int MaxHP;
@@ -24,11 +24,12 @@ namespace CombatSystem
         public string hpName;
         public string hitName;
         public bool armor;
-
+        public BuffContainer BuffContainer;
         public UnityEvent< string,float> onPoiseChange;
         public UnityEvent<string,float> onHPChange;
         public UnityEvent<string, bool> onHited;
         public UnityEvent<Vector3> AddedForce;
+
         // Start is called before the first frame update
 
         public void setAremd(string s, bool result)
@@ -69,7 +70,7 @@ namespace CombatSystem
                 }
                 onHPChange?.Invoke(hpName, HP);
                 onPoiseChange?.Invoke(PoiseName, Poise);
-                if (type == Type.enemy) {
+                if (type == TargetType.enemy) {
                     if (damage.Critic)
                     {
                         VisualEffectController.DoDamagePopUp(damage.damage, VisualEffectController.DamagePopUpType.criticDamage, DamagePoint.position);
@@ -80,12 +81,12 @@ namespace CombatSystem
                     }
 
                 }
-                if (type == Type.player)
+                if (type == TargetType.player)
                 {
                     if (damage.damage > 0) {
                         VisualEffectController.DoDamagePopUp(damage.damage, VisualEffectController.DamagePopUpType.damagePlayer, DamagePoint.position);
                     }
-                    else
+                    else if(damage.damage < 0)
                     {
                         VisualEffectController.DoDamagePopUp(damage.damage, VisualEffectController.DamagePopUpType.cure, DamagePoint.position);
                     }

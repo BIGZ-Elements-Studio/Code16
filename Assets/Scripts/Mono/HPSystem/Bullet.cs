@@ -20,7 +20,8 @@ namespace CombatSystem
         public float time;
         public Vector3 size;
         //ÉËº¦ÊýÖµ
-        public int damage;
+        public int damagePercent;
+        public int AtkValue;
         public int critcAtkRate;
         public int critcAtkDamage;
         public bool faceRight;
@@ -30,6 +31,7 @@ namespace CombatSystem
         public Transform origialPoint;
         public float ForceMagnitude;
         public UnityEvent<bool> hit;
+        public UnityEvent<HPController> hitTarget;
         private void Start()
         {
             StartCoroutine(process());
@@ -70,18 +72,18 @@ namespace CombatSystem
                 HPController target = b.GetComponent<HPController>();
                 if (target != null)
                 {
-                    if ((affectEnemy && target.type == Type.enemy) || (affectPlayer && target.type == Type.player) || (affectObject && target.type == Type.other))
+                    if ((affectEnemy && target.type == TargetType.enemy) || (affectPlayer && target.type == TargetType.player) || (affectObject && target.type == TargetType.other))
                 {
                     DamageObject a = DamageObject.GetdamageObject();
                     a.hardness = 10;
                     if (Random.value < critcAtkRate / 100f)
                     {
-                        a.damage = calculateAmount(damage, critcAtkRate, true);
+                        a.damage = calculateAmount(damagePercent*AtkValue/100, critcAtkRate, true);
                         a.Critic = true;
                     }
                     else
                     {
-                        a.damage = calculateAmount(damage, critcAtkRate, false);
+                        a.damage = calculateAmount(damagePercent * AtkValue/100, critcAtkRate, false);
                         a.Critic = false;
                     }
 
@@ -111,6 +113,7 @@ namespace CombatSystem
         {
            
             target.addforce((origialPoint.position- target.transform.position).normalized*-ForceMagnitude);
+            hitTarget?.Invoke(target);
           return  target.Damage(d);
         }
     }

@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-namespace oct.generatedBehavior
+namespace oct.ObjectBehaviors
 {
     public abstract class MoveableControlCoroutine : MonoBehaviour
     {

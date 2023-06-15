@@ -82,13 +82,19 @@ MonoBehaviour:
   interval: 0.1
   time: 0
   size: {x: 3.57, y: 3.44, z: 2.87}
-  damage: 81
+  damagePercent: 50
+  AtkValue: 100
   critcAtkRate: 34
   critcAtkDamage: 75
   faceRight: 0
   affectEnemy: 1
-  affectObject: 0
+  affectObject: 1
   affectPlayer: 0
   origialPoint: {fileID: 3195684264988412996}
-  ForceMagnitude: 400
-  force: {x: 0, y: 0, z: 0}
+  ForceMagnitude: 7000
+  hit:
+    m_PersistentCalls:
+      m_Calls: []
+  hitTarget:
+    m_PersistentCalls:
+      m_Calls: []
