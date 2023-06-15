@@ -2,7 +2,7 @@ using oct.InventorySystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/ PlayerBack")]
 public class PlayerBackpack : ScriptableObject
 {
     private static PlayerBackpack instance;
@@ -18,8 +18,24 @@ public class PlayerBackpack : ScriptableObject
             return instance;
         }
     }
+    public static PlayerBackpack Backpack
+    {
+        get
+        {
+            if (instance == null)
+            {
+                PlayerBackpack[] BackPackData = Resources.FindObjectsOfTypeAll<PlayerBackpack>();
+                if (BackPackData.Length != 1)
+                {
+                    Debug.LogError("背包系统错误，实例数量为：" + BackPackData.Length);
+                }
+                return BackPackData[0];
+            }
+            return instance;
+        }
+    }
 
-    public List<InventoryItem> Items;
+
     public Dictionary<InventoryItem, int> ItemQuantities;
 
     private void OnEnable()
@@ -35,7 +51,6 @@ public class PlayerBackpack : ScriptableObject
         }
         else
         {
-            Items.Add(item);
             ItemQuantities.Add(item, 1);
         }
     }
@@ -47,7 +62,6 @@ public class PlayerBackpack : ScriptableObject
             ItemQuantities[item]--;
             if (ItemQuantities[item] <= 0)
             {
-                Items.Remove(item);
                 ItemQuantities.Remove(item);
             }
         }
