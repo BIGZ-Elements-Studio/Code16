@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class GameModeController : MonoBehaviour
 {
-    private void OnEnable()
-    {
-        BuffTable.icons = Resources.Load<BuffTable>("BuffTable").sprites;
-    }
     public delegate void handler(bool i);
     #region changeD: GameModeController.ModeChangediFTo2D(if 2d)
     public static bool Is2d { get; private set; }

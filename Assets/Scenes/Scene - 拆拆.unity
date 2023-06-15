@@ -2445,6 +2445,7 @@ GameObject:
   - component: {fileID: 1166108489}
   - component: {fileID: 1166108491}
   - component: {fileID: 1166108492}
+  - component: {fileID: 1166108493}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -2504,6 +2505,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53fb044bc9273b4e9ad2b0d31750e77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1166108493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166108488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1959ced07878a94ea25ad62cbb807f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuffTable: {fileID: 11400000, guid: ccab769b4a78b0346a9d6f74746d19a4, type: 2}
+  InventoryItems: {fileID: 11400000, guid: 3538a727cde504144a0b91402c5ff1c8, type: 2}
+  PlayerBackpack: {fileID: 11400000, guid: 24954c71333122a49a81f83b61bf4da3, type: 2}
 --- !u!1 &1171088350
 GameObject:
   m_ObjectHideFlags: 0
