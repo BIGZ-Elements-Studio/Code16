@@ -2517,9 +2517,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1959ced07878a94ea25ad62cbb807f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuffTable: {fileID: 11400000, guid: ccab769b4a78b0346a9d6f74746d19a4, type: 2}
-  InventoryItems: {fileID: 11400000, guid: 3538a727cde504144a0b91402c5ff1c8, type: 2}
-  PlayerBackpack: {fileID: 11400000, guid: 24954c71333122a49a81f83b61bf4da3, type: 2}
+  BuffTable: {fileID: 11400000, guid: 605f7d94b24da244a9f4a17bd54248e7, type: 2}
+  InventoryItems: {fileID: 11400000, guid: a45f75851f4bdb24db7d04782552eecb, type: 2}
+  PlayerBackpack: {fileID: 11400000, guid: c5f4e2525f5a75e43b1a1d643b25b5f6, type: 2}
 --- !u!1 &1171088350
 GameObject:
   m_ObjectHideFlags: 0
