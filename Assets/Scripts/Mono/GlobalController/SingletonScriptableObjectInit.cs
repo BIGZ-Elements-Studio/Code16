@@ -7,8 +7,6 @@ public class SingletonScriptableObjectInit : MonoBehaviour
 {
     [SerializeField]
    BuffTable BuffTable;
-    [SerializeField]
-    InventoryItems InventoryItems;
     [SerializeField]                                                                                                                              
     PlayerBackpack PlayerBackpack;
 }
