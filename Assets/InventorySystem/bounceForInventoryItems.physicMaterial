@@ -6,7 +6,7 @@ PhysicMaterial:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: bounce
+  m_Name: bounceForInventoryItems
   dynamicFriction: 1.73
   staticFriction: 2
   bounciness: 1

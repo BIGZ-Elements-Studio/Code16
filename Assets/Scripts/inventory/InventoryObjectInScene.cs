@@ -6,7 +6,7 @@ namespace oct.InventorySystem {
     public class InventoryObjectInScene : MonoBehaviour
     {
         [SerializeField]
-        SpriteRenderer graphic;
+        MeshRenderer graphic;
         public InventoryItem type;
         int displayedId = -1;
 
@@ -14,7 +14,7 @@ namespace oct.InventorySystem {
         GameObject Obj;
         private void Start()
         {
-            graphic.sprite = type.Icon;
+            graphic.material = type.material;
         }
 
         private void OnTriggerEnter(Collider other)

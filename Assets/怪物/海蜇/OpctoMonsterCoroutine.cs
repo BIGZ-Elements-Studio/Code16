@@ -71,9 +71,9 @@ namespace oct.ObjectBehaviors
             controller.velocity = 0;
             controller.movedirection = controller.Targetdirection;
             controller.SetAnimation(AtkName);
+            yield return new WaitForSeconds(1f);
             GameObject g = Instantiate(BulletPrefeb);
             g.transform.position = new Vector3(controller.target.transform.position.x, 2.68f, controller.target.transform.position.z);
-            yield return new WaitForSeconds(1f);
             lockState(false);
         }
 

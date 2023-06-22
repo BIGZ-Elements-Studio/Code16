@@ -15,4 +15,5 @@ MonoBehaviour:
   itemName: example
   descripton: ffad
   icon: {fileID: 21300000, guid: ada700d3a6a5b904b86001f6185e86a8, type: 3}
+  M: {fileID: 2100000, guid: 218cf996545d3054f80b18d60f542782, type: 2}
   prefeb: {fileID: 0}

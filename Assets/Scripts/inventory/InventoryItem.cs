@@ -14,10 +14,16 @@ namespace oct.InventorySystem
         [SerializeField]
         Sprite icon;
         [SerializeField]
+        Material M;
+        [SerializeField]
         GameObject prefeb;
         public string ItemName
         {
             get { return itemName; }
+        }
+        public Material material
+        {
+            get { return M; }
         }
         public string Descripton
         {

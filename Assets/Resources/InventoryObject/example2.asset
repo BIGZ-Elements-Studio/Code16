@@ -15,4 +15,5 @@ MonoBehaviour:
   itemName: example2
   descripton: ccdcdscds
   icon: {fileID: 21300000, guid: 16afaf2e9fd6c214da9592ee7bc96707, type: 3}
+  M: {fileID: 2100000, guid: 218cf996545d3054f80b18d60f542782, type: 2}
   prefeb: {fileID: 0}
