@@ -48,47 +48,71 @@ public class BehaviorObjectEditor : Editor
   private void DrawStateBehavior(StateBehavior stateBehavior, int index)
 {
     EditorGUILayout.BeginVertical(GUI.skin.box);
-
-    // Show the state behavior name and priority.
-    stateBehavior.stateName = EditorGUILayout.TextField("名称", stateBehavior.stateName);
-    stateBehavior.priority = EditorGUILayout.IntField("优先级", stateBehavior.priority);
-    stateBehavior.allowBufferedInput = EditorGUILayout.Toggle("允许预输入", stateBehavior.allowBufferedInput);
-
-    stateBehavior.AllowReEnterDuringProcess = EditorGUILayout.Toggle("允许重新进入", stateBehavior.AllowReEnterDuringProcess);
-        stateBehavior.effect = EditorGUILayout.Toggle("效果", stateBehavior.effect);
-        // Show the state behavior's conditions.
-        stateBehavior.showConditions = EditorGUILayout.Foldout(stateBehavior.showConditions, "条件");
-    if (stateBehavior.showConditions)
-    {
-        EditorGUI.indentLevel++;
-        for (int i = 0; i < stateBehavior.conditions.Count; i++)
+        
+        // Show the state behavior name and priority.
+        stateBehavior.stateName = EditorGUILayout.TextField("名称", stateBehavior.stateName);
+        stateBehavior.show = EditorGUILayout.Foldout(stateBehavior.show, "show");
+        if (stateBehavior.show)
         {
-            DrawCondition(stateBehavior.conditions[i], i);
-        }
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("bool条件"))
-        {
-            stateBehavior.conditions.Add(new BoolCondition());
-            return;
-        }
-        if (GUILayout.Button("float条件"))
-        {
-            stateBehavior.conditions.Add(new FloatCondition());
-            return;
-        }
-        GUILayout.EndHorizontal();
-        EditorGUI.indentLevel--;
-    }
+            stateBehavior.priority = EditorGUILayout.IntField("优先级", stateBehavior.priority);
+            stateBehavior.allowBufferedInput = EditorGUILayout.Toggle("允许预输入", stateBehavior.allowBufferedInput);
+            stateBehavior.showTags = EditorGUILayout.Foldout(stateBehavior.showTags, "tag");
+            if (stateBehavior.showTags)
+            {
+                EditorGUI.indentLevel++;
+                for (int i = 0; i < stateBehavior.tags.Count; i++)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    stateBehavior.tags[i] = (characterState)EditorGUILayout.EnumPopup(stateBehavior.tags[i]);
+                    if (GUILayout.Button("-"))
+                    {
+                        stateBehavior.tags.RemoveAt(index);
+                        return;
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
+                if (GUILayout.Button("+"))
+                {
+                    stateBehavior.tags.Add(characterState.fly);
+                    return;
+                }
+                EditorGUI.indentLevel--;
+            }
+            stateBehavior.AllowReEnterDuringProcess = EditorGUILayout.Toggle("允许重新进入", stateBehavior.AllowReEnterDuringProcess);
+            stateBehavior.effect = EditorGUILayout.Toggle("效果", stateBehavior.effect);
+            // Show the state behavior's conditions.
+            stateBehavior.showConditions = EditorGUILayout.Foldout(stateBehavior.showConditions, "条件");
+            if (stateBehavior.showConditions)
+            {
+                EditorGUI.indentLevel++;
+                for (int i = 0; i < stateBehavior.conditions.Count; i++)
+                {
+                    DrawCondition(stateBehavior.conditions[i], i);
+                }
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("bool条件"))
+                {
+                    stateBehavior.conditions.Add(new BoolCondition());
+                    return;
+                }
+                if (GUILayout.Button("float条件"))
+                {
+                    stateBehavior.conditions.Add(new FloatCondition());
+                    return;
+                }
+                GUILayout.EndHorizontal();
+                EditorGUI.indentLevel--;
+            }
 
-    // Show the remove state behavior button.
-    if (GUILayout.Button("删除"))
-    {
-        List<StateBehavior> list = new List<StateBehavior>(behaviorObject.stateBehaviors);
-        list.RemoveAt(index);
-        behaviorObject.stateBehaviors = list;
-        return;
-    }
-
+            // Show the remove state behavior button.
+            if (GUILayout.Button("删除"))
+            {
+                List<StateBehavior> list = new List<StateBehavior>(behaviorObject.stateBehaviors);
+                list.RemoveAt(index);
+                behaviorObject.stateBehaviors = list;
+                return;
+            }
+        }
     EditorGUILayout.EndVertical();
 }
     #region DrawCondition
@@ -101,7 +125,6 @@ public class BehaviorObjectEditor : Editor
         GUIStyle style = new GUIStyle(EditorStyles.textField);
         if (behaviorObject.ConditionVariables.Exists(x => x.name == condition.conditionName))
         { 
-            
             condition.conditionName = EditorGUILayout.TextField(condition.conditionName);
         }
         else

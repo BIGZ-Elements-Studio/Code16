@@ -20,6 +20,10 @@ namespace  BehaviorControlling
             inputActions.In3d.dash.canceled += ctx => { controller3d.setBoolVariable("闪避", false); };
             inputActions.In3d.atk.performed += ctx => { controller3d.setBoolVariable("攻击", true); };
             inputActions.In3d.atk.canceled += ctx => { controller3d.setBoolVariable("攻击", false); };
+            inputActions.In3d.skill.performed += ctx => { controller3d.setBoolVariable("技能", true); };
+            inputActions.In3d.skill.canceled += ctx => { controller3d.setBoolVariable("技能", false); };
+            inputActions.In3d.ultraSkill.performed += ctx => { controller3d.setBoolVariable("大招", true); };
+            inputActions.In3d.ultraSkill.canceled += ctx => { controller3d.setBoolVariable("大招", false); };
 
             inputActions.In2d.move.performed += ctx => { controller2d.setBoolVariable("移动", true); };
             inputActions.In2d.move.canceled += ctx => { controller2d.setBoolVariable("移动", false); };
