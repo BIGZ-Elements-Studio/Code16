@@ -13,6 +13,7 @@ namespace BehaviorControlling
 
     public class BehaviorController : Controller
     {
+        public bool log;
         [SerializeField]
         float bufferedInputTime;
         public bool LockState {get{ return _LockState; } set { _LockState = value;if (!value) { stopLock(); } } }
