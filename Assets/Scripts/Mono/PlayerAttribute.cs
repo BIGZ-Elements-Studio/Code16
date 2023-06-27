@@ -172,9 +172,13 @@ namespace oct.ObjectBehaviors
             {
                 Stagger(eventValue, staggerTime);
             });
+            b.gainSp.AddListener((eventValue) =>
+            {
+               attackAttributeController.GainSp(eventValue);
+            });
 
         }
-
+        
         private void Stagger(bool arg0,float time)
         {
 

@@ -13,56 +13,64 @@ MonoBehaviour:
   m_Name: "\u89D2\u82723d\u72B6\u60011"
   m_EditorClassIdentifier: 
   stateBehaviors:
-  - stateName: run
+  - show: 0
+    stateName: run
     priority: 1
     effect: 0
     conditions:
     - rid: 4152961250104442882
-    showConditions: 1
+    tags: 07000000
+    showConditions: 0
+    showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - stateName: dash
+  - show: 0
+    stateName: dash
     priority: 6
     effect: 0
     conditions:
     - rid: 4152961250104442887
     - rid: 4829176287206572044
+    tags: 06000000
     showConditions: 1
+    showTags: 0
     allowBufferedInput: 1
     AllowReEnterDuringProcess: 0
-  - stateName: idle
+  - show: 0
+    stateName: idle
     priority: 0
     effect: 0
     conditions: []
-    showConditions: 1
+    tags: 08000000
+    showConditions: 0
+    showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - stateName: "\u653B\u51FB1"
-    priority: 2
-    effect: 0
-    conditions:
-    - rid: 4152961250104442888
-    showConditions: 1
-    allowBufferedInput: 1
-    AllowReEnterDuringProcess: 1
-  - stateName: E
+  - show: 1
+    stateName: E
     priority: 2
     effect: 0
     conditions:
     - rid: 4152961250104442889
+    tags: 0500000002000000
     showConditions: 1
+    showTags: 0
     allowBufferedInput: 1
     AllowReEnterDuringProcess: 0
-  - stateName: Q
+  - show: 0
+    stateName: Q
     priority: 2
     effect: 0
     conditions:
     - rid: 4152961250104442890
     - rid: 4152961250104442892
+    tags: 0500000002000000
     showConditions: 1
+    showTags: 0
     allowBufferedInput: 1
     AllowReEnterDuringProcess: 0
-  - stateName: "\u6253\u65AD"
+  - show: 0
+    stateName: "\u6253\u65AD"
     priority: 5
     effect: 0
     conditions:
@@ -70,10 +78,13 @@ MonoBehaviour:
     - rid: 4829176287206572033
     - rid: 4829176287206572037
     - rid: 4829176287206572041
-    showConditions: 1
+    tags: 00000000
+    showConditions: 0
+    showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - stateName: "\u51FB\u98DE"
+  - show: 0
+    stateName: "\u51FB\u98DE"
     priority: 6
     effect: 0
     conditions:
@@ -81,17 +92,58 @@ MonoBehaviour:
     - rid: 4829176287206572034
     - rid: 4829176287206572038
     - rid: 4829176287206572042
+    tags: 01000000
     showConditions: 1
+    showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 1
-  - stateName: "\u95EA\u907F\u6210\u529F"
+  - show: 0
+    stateName: "\u95EA\u907F\u6210\u529F"
     priority: 7
     effect: 1
     conditions:
     - rid: 4829176287206572039
     - rid: 4829176287206572040
+    tags: 
     showConditions: 1
+    showTags: 0
     allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - show: 0
+    stateName: "\u653B\u51FB1"
+    priority: 2
+    effect: 0
+    conditions:
+    - rid: 1997685619496321024
+    - rid: 1997685619496321027
+    tags: 0500000003000000
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 1
+    AllowReEnterDuringProcess: 0
+  - show: 0
+    stateName: "\u653B\u51FB2"
+    priority: 2
+    effect: 0
+    conditions:
+    - rid: 1997685619496321026
+    - rid: 1997685619496321028
+    tags: 0500000003000000
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 1
+    AllowReEnterDuringProcess: 0
+  - show: 0
+    stateName: "\u653B\u51FB3"
+    priority: 2
+    effect: 0
+    conditions:
+    - rid: 1997685619496321029
+    - rid: 1997685619496321030
+    tags: 0500000002000000
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 1
     AllowReEnterDuringProcess: 0
   ConditionVariables:
   - rid: 4829176268193267720
@@ -104,9 +156,48 @@ MonoBehaviour:
   - rid: 4829176287206572032
   - rid: 4829176287206572035
   - rid: 4829176287206572036
+  - rid: 1997685619496321025
   references:
     version: 2
     RefIds:
+    - rid: 1997685619496321024
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u653B\u51FB"
+        conditionValue: 1
+    - rid: 1997685619496321025
+      type: {class: FloatVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: combo
+        type: 1
+    - rid: 1997685619496321026
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u653B\u51FB"
+        conditionValue: 1
+    - rid: 1997685619496321027
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: combo
+        conditionValue: 0
+        comparisonType: 0
+    - rid: 1997685619496321028
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: combo
+        conditionValue: 1
+        comparisonType: 0
+    - rid: 1997685619496321029
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: combo
+        conditionValue: 2
+        comparisonType: 0
+    - rid: 1997685619496321030
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u653B\u51FB"
+        conditionValue: 1
     - rid: 4152961250104442882
       type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
       data:
@@ -116,11 +207,6 @@ MonoBehaviour:
       type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
       data:
         conditionName: "\u95EA\u907F"
-        conditionValue: 1
-    - rid: 4152961250104442888
-      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
-      data:
-        conditionName: "\u653B\u51FB"
         conditionValue: 1
     - rid: 4152961250104442889
       type: {class: BoolCondition, ns: , asm: Assembly-CSharp}

@@ -29,7 +29,16 @@ namespace CombatSystem
         public UnityEvent<string,float> onHPChange;
         public UnityEvent<string, bool> onHited;
         public UnityEvent<Vector3> AddedForce;
-
+        [SerializeField]
+        playerAttibutesByGrade attribute;
+        
+        private void setAmount()
+        {
+            baseHP = attribute.baseHP;
+            baseDef = attribute.baseDef;
+            basePoise = attribute.basePoise;
+        }
+        
         // Start is called before the first frame update
 
         public void setAremd(string s, bool result)

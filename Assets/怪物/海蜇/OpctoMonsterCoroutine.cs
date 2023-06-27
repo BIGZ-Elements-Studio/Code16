@@ -3,6 +3,9 @@ using UnityEngine;
 using Spine.Unity;
 using BehaviorControlling;
 using Vector3 = UnityEngine.Vector3;
+using CombatSystem;
+using oct.EnemyMovement;
+
 namespace oct.ObjectBehaviors
 {
     public class OpctoMonsterCoroutine : MoveableControlCoroutine
@@ -12,6 +15,8 @@ namespace oct.ObjectBehaviors
         public float moveSpeed;
         [SerializeField]
         MonsterAttribute controller;
+        [SerializeField]
+        SeekBehaviour behaviorController;
         [SpineAnimation]
         public string AtkName;
 
@@ -31,21 +36,64 @@ namespace oct.ObjectBehaviors
         {
             while (true)
             {
-                yield return new WaitForSeconds(2f);
-                b.setBoolVariable("¹¥»÷", true);
-                yield return null;
-                b.setBoolVariable("¹¥»÷", false);
+                
+                    yield return new WaitForSeconds(Random.value*3+3);
+                if (behaviorController.distance >= 7)
+                {
+                    b.setBoolVariable("¹¥»÷", true);
+                    yield return null;
+                    b.setBoolVariable("¹¥»÷", false);
+                }
             }
         }
         public IEnumerator move()
         {
+            bool d;
             controller.SetAnimation(moveName);
+            if (Random.value > 0.5)
+            {
+                d =true;
+            }
+            else
+            {
+                d=false;
+            }
+            
             while (true)
             {
-                yield return null;
-                controller.velocity = moveSpeed;
-                controller.movedirection = controller.Targetdirection;
 
+                
+                if (behaviorController.distance<15&& behaviorController.distance >7)
+                {
+                    behaviorController.roughness = 5;
+                    behaviorController.maxangle = 90;
+                    float degree = 1-(behaviorController.distance - 7) / (15 - 7);
+                    if (d) {
+                        behaviorController.deflectAngle = degree * 90;
+                    }
+                    else
+                    {
+                        behaviorController.deflectAngle = -degree * 90;
+
+                    }
+                    controller.velocity = moveSpeed;
+                }
+                else if (behaviorController.distance <= 7)
+                {
+                    controller.velocity = moveSpeed;
+                    behaviorController.maxangle = 30;
+                    behaviorController.roughness = 2;
+                    behaviorController.deflectAngle = 180;
+                }
+                else
+                {
+                    behaviorController.roughness = 5;
+                    behaviorController.maxangle = 90;
+                    behaviorController.deflectAngle = 0;
+                    controller.velocity = moveSpeed;
+                }
+                
+                yield return null;
             }
 
         }
@@ -69,43 +117,21 @@ namespace oct.ObjectBehaviors
             yield return null;
             lockState(true);
             controller.velocity = 0;
-            controller.movedirection = controller.Targetdirection;
             controller.SetAnimation(AtkName);
             yield return new WaitForSeconds(1f);
             GameObject g = Instantiate(BulletPrefeb);
-            g.transform.position = new Vector3(controller.target.transform.position.x, 2.68f, controller.target.transform.position.z);
+            g.transform.position = new Vector3(combatController.Player.transform.position.x, 2.68f, combatController.Player.transform.position.z);
             lockState(false);
         }
 
         public IEnumerator Wondering()
         {
+            controller.velocity  = moveSpeed;
             controller.SetAnimation(moveName);
             while (true)
             {
-
-                float speed = (Random.value) * 1.5f + 2;
-                float Totaltime = Random.value + 1;
-                float passedTime = 0;
-                Vector3 perpendicularDirection = new Vector3(controller.movedirection.z, 0f, controller.movedirection.x).normalized;
-                if (Random.value > 0.5)
-                {
-                    perpendicularDirection *= -1;
-                }
-                controller.movedirection = perpendicularDirection;
-                while (Totaltime > passedTime)
-                {
-                    yield return null;
-                    controller.velocity = speed;
-                    passedTime += Time.deltaTime;
-                }
-                controller.velocity = 0;
-                float i = (Random.value - 0.3f) * 1.5f;
-                if (i < 0)
-                {
-                    i = 0;
-                }
-                yield return new WaitForSeconds(i);
-                Debug.Log(i);
+                behaviorController.roughness = 5;
+                behaviorController.maxangle = 360;
             }
         }
     }

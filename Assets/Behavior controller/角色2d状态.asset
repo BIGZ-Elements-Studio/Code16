@@ -18,7 +18,9 @@ MonoBehaviour:
     effect: 0
     conditions:
     - rid: 4829176271431794688
+    tags: 
     showConditions: 1
+    showTags: 1
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
   - stateName: jump
@@ -27,14 +29,18 @@ MonoBehaviour:
     conditions:
     - rid: 4829176271431794690
     - rid: 4829176271431794693
+    tags: 
     showConditions: 1
+    showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
   - stateName: idle
     priority: 0
     effect: 0
     conditions: []
+    tags: 
     showConditions: 1
+    showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
   - stateName: in air
@@ -42,7 +48,9 @@ MonoBehaviour:
     effect: 0
     conditions:
     - rid: 4829176271431794694
+    tags: 
     showConditions: 1
+    showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
   ConditionVariables:

@@ -7,18 +7,21 @@ using oct.ObjectBehaviors;
 using System.Reflection;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.Events;
 
 namespace BehaviorControlling
 {
 
     public class BehaviorController : Controller
     {
+        public List<characterState> characterStates = new List<characterState>();
+
         [SerializeField]
         float bufferedInputTime;
         public bool LockState {get{ return _LockState; } set { _LockState = value;if (!value) { stopLock(); } } }
         [SerializeField]
         bool _LockState;
-
+        public UnityEvent<List<characterState>> statechange;
 
         Coroutine bufferInputProcess;
 
@@ -43,6 +46,7 @@ namespace BehaviorControlling
         //解除锁定后的时候调用
         private void stopLock()
         {
+            
             if (storedState == -1)
             {
                 CheakCondition();
@@ -101,25 +105,28 @@ namespace BehaviorControlling
         private void changtoState(int index)
         {
             currentState = index;
-            Func<IEnumerator> coroutineDelegate = (Func<IEnumerator>)Delegate.CreateDelegate(typeof(Func<IEnumerator>), targetCode, CoroutineList[index]);
-            if (behaviorObject.stateBehaviors[index].effect)
-            {
-                StartCoroutine(coroutineDelegate());
-            }
-          else  if (behaviorObject.stateBehaviors[index].AllowReEnterDuringProcess)
-            {
-                SetState(coroutineDelegate);
-            }
-            else
-            {
-                ChangeState(coroutineDelegate);
+            if (CoroutineList[index] != null && CoroutineList[index]!="") {
+                Func<IEnumerator> coroutineDelegate = (Func<IEnumerator>)Delegate.CreateDelegate(typeof(Func<IEnumerator>), targetCode, CoroutineList[index]);
+                characterStates = behaviorObject.stateBehaviors[index].tags;
+                statechange.Invoke(behaviorObject.stateBehaviors[index].tags);
+                if (behaviorObject.stateBehaviors[index].effect)
+                {
+                    StartCoroutine(coroutineDelegate());
+                }
+                else if (behaviorObject.stateBehaviors[index].AllowReEnterDuringProcess)
+                {
+                    SetState(coroutineDelegate);
+                }
+                else
+                {
+                    ChangeState(coroutineDelegate);
+                }
             }
         }
 
         private IEnumerator bufferInputed()
         {
-            Debug.Log("called");
-            if(bufferInputProcess!= null)
+            if (bufferInputProcess!= null)
             {
                 StopCoroutine(bufferInputProcess);
             }
@@ -131,7 +138,6 @@ namespace BehaviorControlling
         // 设置浮点数类型的条件变量的值
         public bool setFloatVariable(string VariableName, float result)
         {
-
                 ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
                 if (f != null && f is FloatVariable)
                 {
@@ -144,10 +150,16 @@ namespace BehaviorControlling
                 {
                     return false;
                 }
-            
-            return false;
         }
-
+        public void setFloatVariableNoChangeCondition(string VariableName, float result)
+        {
+            ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
+            if (f != null && f is FloatVariable)
+            {
+                int Index = behaviorObject.ConditionVariables.IndexOf(f);
+                varibleValues[Index] = result;
+            }
+        }
         // 设置布尔类型的条件变量的值
         public bool setBoolVariable(string VariableName, bool result)
         {
@@ -164,16 +176,13 @@ namespace BehaviorControlling
                     {
                         varibleValues[Index] = 0;
                     }
-
-                    CheakCondition();
+                CheakCondition();
                     return true;
                 }
                 else
                 {
                     return false;
                 }
-            
-            return false;
         }
         public void setBoolVariablewNoReturnType(string VariableName, bool result)
         {

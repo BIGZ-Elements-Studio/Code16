@@ -23,7 +23,7 @@ public class MainCameraController : MonoBehaviour
     public Vector3 shakeOffset;
     public float Z2d;
     public bool is2D { get; private set; } // 当前是否为2D模式
-
+    private Vector3 velocity = Vector3.zero;
     private void Awake()
     {
         GameModeController.ModeChangediFTo2D += ChangeMode;
@@ -83,7 +83,7 @@ public class MainCameraController : MonoBehaviour
         {
             desiredPosition = new Vector3(desiredPosition.x, desiredPosition. y, Z2d);
         }
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition,ref velocity, smoothSpeed);
 
         // 将相机的位置设置为平滑后的目标位置
         transform.position = smoothedPosition;
