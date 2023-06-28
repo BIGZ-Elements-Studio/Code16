@@ -14,8 +14,10 @@ namespace BehaviorControlling
         public virtual void AddState(Func<IEnumerator> routine)
         {
             currentIEnumerator = routine;
-            stateCoroutine = StartCoroutine(routine());
-            
+            if (gameObject.activeInHierarchy) {
+                Debug.Log("stoped "+gameObject.name+"   "+ routine.Method.Name);
+                stateCoroutine = StartCoroutine(routine());
+            }
         }
 
         public virtual void RemoveState()

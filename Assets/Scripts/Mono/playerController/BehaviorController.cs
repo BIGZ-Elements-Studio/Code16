@@ -1,4 +1,4 @@
-//Õâ¸ö½Å±¾Ö»¸ºÔğÅĞ¶Ï¸ÃÖ´ĞĞÄÄ¸ö×´Ì¬²¢ÇÒµ÷ÓÃ£¬Ê¹ÓÃ·½Ê½Ó¦¸ÃÊÇÁíÒ»¸ö½Å±¾¶ÁÈ¡ÊäÈë£¬ÉèÖÃ¸¡µã/²¼¶ûÊıÀàĞÍµÄÌõ¼ş±äÁ¿µÄÖµ£¬È»ºóÖ´ĞĞ×´Ì¬£¬Âß¼­ºÍanimator²î²»¶à£¬µ«ÊÇ¸üÎª¼ò»¯
+//è¿™ä¸ªè„šæœ¬åªè´Ÿè´£åˆ¤æ–­è¯¥æ‰§è¡Œå“ªä¸ªçŠ¶æ€å¹¶ä¸”è°ƒç”¨ï¼Œä½¿ç”¨æ–¹å¼åº”è¯¥æ˜¯å¦ä¸€ä¸ªè„šæœ¬è¯»å–è¾“å…¥ï¼Œè®¾ç½®æµ®ç‚¹/å¸ƒå°”æ•°ç±»å‹çš„æ¡ä»¶å˜é‡çš„å€¼ï¼Œç„¶åæ‰§è¡ŒçŠ¶æ€ï¼Œé€»è¾‘å’Œanimatorå·®ä¸å¤šï¼Œä½†æ˜¯æ›´ä¸ºç®€åŒ–
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +14,7 @@ namespace BehaviorControlling
 
     public class BehaviorController : Controller
     {
+        public bool log;
         public List<characterState> characterStates = new List<characterState>();
 
         [SerializeField]
@@ -36,14 +37,14 @@ namespace BehaviorControlling
 
         [SerializeField]
      //   PlayerAttribute PlayerController;
-        //¿ÉÒÔ°ÑÕâ¸ö¸Ä³Éstring»¹ÊÇdeleagate»¹ÊÇÊ²Ã´µÄ£¬·´Õı°ÑmethodºÍ¶ÔÓ¦µÄ×´Ì¬°ó¶¨¾ÍĞĞ
+        //å¯ä»¥æŠŠè¿™ä¸ªæ”¹æˆstringè¿˜æ˜¯deleagateè¿˜æ˜¯ä»€ä¹ˆçš„ï¼Œåæ­£æŠŠmethodå’Œå¯¹åº”çš„çŠ¶æ€ç»‘å®šå°±è¡Œ
         public MoveableControlCoroutine targetCode;
         [HideInInspector]
         public List<string> CoroutineList = new List<string>();
         [HideInInspector]
         public List<float> varibleValues = new List<float>();
 
-        //½â³ıËø¶¨ºóµÄÊ±ºòµ÷ÓÃ
+        //è§£é™¤é”å®šåçš„æ—¶å€™è°ƒç”¨
         private void stopLock()
         {
             
@@ -134,8 +135,8 @@ namespace BehaviorControlling
             _storedState = -1;
         }
 
-        #region ÉèÖÃ±äÁ¿
-        // ÉèÖÃ¸¡µãÊıÀàĞÍµÄÌõ¼ş±äÁ¿µÄÖµ
+        #region è®¾ç½®å˜é‡
+        // è®¾ç½®æµ®ç‚¹æ•°ç±»å‹çš„æ¡ä»¶å˜é‡çš„å€¼
         public bool setFloatVariable(string VariableName, float result)
         {
                 ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
@@ -160,7 +161,7 @@ namespace BehaviorControlling
                 varibleValues[Index] = result;
             }
         }
-        // ÉèÖÃ²¼¶ûÀàĞÍµÄÌõ¼ş±äÁ¿µÄÖµ
+        // è®¾ç½®å¸ƒå°”ç±»å‹çš„æ¡ä»¶å˜é‡çš„å€¼
         public bool setBoolVariable(string VariableName, bool result)
         {
                 ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
@@ -204,17 +205,17 @@ namespace BehaviorControlling
             setBoolVariable(target, !result);
         }
         #endregion
-        // ¼ì²éÌõ¼şÊÇ·ñÂú×ã
+        // æ£€æŸ¥æ¡ä»¶æ˜¯å¦æ»¡è¶³
 
-        // ¼ì²éÌõ¼ş²¢ÇĞ»»×´Ì¬
-        #region ¼ì²éÌõ¼ş
+        // æ£€æŸ¥æ¡ä»¶å¹¶åˆ‡æ¢çŠ¶æ€
+        #region æ£€æŸ¥æ¡ä»¶
         public void CheakCondition()
         {
             if (!enabled)
             {
                 return;
             }
-            // ÕÒµ½ÓÅÏÈ¼¶×î¸ßµÄ·ûºÏËùÓĞÌõ¼şµÄ×´Ì¬
+            // æ‰¾åˆ°ä¼˜å…ˆçº§æœ€é«˜çš„ç¬¦åˆæ‰€æœ‰æ¡ä»¶çš„çŠ¶æ€
             int stateBehavior = -1;
             for (int i = 0; i < behaviorObject.stateBehaviors.Count; i++)
             {
@@ -238,8 +239,8 @@ namespace BehaviorControlling
                 }
             }
 
-            // Èç¹ûÕÒµ½ÁË×´Ì¬£¬Ö´ĞĞÆä¶ÔÓ¦µÄĞĞÎª
-            //¸ü¸ÄÕâÒ»¿éµÄÊµÏÖ·½Ê½À´Æ¥ÅäÖ÷³ÌµÄaddstate£¨¡°¡±£©Ä£Ê½
+            // å¦‚æœæ‰¾åˆ°äº†çŠ¶æ€ï¼Œæ‰§è¡Œå…¶å¯¹åº”çš„è¡Œä¸º
+            //æ›´æ”¹è¿™ä¸€å—çš„å®ç°æ–¹å¼æ¥åŒ¹é…ä¸»ç¨‹çš„addstateï¼ˆâ€œâ€ï¼‰æ¨¡å¼
             if (stateBehavior != -1)
             {
 
