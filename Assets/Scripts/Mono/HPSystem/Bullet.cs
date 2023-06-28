@@ -24,6 +24,7 @@ namespace CombatSystem
         public int AtkValue;
         public int critcAtkRate;
         public int critcAtkDamage;
+        public int Sp;
         public bool faceRight;
         public bool affectEnemy;
         public bool affectObject;
@@ -31,6 +32,7 @@ namespace CombatSystem
         public Transform origialPoint;
         public float ForceMagnitude;
         public UnityEvent<bool> hit;
+        public UnityEvent<int> gainSp;
         public UnityEvent<HPController> hitTarget;
         private void Start()
         {
@@ -87,11 +89,18 @@ namespace CombatSystem
                         a.Critic = false;
                     }
 
-                        Hit= Hit|| DamageTarget(target, a);
+                        if (DamageTarget(target, a))
+                        {
+                            Hit = true;
+                        }
                         i += 1;
                     }
                 }
                 
+            }
+            if (Hit)
+            {
+                gainSp?.Invoke(Sp);
             }
             hit?.Invoke(Hit);
         }

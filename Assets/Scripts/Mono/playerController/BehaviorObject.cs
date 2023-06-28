@@ -63,14 +63,17 @@ using UnityEngine;
     [System.Serializable]
     public class StateBehavior
     {
+        public bool show;
         public string stateName; // 状态名
         public int priority;// 优先级
         public bool effect;//不是一个状态，独立于状态轴外触发的效果
         [SerializeField]
         [SerializeReference]
         public List<Condition> conditions; // 条件列表，用于存储不同条件
-
+        [SerializeField]
+        public List<characterState> tags;
         public bool showConditions; // 是否显示条件
+        public bool showTags;
         public bool allowBufferedInput;
         public bool AllowReEnterDuringProcess;
         public StateBehavior()
@@ -127,4 +130,9 @@ using UnityEngine;
             Smaller
         }
     }
+
+public enum characterState
+{
+    stun,fly,smash,hit,bow,nearAtk,dash,move,idle
+}
 

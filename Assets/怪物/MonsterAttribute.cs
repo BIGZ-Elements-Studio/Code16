@@ -2,16 +2,15 @@ using CombatSystem;
 using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MonsterAttribute : MonoBehaviour
 {
-    public Transform target;
     public HPController HPcontroller;
     public Rigidbody rb;
-    public Vector3 Targetdirection { get { Vector3 direction = (target.transform.position - transform.position); return new Vector3(direction.x, 0, direction.z).normalized; }  }
     [SerializeField]
     public SkeletonAnimation skeletonAnimation;
     public Spine.AnimationState spineAnimationState { get { return skeletonAnimation.AnimationState; } }
@@ -20,8 +19,14 @@ public class MonsterAttribute : MonoBehaviour
     public float velocity;
     public bool controlVelocity;
     // Update is called once per frame
+
+    public void setmovedirection(Vector3 v)
+    {
+        movedirection = v;
+    }
     private void flip(bool toright)
     {
+        StartCoroutine(lockProcess());
         if (toright)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -31,22 +36,34 @@ public class MonsterAttribute : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
+    private void Awake()
+    {
+        controlVelocity = true;
+    }
     private void Update()
     {
-        if (movedirection.x>0.05)
-        {
-            flip(false);
-        }
-       else if (movedirection.x < 0.05)
-        {
-            flip(true);
+        if (allowFlip) {
+            if (movedirection.x > 0.05)
+            {
+                flip(false);
+            }
+            else if (movedirection.x < 0.05)
+            {
+                flip(true);
+            }
         }
         if (controlVelocity) {
             rb.velocity = (movedirection * velocity);
         }
         
     }
-
+    bool allowFlip=true;
+    IEnumerator lockProcess()
+    {
+        allowFlip = false;
+        yield return new WaitForSecondsRealtime(0.5f);
+        allowFlip = true;
+    }
     public void SetAnimation(string s)
     {
         spineAnimationState.SetAnimation(0, s, true);

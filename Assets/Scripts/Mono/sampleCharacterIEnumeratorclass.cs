@@ -5,6 +5,7 @@ using Spine.Unity;
 using System;
 using Unity.Burst.Intrinsics;
 using CombatSystem;
+using UnityEngine.Events;
 
 namespace oct.ObjectBehaviors
 {
@@ -17,15 +18,9 @@ namespace oct.ObjectBehaviors
         PlayerAttribute PlayerControllerr;
        public float speed;
         [SpineAnimation]
-      public  string runa;
+        public  string runa;
         [SpineAnimation]
         public string idleb;
-        [SpineAnimation]
-        public string atkc;
-        [SpineAnimation]
-        public string atkD;
-        [SpineAnimation]
-        public string atkE;
         [SpineAnimation]
         public string stun;
         [SpineAnimation]
@@ -34,11 +29,45 @@ namespace oct.ObjectBehaviors
         public string dashname;
         [SpineAnimation]
         public string dashSuccessfulName;
+        [SpineAnimation]
+        public string atk1;
+        [SerializeField]
+        private float atk1Distance;
+        [SerializeField]
+        private float[] atk1time;
+        [SpineAnimation]
+        public string atk2;
+        [SerializeField]
+        private float atk2Distance;
+        [SpineAnimation]
+        public string atk3;
+        [SerializeField]
+        private float atk3Distance;
         public GameObject bulletPrefeb;
+        public GameObject boostBullet;
         public Transform bulletPosition;
-        public int combo;
 
+        [SpineAnimation]
+        public string skillAnimation;
+        [SerializeField]
+        public GameObject skillBullet;
+        [SerializeField]
+        public float skillDuration;
+
+        [SpineAnimation]
+        public string UltraAnimation;
+        [SerializeField]
+        public GameObject UltraBullet;
+        [SerializeField]
+        public float UltraDuration;
+        public int combo { get; private set; }
+        private int _combo;
         public Vector3 flydirection;
+        [SerializeField]
+        UnityEvent<string, float> onComboChange;
+
+
+        private bool boost;
        public void SetFly(Vector3 vector3)
         {
             flydirection=vector3;
@@ -67,46 +96,126 @@ namespace oct.ObjectBehaviors
             
         }
         #region 普通攻击
-        public IEnumerator hit()
+
+        public IEnumerator hit1()
         {
-            PlayerControllerr.SetAnimationTimeScale(1);
-            if (canceling!=null)
+            if (canceling != null)
             {
                 StopCoroutine(canceling);
             }
-            if (combo<3)
+            lockState(true);
+
+            yield return new WaitForSecondsRealtime(atk1time[0]);
+            combo += 1;
+            onComboChange?.Invoke("combo", combo);
+            PlayerControllerr.speed = atk1Distance/(atk1time[1] * Time.timeScale);
+            PlayerControllerr.SetAnimation(atk1);
+
+            yield return new WaitForSecondsRealtime(atk1time[1]);
+            if (!boost)
             {
-                combo += 1;
+                PlayerControllerr.createBullet(bulletPrefeb, bulletPosition, 0.07f);
             }
             else
             {
-                combo = 1;
+                PlayerControllerr.createBullet(boostBullet, bulletPosition, 0.07f);
             }
-            PlayerControllerr.speed = 0;
-            if (combo==1) {
-                PlayerControllerr.SetAnimation(atkc);
-            }else if (combo == 2)
-            {
-                PlayerControllerr.SetAnimation(atkD);
-            }
-            else if (combo == 3)
-            {
-                PlayerControllerr.SetAnimation(atkE);
-            }
-            yield return null;
-            PlayerControllerr.createBullet(bulletPrefeb, bulletPosition,0.1f);
-            lockState(true);
-                yield return new WaitForSeconds(1f);
-            lockState(false);
-            canceling= StartCoroutine(cancelCombo());
 
+            PlayerControllerr.speed =  (0);
+            yield return new WaitForSecondsRealtime(1);
+
+            canceling = StartCoroutine(cancelCombo());
+            lockState(false);
         }
+        public IEnumerator hit2()
+        {
+            if (canceling != null)
+            {
+                StopCoroutine(canceling);
+            }
+            lockState(true);
+            combo += 1;
+            onComboChange?.Invoke("combo", combo);
+            float time = 0.7f;
+            PlayerControllerr.speed = atk2Distance / (time * Time.timeScale);
+            PlayerControllerr.SetAnimation(atk2);
+            
+            yield return new WaitForSecondsRealtime(time);
+            if (!boost)
+            {
+                PlayerControllerr.createBullet(bulletPrefeb, bulletPosition, 0.07f);
+            }
+            else
+            {
+                PlayerControllerr.createBullet(boostBullet, bulletPosition, 0.07f);
+            }
+            canceling = StartCoroutine(cancelCombo());
+            lockState(false);
+        }
+        public IEnumerator hit3()
+        {
+            if (canceling != null)
+            {
+                StopCoroutine(canceling);
+            }
+            lockState(true);
+            combo = 0;
+            onComboChange?.Invoke("combo", combo);
+            float time = 0.7f;
+            PlayerControllerr.speed = atk3Distance / (time * Time.timeScale);
+            PlayerControllerr.SetAnimation(atk3);
+
+            yield return new WaitForSecondsRealtime(time);
+            if (!boost)
+            {
+                PlayerControllerr.createBullet(bulletPrefeb, bulletPosition, 0.07f);
+            }
+            else
+            {
+                PlayerControllerr.createBullet(boostBullet, bulletPosition, 0.07f);
+            }
+            lockState(false);
+        }
+
         Coroutine canceling;
         
         IEnumerator cancelCombo()
         {
             yield return new WaitForSecondsRealtime(1);
-            combo=0;
+            combo =0;
+            onComboChange?.Invoke("combo", combo);
+        }
+        #endregion
+        #region 技能
+        public IEnumerator E()
+        {
+            lockState(true);
+            PlayerControllerr.speed = 0;
+            PlayerControllerr.SetAnimation(skillAnimation);
+            PlayerControllerr.createBullet(skillBullet, bulletPosition, 0.07f);
+            yield return new WaitForSecondsRealtime(skillDuration);
+            lockState(false);
+
+        }
+
+        public IEnumerator ultraSkill()
+        {
+            lockState(true);
+            PlayerControllerr.attackAttributeController.GainSp(-70);
+            PlayerControllerr.speed = 0;
+            PlayerControllerr.SetAnimation(UltraAnimation);
+            PlayerControllerr.createBullet(UltraBullet, bulletPosition, 0.07f);
+            StartCoroutine(boostProcess());
+            yield return new WaitForSecondsRealtime(UltraDuration);
+            lockState(false);
+
+        }
+
+        private IEnumerator boostProcess()
+        {
+            boost = true;
+            yield return new WaitForSecondsRealtime(10f);
+            boost = false;
         }
         #endregion
         #region 打断
@@ -198,7 +307,6 @@ namespace oct.ObjectBehaviors
             PlayerControllerr.SetAnimationTimeScale(1);
             if (dashEffect) {
                 yield return null;
-                Debug.Log("!!!!!!!!!!!!!!!!");
                 dashEffect=false;
             }
             
