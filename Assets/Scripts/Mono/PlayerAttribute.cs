@@ -26,17 +26,14 @@ namespace oct.ObjectBehaviors
         Vector3 direction;
         public float speed;
         [SerializeField]
-       public AttackAttributeController attackAttributeController;
+       public IndividualProperty property;
         Spine.AnimationState spineAnimationState { get {return skeletonAnimation.AnimationState; } }
-        [SerializeField]BehaviorController behaviourController2d;
         [SerializeField] BehaviorController behaviourController3d;
         public UnityEvent<string, bool> onDashChange;
         public UnityEvent<string, bool> onAmored;
         public UnityEvent<bool> Amored;
         public int combo;
-        public bool in2d { get { return _in2d; }set { if (_in2d!=value) { changeMode(value); } } }
-
-        private bool _in2d;
+        public bool in2d;
         public bool faceRight { get { return _faceRight; } set { if (_faceRight != value) { _faceRight = value; flip(value); } } }
         private bool _faceRight;
 
@@ -58,32 +55,15 @@ namespace oct.ObjectBehaviors
         {
             spineAnimationState.SetAnimation(0,s,true);
         }
+        public void SetAnimationNoRepeate(string s)
+        {
+            spineAnimationState.SetAnimation(0, s, false);
+        }
         public void SetAnimationTimeScale(float time)
         {
             spineAnimationState.TimeScale=time;
         }
         #endregion
-        public void changeMode(bool to2d)
-        {
-            behaviourController2d.enabled = to2d;
-            behaviourController3d.enabled = !to2d;
-            _in2d = to2d;
-            if (to2d) {
-                behaviourController2d.storedState = -1;
-                behaviourController2d.CheakCondition();
-                behaviourController2d.setBoolVariable("触地", grounded);
-                if (!grounded)
-                {
-                  StartCoroutine(  jumpprocess());
-                }
-
-            }
-            else
-            {
-                behaviourController3d.storedState = -1;
-                behaviourController3d.LockState = false;
-            }
-        }
 
         public bool isGrounded()
         {
@@ -112,27 +92,38 @@ namespace oct.ObjectBehaviors
         private void Awake()
         {
             flip(true);
-            GameModeController.ModeChangediFTo2D += changeMode;
             //spineAnimationState = skeletonAnimation.AnimationState;
             input = new PlayerInput();
             input.Enable();
             input.In3d.run.performed += ctx => {  if (isActiveAndEnabled) { direction = (ctx.ReadValue<Vector2>()).normalized; } };
                 
         }
+        private void OnEnable()
+        {
+            if (input!=null) {
+                input.Enable();
+            }
+            direction = Vector3.zero;
+        }
+        private void OnDisable()
+        {
+            input.Disable();
+        }
+
         private void FixedUpdate()
         {
             if (direction.x > 0)
             {
                 faceRight=true;
             }
-            else if (direction.x < 0)
+            else if (direction.x <0)
             {
                 faceRight=false;
             }
             if (UpdateVelocity) {
                 if (!in2d)
                 {
-                    Rigidbody.velocity = new Vector3(direction.x * speed* attackAttributeController.moveSpeedFactor, Rigidbody.velocity.y, direction.y * speed* attackAttributeController.moveSpeedFactor);
+                    Rigidbody.velocity = new Vector3(direction.x * speed* property.moveSpeedFactor, Rigidbody.velocity.y, direction.y * speed* property.moveSpeedFactor);
                 }
                 else
                 {
@@ -154,10 +145,6 @@ namespace oct.ObjectBehaviors
                 graphic.transform.rotation = Quaternion.Euler(0, 180, 0);
             }
         }
-        internal void jump(int v)
-        {
-            StartCoroutine(jumpprocess());
-        }
         #region 子弹
         internal void createBullet(GameObject bulletPrefeb, Transform bulletPosition,float staggerTime)
         {
@@ -165,16 +152,16 @@ namespace oct.ObjectBehaviors
             g.transform.position = bulletPosition.position;
             Bullet b = g.GetComponent<Bullet>();
             b.faceRight = faceRight;
-            b.AtkValue = attackAttributeController.Atk;
-            b.critcAtkRate= attackAttributeController.CritcAtkRate;
-            b.critcAtkDamage= attackAttributeController.CritcAtkDamage;
+            b.AtkValue = property.actualAtk;
+            b.critcAtkRate= property.actualCritcRate;
+            b.critcAtkDamage= property.actualCritcDamage;
             b.hit.AddListener((eventValue) =>
             {
                 Stagger(eventValue, staggerTime);
             });
             b.gainSp.AddListener((eventValue) =>
             {
-               attackAttributeController.GainSp(eventValue);
+               property.GainSp(eventValue);
             });
 
         }
@@ -195,16 +182,5 @@ namespace oct.ObjectBehaviors
 
         }
         #endregion
-        private IEnumerator jumpprocess()
-        {
-            bool j=true;
-            behaviourController2d.setBoolVariable("触地", false);
-            while (j){
-                yield return new WaitForFixedUpdate();
-                j = !grounded;
-            }
-            behaviourController2d.setBoolVariable("触地",true);
-
-        }
     }
 }

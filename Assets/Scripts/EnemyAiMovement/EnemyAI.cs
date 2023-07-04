@@ -1,4 +1,5 @@
 using CombatSystem;
+using CombatSystem.map;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,7 +38,6 @@ namespace oct.EnemyMovement
             aiData.obstacles = blockInfo.allColliders.ToArray();
             aiData.currentTarget = combatController.Player.transform;
 
-            aiData.targets =new List<Transform>();
             aiData.targets.Add(combatController.Player.transform);
         }
         private void setDirection()

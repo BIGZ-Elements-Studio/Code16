@@ -19,14 +19,14 @@ namespace oct.InventorySystem {
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.GetComponent<PlayerPickUp>() != null)
+            if (other.gameObject.GetComponent<playerSettings>() != null)
             {
                 displayedId=InventoryItemList.ShowItem(type,this);
             }
         }
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.GetComponent<PlayerPickUp>() != null)
+            if (other.gameObject.GetComponent<playerSettings>() != null)
             {
                 InventoryItemList.RemoveItem(displayedId);
                 displayedId = -1;

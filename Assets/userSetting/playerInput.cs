@@ -69,7 +69,16 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""id"": ""c75da0f7-5951-47ef-ad43-9aef2d2a1c32"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap(duration=0.2)"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""holdatk"",
+                    ""type"": ""Button"",
+                    ""id"": ""e96c9a28-d7e6-45b1-a28e-c213302d4402"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=0.2,pressPoint=0.5)"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -170,6 +179,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""atk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3b7c0b02-cbcc-41b3-8153-78304e6bf533"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""holdatk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -288,6 +308,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_In3d_ultraSkill = m_In3d.FindAction("ultraSkill", throwIfNotFound: true);
         m_In3d_dash = m_In3d.FindAction("dash", throwIfNotFound: true);
         m_In3d_atk = m_In3d.FindAction("atk", throwIfNotFound: true);
+        m_In3d_holdatk = m_In3d.FindAction("holdatk", throwIfNotFound: true);
         // In2d
         m_In2d = asset.FindActionMap("In2d", throwIfNotFound: true);
         m_In2d_move = m_In2d.FindAction("move", throwIfNotFound: true);
@@ -358,6 +379,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_In3d_ultraSkill;
     private readonly InputAction m_In3d_dash;
     private readonly InputAction m_In3d_atk;
+    private readonly InputAction m_In3d_holdatk;
     public struct In3dActions
     {
         private @PlayerInput m_Wrapper;
@@ -367,6 +389,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @ultraSkill => m_Wrapper.m_In3d_ultraSkill;
         public InputAction @dash => m_Wrapper.m_In3d_dash;
         public InputAction @atk => m_Wrapper.m_In3d_atk;
+        public InputAction @holdatk => m_Wrapper.m_In3d_holdatk;
         public InputActionMap Get() { return m_Wrapper.m_In3d; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -391,6 +414,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @atk.started += instance.OnAtk;
             @atk.performed += instance.OnAtk;
             @atk.canceled += instance.OnAtk;
+            @holdatk.started += instance.OnHoldatk;
+            @holdatk.performed += instance.OnHoldatk;
+            @holdatk.canceled += instance.OnHoldatk;
         }
 
         private void UnregisterCallbacks(IIn3dActions instance)
@@ -410,6 +436,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @atk.started -= instance.OnAtk;
             @atk.performed -= instance.OnAtk;
             @atk.canceled -= instance.OnAtk;
+            @holdatk.started -= instance.OnHoldatk;
+            @holdatk.performed -= instance.OnHoldatk;
+            @holdatk.canceled -= instance.OnHoldatk;
         }
 
         public void RemoveCallbacks(IIn3dActions instance)
@@ -488,6 +517,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnUltraSkill(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnAtk(InputAction.CallbackContext context);
+        void OnHoldatk(InputAction.CallbackContext context);
     }
     public interface IIn2dActions
     {

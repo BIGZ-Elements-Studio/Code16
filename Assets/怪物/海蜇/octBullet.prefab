@@ -141534,22 +141534,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c70ffcc9fa78d55438f5e13c8ba8a74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: 3
   BasedOnFixedTime: 0
   delay: 1.3
   last: 2
   interval: 0.27
   time: 0
   size: {x: 3.4, y: 5.18, z: 3.43}
-  damagePercent: 0
-  AtkValue: 0
+  damagePercent: 95
+  AtkValue: 51
   critcAtkRate: 100
   critcAtkDamage: 100
+  Sp: 0
   faceRight: 0
   affectEnemy: 0
   affectObject: 0
   affectPlayer: 1
   origialPoint: {fileID: 7804326874513800683}
-  ForceMagnitude: 15000
+  ForceMagnitude: 20000
   hit:
     m_PersistentCalls:
       m_Calls:
@@ -141565,6 +141567,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  gainSp:
+    m_PersistentCalls:
+      m_Calls: []
   hitTarget:
     m_PersistentCalls:
       m_Calls:

@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f72162fa6ac53b7459d691e3669d110c, type: 3}
   m_Name: "\u89D2\u8272\u9762\u677F\u4FE1\u606F"
   m_EditorClassIdentifier: 
+  multipler: 1
   level: 1
-  _baseHp: 100
+  _baseHp: 1000
   _baseDef: 100
-  _basePoise: 100
+  _basePoise: 40
   _baseAtk: 100
   _baseCritcAtkRate: 20
   _baseCritcAtkDamage: 30

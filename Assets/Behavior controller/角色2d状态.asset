@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: "\u89D2\u82722d\u72B6\u6001"
   m_EditorClassIdentifier: 
   stateBehaviors:
-  - stateName: move
+  - show: 0
+    stateName: move
     priority: 1
     effect: 0
     conditions:
@@ -23,18 +24,21 @@ MonoBehaviour:
     showTags: 1
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - stateName: jump
+  - show: 1
+    stateName: jump
     priority: 3
     effect: 0
     conditions:
     - rid: 4829176271431794690
     - rid: 4829176271431794693
+    - rid: 1997685770680795141
     tags: 
     showConditions: 1
     showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - stateName: idle
+  - show: 0
+    stateName: idle
     priority: 0
     effect: 0
     conditions: []
@@ -43,7 +47,8 @@ MonoBehaviour:
     showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - stateName: in air
+  - show: 1
+    stateName: in air
     priority: 2
     effect: 0
     conditions:
@@ -57,9 +62,20 @@ MonoBehaviour:
   - rid: 4829176270802386944
   - rid: 4829176270802386945
   - rid: 4829176271431794691
+  - rid: 1997685770680795140
   references:
     version: 2
     RefIds:
+    - rid: 1997685770680795140
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u5141\u8BB8\u98DE\u884C"
+        type: 0
+    - rid: 1997685770680795141
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u5141\u8BB8\u98DE\u884C"
+        conditionValue: 1
     - rid: 4829176270802386944
       type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
       data:

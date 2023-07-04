@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class MonsterAttribute : MonoBehaviour
 {
-    public HPController HPcontroller;
+   // public HPController HPcontroller;
     public Rigidbody rb;
     [SerializeField]
     public SkeletonAnimation skeletonAnimation;
@@ -53,7 +53,7 @@ public class MonsterAttribute : MonoBehaviour
             }
         }
         if (controlVelocity) {
-            rb.velocity = (movedirection * velocity);
+            rb.velocity =new Vector3((movedirection * velocity).x,rb.velocity.y, (movedirection * velocity).z);
         }
         
     }

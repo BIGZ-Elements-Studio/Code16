@@ -6,9 +6,11 @@ namespace CombatSystem
     public class combatController : MonoBehaviour
     {
         [SerializeField]
-        private GameObject player;
+        private GameObject player { get { return team.CurrentCharacter.gameObject; } }
         [SerializeField]
-        private List<characterState> characterStates=new List<characterState>();
+        private playerTeamController team;
+        public static List<Transform> allEnemyTargets { get { List<Transform> a = new List<Transform>(); a.Add(Instance.player.transform);return a; } }
+        private List<characterState> characterStates { get { return team.characterStates; } }
         public static List<characterState> CharacterStates
         {
             get { return Instance.characterStates; }
@@ -34,15 +36,6 @@ namespace CombatSystem
             {
                return Instance.player;
             }
-        }
-
-        public static void setState(List<characterState> states)
-        {
-            if (instance == null)
-            {
-                instance = FindFirstObjectByType<combatController>();
-            }
-            instance.characterStates = states;
         }
     }
 }

@@ -46,7 +46,7 @@ MonoBehaviour:
     showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - show: 1
+  - show: 0
     stateName: E
     priority: 2
     effect: 0
@@ -79,7 +79,7 @@ MonoBehaviour:
     - rid: 4829176287206572037
     - rid: 4829176287206572041
     tags: 00000000
-    showConditions: 0
+    showConditions: 1
     showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
@@ -141,9 +141,45 @@ MonoBehaviour:
     - rid: 1997685619496321029
     - rid: 1997685619496321030
     tags: 0500000002000000
-    showConditions: 1
+    showConditions: 0
     showTags: 0
     allowBufferedInput: 1
+    AllowReEnterDuringProcess: 0
+  - show: 1
+    stateName: "\u84C4\u529B\u4E2D"
+    priority: 3
+    effect: 0
+    conditions:
+    - rid: 7910368267162353667
+    - rid: 7910368267162353668
+    tags: 
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - show: 0
+    stateName: "\u84C4\u529B\u653B\u51FB"
+    priority: 2
+    effect: 0
+    conditions:
+    - rid: 7910368269409714177
+    - rid: 7910368285030612993
+    tags: 
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - show: 1
+    stateName: "\u84C4\u529B\u653B\u51FB2"
+    priority: 2
+    effect: 0
+    conditions:
+    - rid: 7910368285030612995
+    - rid: 7910368285030612996
+    tags: 
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
   ConditionVariables:
   - rid: 4829176268193267720
@@ -157,6 +193,9 @@ MonoBehaviour:
   - rid: 4829176287206572035
   - rid: 4829176287206572036
   - rid: 1997685619496321025
+  - rid: 7910368267162353665
+  - rid: 7910368269409714176
+  - rid: 7910368285030612992
   references:
     version: 2
     RefIds:
@@ -331,3 +370,51 @@ MonoBehaviour:
       data:
         conditionName: "\u88AB\u6253"
         conditionValue: 0
+    - rid: 7910368267162353665
+      type: {class: FloatVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u6309\u4F4F\u653B\u51FB"
+        type: 1
+    - rid: 7910368267162353667
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u6309\u4F4F\u653B\u51FB"
+        conditionValue: 0.3
+        comparisonType: 1
+    - rid: 7910368267162353668
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u6309\u4F4F\u653B\u51FB"
+        conditionValue: 3
+        comparisonType: 2
+    - rid: 7910368269409714176
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u84C4\u529B\u7ED3\u675F"
+        type: 0
+    - rid: 7910368269409714177
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u84C4\u529B\u7ED3\u675F"
+        conditionValue: 1
+    - rid: 7910368285030612992
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u84C4\u529B\u8D85\u65F6"
+        type: 0
+    - rid: 7910368285030612993
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u6309\u4F4F\u653B\u51FB"
+        conditionValue: 0.1
+        comparisonType: 2
+    - rid: 7910368285030612995
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u84C4\u529B\u7ED3\u675F"
+        conditionValue: 1
+    - rid: 7910368285030612996
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u84C4\u529B\u8D85\u65F6"
+        conditionValue: 1

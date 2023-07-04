@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "角色面板信息", menuName = "角色面板")]
 public class playerAttibutesByGrade : ScriptableObject
 {
-    int multipler;
+   public int multipler=1;
     public int level;
     public int baseHP {
         get

@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c70ffcc9fa78d55438f5e13c8ba8a74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: 1
   BasedOnFixedTime: 0
   delay: 0.24
   last: 0.27
@@ -140,7 +141,7 @@ MonoBehaviour:
   AtkValue: 100
   critcAtkRate: 100
   critcAtkDamage: 150
-  Sp: 20
+  Sp: 5
   faceRight: 0
   affectEnemy: 1
   affectObject: 1

@@ -94,8 +94,8 @@ namespace BehaviorControlling
         }        
         private void Start()
         {
-            targetCode.LockState += () => LockState=true;
-            targetCode.UnLockState += () => LockState = false;
+            targetCode.LockState += () => { LockState = true; };
+            targetCode.UnLockState += () => { LockState = false; };
             CheakCondition();
         }
 
@@ -105,7 +105,6 @@ namespace BehaviorControlling
         }
         private void changtoState(int index)
         {
-            currentState = index;
             if (CoroutineList[index] != null && CoroutineList[index]!="") {
                 Func<IEnumerator> coroutineDelegate = (Func<IEnumerator>)Delegate.CreateDelegate(typeof(Func<IEnumerator>), targetCode, CoroutineList[index]);
                 characterStates = behaviorObject.stateBehaviors[index].tags;
@@ -116,11 +115,17 @@ namespace BehaviorControlling
                 }
                 else if (behaviorObject.stateBehaviors[index].AllowReEnterDuringProcess)
                 {
-                    SetState(coroutineDelegate);
+                    if (SetState(coroutineDelegate)){
+                        Debug.Log(1);
+                        currentState = index;
+                    }
                 }
                 else
                 {
-                    ChangeState(coroutineDelegate);
+                    if (ChangeState(coroutineDelegate))
+                    {
+                        currentState = index;
+                    }
                 }
             }
         }
@@ -139,7 +144,7 @@ namespace BehaviorControlling
         // 设置浮点数类型的条件变量的值
         public bool setFloatVariable(string VariableName, float result)
         {
-                ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
+            ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
                 if (f != null && f is FloatVariable)
                 {
                     int Index = behaviorObject.ConditionVariables.IndexOf(f);
@@ -164,7 +169,7 @@ namespace BehaviorControlling
         // 设置布尔类型的条件变量的值
         public bool setBoolVariable(string VariableName, bool result)
         {
-                ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
+            ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
                 if (f != null && f is BoolVariable)
                 {
                     int Index = behaviorObject.ConditionVariables.IndexOf(f);
@@ -201,8 +206,8 @@ namespace BehaviorControlling
         IEnumerator Process(string target, bool result)
         {
             setBoolVariable(target, result);
-            yield return null;
-            setBoolVariable(target, !result);
+          
+            setBoolVariable(target, !result);  yield return null;
         }
         #endregion
         // 检查条件是否满足
