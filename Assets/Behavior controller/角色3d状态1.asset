@@ -83,7 +83,7 @@ MonoBehaviour:
     showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - show: 0
+  - show: 1
     stateName: "\u51FB\u98DE"
     priority: 6
     effect: 0

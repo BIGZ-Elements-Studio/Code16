@@ -10,10 +10,14 @@ public class SimpleAtkPoint : MonoBehaviour, DamageTarget
     public CombatColor CombatColor;
     public Transform center;
     public UnityEvent<string, bool> onHited;
+    public UnityEvent<float> HitRemainHp;
     public UnityEvent<Vector3> AddedForce;
     [SerializeField] string hitName;
     public bool armor;
     public bool returnAfterHit;
+   public float maxHp;
+    float currentHp;
+    bool useHardness;
     public void addBuff(CharacterBuff buff)
     {
     }
@@ -27,10 +31,21 @@ public class SimpleAtkPoint : MonoBehaviour, DamageTarget
 
     public bool Damage(DamageObject damage, CombatColor damageColor)
     {
+        if (!useHardness) {
+            currentHp -= damage.damage;
+        }
+        else
+        {
+            currentHp -= damage.hardness;
+        }
+        HitRemainHp?.Invoke(currentHp);
         onHited.Invoke(hitName, true);
         return returnAfterHit;
     }
-
+    private void Awake()
+    {
+        currentHp=maxHp;
+    }
     public void DamageByPercent(int percent, CombatColor damageColor)
     {
         onHited.Invoke(hitName, true);

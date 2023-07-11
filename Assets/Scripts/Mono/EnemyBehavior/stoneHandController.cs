@@ -1,3 +1,4 @@
+using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,16 @@ namespace CombatSystem.boss.stoneperson
         public MeshRenderer rd;
        public BoxCollider BoxCollider;
         public Transform skill1APosition;
+        public Transform spawnStonePosition;
+        public SkeletonAnimation skeletonAnimation;
+        Spine.AnimationState spineAnimationState { get { return skeletonAnimation.AnimationState; } }
+        [SpineAnimation]
+       public string skill1;
+        [SpineAnimation]
+        public string idleAnimation;
+        [SpineAnimation]
+        public string skill2Animation;
+        public GameObject stonePrefab;
         public IEnumerator skill1A()
         {
             followCharacter = false;
@@ -28,22 +39,45 @@ namespace CombatSystem.boss.stoneperson
             BoxCollider.enabled = true;
             //setAnimation
         }
+       public Vector3 offsetPosition;
+        public IEnumerator skill2()
+        {
+            followCharacter = false;
+            rd.enabled = true;
+            BoxCollider.enabled = false;
+            yield return new WaitForFixedUpdate();
+            spineAnimationState.SetAnimation(0, skill2Animation, false);
+            currentPosion = player.position+ offsetPosition;
+            GameObject g= Instantiate(stonePrefab);
+            g.SetActive(true);
+            yield return new WaitForSeconds(0.56f);
+
+            //make stone, 
+
+            
+            //throw
+
+            //setAnimation
+        }
         public IEnumerator skill1B()
         {
-            //´ËÊ±Ê¯¾ŞÈËÓÒÊÖ»áËæ×ÅÍæ¼Ò½ÇÉ«µÄÒÆ¶¯¶ø»Î¶¯£¬1.5ÃëºóÍê³ÉË÷µĞ£¬ÔÒÏòÄ¿Ç°Ëø¶¨µÄÎ»ÖÃ£¬
+            //æ­¤æ—¶çŸ³å·¨äººå³æ‰‹ä¼šéšç€ç©å®¶è§’è‰²çš„ç§»åŠ¨è€Œæ™ƒåŠ¨ï¼Œ1.5ç§’åå®Œæˆç´¢æ•Œï¼Œç ¸å‘ç›®å‰é”å®šçš„ä½ç½®ï¼Œ
+            spineAnimationState.SetAnimation(0, idleAnimation, false);
+            yield return null;
             rd.enabled = true;
             currentHeight = skill1BHeight;
             followCharacter = true; 
             yield return new WaitForSeconds(1.5f);
 
-            //Ë÷µĞÍê³É
+            //ç´¢æ•Œå®Œæˆ
             followCharacter = false;
             currentPosion= Self.transform.position;
             damagecircle.transform.position = new Vector3(Self.transform.position.x, 0, Self.transform.position.z);
             damagecircle.SetActive(true);
             damagecircle.GetComponent<damageCircle>().time = 1f;
-
             yield return new WaitForSeconds(0.2f);
+
+            spineAnimationState.SetAnimation(0, skill1, false);
             float time = 0.25f;
             float movePosition = (skill1BHeight- normalHeight) / (time / Time.fixedDeltaTime);
             BoxBullet.active();
@@ -64,14 +98,14 @@ namespace CombatSystem.boss.stoneperson
         }
         private void Start()
         {
-           // StartCoroutine(trything());
+            StartCoroutine(trything());
         }
         public IEnumerator trything()
         {
             while (true)
             {
                 yield return new WaitForSeconds(5f);
-                StartCoroutine(skill1B());
+                StartCoroutine(skill2());
             }
         }
 

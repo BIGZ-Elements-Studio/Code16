@@ -77,9 +77,10 @@ public class SphereBullet : MonoBehaviour
                 }
 
                 DamageTarget(target, a);
+                hit?.Invoke(true);
             }
         }
-        hit?.Invoke(true);
+
     }
     private int calculateAmount(int damage, int critcAtkDamage, bool critcAtk)
     {

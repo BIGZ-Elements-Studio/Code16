@@ -15,6 +15,8 @@ namespace oct.ObjectBehaviors
     {
         [SerializeField]
        public SkeletonAnimation skeletonAnimation;
+
+        Spine.AnimationState spineAnimationState { get { return skeletonAnimation.AnimationState; } }
         [SerializeField]
         public GameObject DamageBox;
         [SerializeField]
@@ -26,8 +28,7 @@ namespace oct.ObjectBehaviors
         Vector3 direction;
         public float speed;
         [SerializeField]
-       public IndividualProperty property;
-        Spine.AnimationState spineAnimationState { get {return skeletonAnimation.AnimationState; } }
+        public IndividualProperty property;
         [SerializeField] BehaviorController behaviourController3d;
         public UnityEvent<string, bool> onDashChange;
         public UnityEvent<string, bool> onAmored;
@@ -49,6 +50,7 @@ namespace oct.ObjectBehaviors
         public void dash(bool i)
         {
             onAmored?.Invoke("∞‘ÃÂ", i);
+            Amored.Invoke(i);
             onDashChange?.Invoke("…¡±‹÷–",i);
         }
         public void SetAnimation(string s)

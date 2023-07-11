@@ -8,6 +8,7 @@ using System.Reflection;
 using System;
 using Unity.VisualScripting;
 using UnityEngine.Events;
+using static UnityEngine.GraphicsBuffer;
 
 namespace BehaviorControlling
 {
@@ -109,14 +110,13 @@ namespace BehaviorControlling
                 Func<IEnumerator> coroutineDelegate = (Func<IEnumerator>)Delegate.CreateDelegate(typeof(Func<IEnumerator>), targetCode, CoroutineList[index]);
                 characterStates = behaviorObject.stateBehaviors[index].tags;
                 statechange.Invoke(behaviorObject.stateBehaviors[index].tags);
-                if (behaviorObject.stateBehaviors[index].effect)
+              /*  if (behaviorObject.stateBehaviors[index].effect)
                 {
                     StartCoroutine(coroutineDelegate());
                 }
-                else if (behaviorObject.stateBehaviors[index].AllowReEnterDuringProcess)
+                else*/ if (behaviorObject.stateBehaviors[index].AllowReEnterDuringProcess)
                 {
                     if (SetState(coroutineDelegate)){
-                        Debug.Log(1);
                         currentState = index;
                     }
                 }
@@ -169,6 +169,10 @@ namespace BehaviorControlling
         // 设置布尔类型的条件变量的值
         public bool setBoolVariable(string VariableName, bool result)
         {
+            if (VariableName == "被打")
+            {
+                Debug.Log(result);
+            }
             ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
                 if (f != null && f is BoolVariable)
                 {
@@ -201,7 +205,10 @@ namespace BehaviorControlling
 
         public void changeBoolForFrame(string target, bool result)
         {
-            StartCoroutine(Process( target,  result));
+            setBoolVariable(target, result);
+
+            setBoolVariable(target, !result);
+            //StartCoroutine(Process( target,  result));
         }
         IEnumerator Process(string target, bool result)
         {

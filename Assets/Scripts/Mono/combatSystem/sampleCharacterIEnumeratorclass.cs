@@ -31,6 +31,8 @@ namespace oct.ObjectBehaviors
         [SpineAnimation]
         public string dashname;
         [SpineAnimation]
+        public string dashname2;
+        [SpineAnimation]
         public string dashSuccessfulName;
         [SpineAnimation]
         public string atk1;
@@ -137,13 +139,14 @@ namespace oct.ObjectBehaviors
                 StopCoroutine(canceling);
             }
             lockState(true);
-            yield return new WaitForSecondsRealtime(atk1time[0]);
+            PlayerControllerr.SetAnimationTimeScale(PlayerControllerr.property.AtkSpeed);
+            yield return new WaitForSecondsRealtime(atk1time[0]/ PlayerControllerr.property.AtkSpeed);
             combo += 1;
             onComboChange?.Invoke("combo", combo);
             PlayerControllerr.speed = atk1Distance/(atk1time[1] * Time.timeScale);
             PlayerControllerr.SetAnimationNoRepeate(atk1);
 
-            yield return new WaitForSecondsRealtime(atk1time[1]);
+            yield return new WaitForSecondsRealtime(atk1time[1] / PlayerControllerr.property.AtkSpeed);
             if (!boost)
             {
                 PlayerControllerr.createBullet(bulletPrefeb, bulletPosition, 0.07f);
@@ -154,7 +157,7 @@ namespace oct.ObjectBehaviors
             }
 
             PlayerControllerr.speed =  (0);
-            yield return new WaitForSecondsRealtime(atk1time[2]);
+            yield return new WaitForSecondsRealtime(atk1time[2] / PlayerControllerr.property.AtkSpeed);
             canceling = StartCoroutine(cancelCombo());
             lockState(false);
         }
@@ -165,13 +168,14 @@ namespace oct.ObjectBehaviors
                 StopCoroutine(canceling);
             }
             lockState(true);
+            PlayerControllerr.SetAnimationTimeScale(PlayerControllerr.property.AtkSpeed);
             combo += 1;
             onComboChange?.Invoke("combo", combo);
             float time = 0.3f;
             PlayerControllerr.speed = atk2Distance / (time * Time.timeScale);
             PlayerControllerr.SetAnimationNoRepeate(atk2);
             
-            yield return new WaitForSecondsRealtime(time);
+            yield return new WaitForSecondsRealtime(time / PlayerControllerr.property.AtkSpeed);
             if (!boost)
             {
                 PlayerControllerr.createBullet(bulletPrefeb, bulletPosition, 0.07f);
@@ -180,7 +184,7 @@ namespace oct.ObjectBehaviors
             {
                 PlayerControllerr.createBullet(boostBullet, bulletPosition, 0.07f);
             }
-            yield return new WaitForSecondsRealtime(0.7f-time);
+            yield return new WaitForSecondsRealtime((0.7f-time) / PlayerControllerr.property.AtkSpeed);
             canceling = StartCoroutine(cancelCombo());
             lockState(false);
         }
@@ -191,6 +195,7 @@ namespace oct.ObjectBehaviors
                 StopCoroutine(canceling);
             }
             lockState(true);
+            PlayerControllerr.SetAnimationTimeScale(PlayerControllerr.property.AtkSpeed);
             combo = 0;
             onComboChange?.Invoke("combo", combo);
             float time = 0.3f;
@@ -254,13 +259,14 @@ namespace oct.ObjectBehaviors
         #region ´ò¶Ï
         public IEnumerator disrupt()
         {
+            Debug.Log("?");
             PlayerControllerr.SetAnimationTimeScale(1);
             lockState(true);
             PlayerControllerr.speed = 0;
-            PlayerControllerr.SetAnimation(stun);
+            PlayerControllerr.SetAnimationNoRepeate(stun);
             PlayerControllerr.UpdateVelocity = false;
             yield return new WaitForFixedUpdate();
-            PlayerControllerr.Rigidbody.AddForce(flydirection/2);
+            PlayerControllerr.Rigidbody.AddForce(new Vector3( flydirection.x / 2,0,  flydirection.z/2));
             float time = 0;
             while (time < 0.2 || !PlayerControllerr.grounded)
             {
@@ -274,6 +280,7 @@ namespace oct.ObjectBehaviors
 
         public IEnumerator fly()
         {
+            Debug.Log("???");
             PlayerControllerr.SetAnimationTimeScale(1);
             lockState(true);
             PlayerControllerr.speed = 0;
@@ -311,34 +318,49 @@ namespace oct.ObjectBehaviors
             yield return null;
             float time=0;
             PlayerControllerr.speed = 0;
-            Vector3 target = new Vector3(5,0,0);
+            Vector3 target = new Vector3(-5,0,0);
             if (PlayerControllerr.faceRight)
             {
                 target = target * -1;
             }
-            PlayerControllerr.SetAnimation(dashname);
+            PlayerControllerr.SetAnimationNoRepeate(dashname);
+            HitForDash=false;
             PlayerControllerr.dash(true);
-            while (time < 0.3)
+            while (time < 0.1)
             {
                 yield return null;
                 time += Time.unscaledDeltaTime;
                 PlayerControllerr.positionBox.transform.localPosition = Vector3.Lerp(Vector3.zero, target,time/0.3f);
             }
+            PlayerControllerr.SetAnimationNoRepeate(dashname2);
+            while (time < 0.3)
+            {
+                yield return null;
+                time += Time.unscaledDeltaTime;
+                PlayerControllerr.positionBox.transform.localPosition = Vector3.Lerp(Vector3.zero, target, time / 0.3f);
+            }
             PlayerControllerr.DamageBox.transform.position = PlayerControllerr.positionBox.transform.position;
             PlayerControllerr.positionBox.transform.localPosition = Vector3.zero;
             PlayerControllerr.dash(false);
-            if (!dashEffect)
+            if (HitForDash)
             {
+                Debug.Log("Successful");
                 PlayerControllerr.SetAnimation(dashSuccessfulName);
             }
+
             yield return new WaitForSecondsRealtime(0.3f);
             lockState(false);
         }
-
-
+        public bool HitForDash;
+        public void setHitForDash()
+        {
+            Debug.Log("!!");
+            HitForDash = true;
+        }
 
         public IEnumerator successfulDash()
         {
+            Debug.Log("called");
             PlayerControllerr.SetAnimationTimeScale(1);
             if (dashEffect) {
                 yield return null;

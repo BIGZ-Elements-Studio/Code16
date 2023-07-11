@@ -47,6 +47,8 @@ namespace CombatSystem {
         {
             get { return Container.def; }
         }
+
+        public float AtkSpeed;
         private void Start()
         {
             currentsp = 0;
@@ -73,7 +75,10 @@ namespace CombatSystem {
             onSpChange?.Invoke(spName, currentsp);
             onSpChangeWithMaxSp.Invoke(MaxSp, currentsp);
         }
+        void arm(bool b)
+        {
 
+        }
         public void gainColor(int amount )
         {
             colorBar+=amount;
