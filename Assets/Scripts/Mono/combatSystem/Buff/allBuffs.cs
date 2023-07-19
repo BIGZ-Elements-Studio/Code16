@@ -71,6 +71,8 @@ namespace CombatSystem {
             }
         }
     }
+
+   
     public class BuffFactory
     {
         public static CharacterBuff CreateBuff(string buffType)

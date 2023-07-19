@@ -24,7 +24,7 @@ MonoBehaviour:
     showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - show: 0
+  - show: 1
     stateName: dash
     priority: 6
     effect: 0
@@ -34,7 +34,7 @@ MonoBehaviour:
     tags: 06000000
     showConditions: 1
     showTags: 0
-    allowBufferedInput: 1
+    allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
   - show: 0
     stateName: idle

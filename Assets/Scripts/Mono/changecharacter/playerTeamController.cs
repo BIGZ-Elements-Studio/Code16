@@ -10,10 +10,11 @@ public class playerTeamController : MonoBehaviour
     public List<GameObject> prefab=new List<GameObject>();
     public List<PlayerInTeam> playerInTeams = new List<PlayerInTeam>();
     public PlayerInTeam Chara2d;
+    public UnityEvent<int> CharacterChanged;
     [SerializeField]
     private int CurrentCharacterIndex;
     public bool allowChange=true;
-    public PlayerInTeam CurrentCharacter { get { return playerInTeams[CurrentCharacterIndex]; } }
+    public PlayerInTeam CurrentCharacter { get { if (GameModeController.Is2d) { return Chara2d; } return playerInTeams[CurrentCharacterIndex]; } }
     public List<characterState> characterStates { get { return playerInTeams[CurrentCharacterIndex].characterStates; } }
     #region Ui
     public UnityEvent<int, int> onSpChangeWithMaxSp;
@@ -39,6 +40,7 @@ public class playerTeamController : MonoBehaviour
         onSpChangeWithMaxSp?.Invoke(playerInTeams[index].properties.MaxSp, playerInTeams[index].properties.currentsp);
         onColorChangeWithMaxColor.Invoke(10,playerInTeams[index].properties.colorBar);
         CurrentCharacterIndex =index;
+        CharacterChanged?.Invoke(index);
     }
 
     void invokeChangeSp(int maxSp, int current)
@@ -56,7 +58,7 @@ public class playerTeamController : MonoBehaviour
         {
             team.ActiveCharacter(false, team.position,true);
         }
-        swtichCharacter(1);
+        swtichCharacter(0);
         GameModeController.ModeChangediFTo2D += changeMode;
     }
 

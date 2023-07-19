@@ -2,7 +2,6 @@ using oct.InventorySystem;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class InventoryItemButton : MonoBehaviour
 {

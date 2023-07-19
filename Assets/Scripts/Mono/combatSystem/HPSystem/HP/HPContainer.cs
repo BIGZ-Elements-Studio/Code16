@@ -5,12 +5,13 @@ using UnityEngine.Events;
 
 namespace CombatSystem
 {
-    public class HPContainer : MonoBehaviour,DamageTarget
+    public class HPContainer : MonoBehaviour
     {
         public TargetType type;
         public CombatColor color;
         public int HP;
         public int baseHP;
+        public int ShieldAmount;
         public int MaxHP { get { return baseHP; } }
 
         public int def { get { return baseDef; } }
@@ -24,6 +25,7 @@ namespace CombatSystem
         public UnityEvent<string, float> onHPChange;
         public UnityEvent<string, bool> onHited;
         public UnityEvent<int, int> onHPChangeWithMaxHP;
+        public UnityEvent shieldBreak;
 
         [SerializeField]
         playerAttibutesByGrade attribute;
@@ -68,6 +70,17 @@ namespace CombatSystem
         // Method to apply damage to HP
         public (int, bool) SelfDamage(DamageObject damage)
         {
+            int remainingDamage = damage.damage - ShieldAmount;
+            if (ShieldAmount!=0&& remainingDamage<=0)
+            {
+                //damage can be shieldSystem;
+                ShieldAmount -= damage.damage;
+                return (0, false);
+            }
+            shieldBreak?.Invoke();
+            damage.damage = remainingDamage;
+            ShieldAmount = 0;
+            
             onHited.Invoke(hitName, true);
             if (!armor)
             {

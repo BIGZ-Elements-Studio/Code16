@@ -10,6 +10,7 @@ public class SimpleAtkPoint : MonoBehaviour, DamageTarget
     public CombatColor CombatColor;
     public Transform center;
     public UnityEvent<string, bool> onHited;
+    public UnityEvent ReciveHit;
     public UnityEvent<float> HitRemainHp;
     public UnityEvent<Vector3> AddedForce;
     [SerializeField] string hitName;
@@ -39,6 +40,7 @@ public class SimpleAtkPoint : MonoBehaviour, DamageTarget
             currentHp -= damage.hardness;
         }
         HitRemainHp?.Invoke(currentHp);
+        ReciveHit?.Invoke();
         onHited.Invoke(hitName, true);
         return returnAfterHit;
     }

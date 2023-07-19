@@ -22,9 +22,8 @@ public class SphereBullet : MonoBehaviour
     public bool affectPlayer;
     public Transform origialPoint;
     public float ForceMagnitude;
+    public int hardness;
        public UnityEvent<bool> hit;
-    // public UnityEvent<int> gainSp;
-    //  public UnityEvent<DamageTarget> hitTarget;
     public bool actived;
     private void OnTriggerEnter(Collider other)
     {
@@ -55,7 +54,6 @@ public class SphereBullet : MonoBehaviour
     {
         actived = false;
     }
-
     void damage(DamageTarget target)
     {
         if (target != null)
@@ -64,7 +62,7 @@ public class SphereBullet : MonoBehaviour
             if ((affectEnemy && target.getType() == TargetType.enemy) || (affectPlayer && target.getType() == TargetType.player) || (affectObject && target.getType() == TargetType.other))
             {
                 DamageObject a = DamageObject.GetdamageObject();
-                a.hardness = 10;
+                a.hardness = hardness;
                 if (Random.value < critcAtkRate / 100f)
                 {
                     a.damage = calculateAmount(damagePercent * AtkValue / 100, critcAtkRate, true);

@@ -140,6 +140,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""72e04621-3ea4-45de-aaf4-05251f83a458"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""ff7de394-179e-455d-83e6-1a36831ad739"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",

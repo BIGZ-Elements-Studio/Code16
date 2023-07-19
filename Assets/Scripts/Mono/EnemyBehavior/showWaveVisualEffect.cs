@@ -7,7 +7,7 @@ public class showWaveVisualEffect : MonoBehaviour
 {
     [SerializeField]
     LayerMask obsticle;
-    Renderer r;
+   public Renderer r;
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other)
     {

@@ -35,6 +35,9 @@ namespace CombatSystem
         public UnityEvent<bool> hit;
         public UnityEvent<int> gainSp;
         public UnityEvent<DamageTarget> hitTarget;
+
+        [SerializeField]
+        GameObject bulletObject;
         private void Start()
         {
             StartCoroutine(process());
@@ -61,7 +64,7 @@ namespace CombatSystem
                 totalTimePassed += Time.deltaTime;
             }
             yield return new WaitForSeconds(last);
-            Destroy(gameObject);
+            Destroy(bulletObject);
 
         }
 

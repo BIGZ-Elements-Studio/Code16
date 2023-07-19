@@ -23,6 +23,8 @@ public class stoneShockWave : MonoBehaviour
     [SerializeField]
     ParticleSystem particleSystem;
     public List<showWaveVisualEffect> things;
+
+    public GameObject self;
     private void OnEnable()
     {
         particleSystem.Play();
@@ -49,6 +51,7 @@ public class stoneShockWave : MonoBehaviour
             currentTime+=Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
+        Destroy(self);
     }
 
     private void OnTriggerEnter(Collider other)

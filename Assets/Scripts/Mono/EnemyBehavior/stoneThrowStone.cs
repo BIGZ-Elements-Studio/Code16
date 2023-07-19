@@ -1,21 +1,20 @@
-using CombatSystem;
-using Mono.Cecil.Cil;
-using Spine.Unity;
+using CombatSystem;using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.Events;
 
 public class stoneThrowStone : MonoBehaviour
 {
     public GameObject target { get { return combatController.Player; } }
     public GameObject flipTarget;
+    public GameObject self;
+    public Rigidbody selfrb;
     public Transform initialPosition;
    public SphereBullet bullet;
     
     public BoneFollower handFollower;
     Coroutine come;
-    Coroutine flipCoroutine;
     public SkeletonAnimation skeletonAnimation;
     Spine.AnimationState spineAnimationState { get { return skeletonAnimation.AnimationState; } }
     [SpineAnimation]
@@ -24,13 +23,31 @@ public class stoneThrowStone : MonoBehaviour
     public string idle;
     bool Hitable;
    public Transform thisTramsform;
+    public LayerMask groundLayer;
+    public List<Rigidbody> bodies;
+    public float magnitude;
+   public UnityEvent breakStone;
+    public void StoneBreak()
+    {
+        Hitable = false;
+        StopAllCoroutines();
+        spineAnimationState.SetAnimation(0, breakAnimation, true);
+        foreach (var body in bodies)
+        {
+            body.isKinematic = false;
+            body.useGravity = true;
+            body.velocity=((new Vector3(Random.Range(-3,3), Random.Range(2, 5),0))*magnitude);
+        }
+        breakStone?.Invoke();
+        DistoryAfterSeconds.Destroy(self, 0.5f);
+    }
+    public float spinspeed;
     public IEnumerator process()
     {
+        
         handFollower.enabled = true;
-        spineAnimationState.SetAnimation(0,idle,true);
-        Debug.Log(1);
+        //spineAnimationState.SetAnimation(0,idle,true);
         yield return new WaitForSeconds(0.6f);
-        Debug.Log(2);
         Vector3 distance = target.transform.position - thisTramsform.position;
         Hitable =true;
         bullet.affectPlayer = true;
@@ -50,13 +67,18 @@ public class stoneThrowStone : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         yield return new WaitForSeconds(0.5f);
-        Destroy(gameObject);
+        Destroy(self);
     }
 
     private void Awake()
     {
-        //    bullet.active();
-        come= StartCoroutine(process());
+        selfrb.maxAngularVelocity = 50;
+        spineAnimationState.SetAnimation(0, idle, true);
+        come = StartCoroutine(process());
+    }
+    private void FixedUpdate()
+    {
+        selfrb.angularVelocity = new Vector3(0, 0, 1) * spinspeed;
     }
     public void release()
     {
@@ -67,8 +89,14 @@ public class stoneThrowStone : MonoBehaviour
     public void HitPlayer(bool i)
     {
         Hitable =false;
-        spineAnimationState.SetAnimation(0,breakAnimation,false);
-        DistoryAfterSeconds.Destroy(gameObject,0.5f);
+        StoneBreak();
+    }
+    public void HitGround(Collider other)
+    {
+        if(groundLayer == (groundLayer | (1 << other.gameObject.layer))){
+            Debug.Log(other.gameObject.name);
+            StoneBreak();
+        }
     }
     public IEnumerator flipProcess()
     {
@@ -99,6 +127,6 @@ public class stoneThrowStone : MonoBehaviour
         {
             StopCoroutine(come);
         }
-        flipCoroutine = StartCoroutine(flipProcess());
+        StartCoroutine(flipProcess());
     }
 }

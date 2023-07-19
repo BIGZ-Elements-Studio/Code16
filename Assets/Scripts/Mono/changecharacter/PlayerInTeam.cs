@@ -13,6 +13,8 @@ public class PlayerInTeam : MonoBehaviour
     BehaviorController controller;
     [SerializeField]
     PlayerAttribute a;
+    [SerializeField]
+   public Transform ActualTransform;
     public IndividualProperty properties;
     public bool faceright;
    public void ActiveCharacter(bool active,Vector3 TargetPosition,bool TofaceRight)

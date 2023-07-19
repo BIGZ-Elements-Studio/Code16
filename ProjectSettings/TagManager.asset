@@ -42,3 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: groundEffect
+    uniqueID: 3365846407
+    locked: 0
+  - name: objectsInScene
+    uniqueID: 2371130485
+    locked: 0

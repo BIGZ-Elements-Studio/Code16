@@ -13,35 +13,47 @@ MonoBehaviour:
   m_Name: "\u6D77\u8707"
   m_EditorClassIdentifier: 
   stateBehaviors:
-  - stateName: "\u8FFD\u8E2A"
+  - show: 0
+    stateName: "\u8FFD\u8E2A"
     priority: 1
     effect: 0
     conditions:
     - rid: 4829176296471789573
+    tags: 
     showConditions: 1
+    showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - stateName: "\u653B\u51FB"
+  - show: 0
+    stateName: "\u653B\u51FB"
     priority: 1
     effect: 0
     conditions:
     - rid: 4829176296471789571
+    tags: 
     showConditions: 1
+    showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - stateName: idle
+  - show: 0
+    stateName: idle
     priority: 0
     effect: 0
     conditions: []
+    tags: 
     showConditions: 0
+    showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - stateName: "\u6253\u98DE"
+  - show: 0
+    stateName: "\u6253\u98DE"
     priority: 2
     effect: 0
     conditions:
     - rid: 4829176302386282497
+    tags: 
     showConditions: 1
+    showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
   ConditionVariables:

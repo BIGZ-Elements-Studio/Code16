@@ -1,0 +1,85 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Unity.Mathematics;
+using Random = UnityEngine.Random;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+public class RandonBreak : MonoBehaviour
+{
+    public List<Rigidbody> rigidbodies;
+    public List<Vector3> position;
+    public List<Vector3> scale;
+    public List<quaternion> Rotation;
+    public Vector3 RangeMax;
+    public Vector3 RangeMin;
+    public void addRb()
+    {
+        rigidbodies = new List<Rigidbody>();
+        position = new List<Vector3>();
+        scale = new List<Vector3>();
+        Rotation = new List<quaternion>();
+        // Recursively go through all child GameObjects and add Rigidbody if there isn't any
+        RecursiveAddRigidbody(transform);
+    }
+
+    private void RecursiveAddRigidbody(Transform parent)
+    {
+        Debug.Log("called");
+       
+        foreach (Transform child in parent)
+        {
+            Debug.Log(child.name);
+            if (child.GetComponent<Rigidbody>() != null)
+            {
+                rigidbodies.Add (child.GetComponent<Rigidbody>()) ;
+                position.Add(child.position);
+                scale.Add(child.localScale);
+                Rotation.Add(child.rotation);
+
+            }
+
+            // Check the children of this child
+            if (child.childCount > 0)
+            {
+                RecursiveAddRigidbody(child);
+            }
+        }
+    }
+
+   public void BreakLeaf()
+    {
+        // Give a random force by the range to all rigidbodies
+        foreach (Rigidbody rb in rigidbodies)
+        {
+            Vector3 force = new Vector3(Random.Range(RangeMin.x, RangeMax.x),
+                                        Random.Range(RangeMin.y, RangeMax.y),
+                                        Random.Range(RangeMin.z, RangeMax.z));
+            rb.AddForce(force, ForceMode.Impulse);
+            rb.useGravity = true;
+        }
+    }
+}
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(RandonBreak))]
+public class RandonBreakEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+
+        RandonBreak randomBreakScript = (RandonBreak)target;
+        if (GUILayout.Button("Add Rigidbody to Children"))
+        {
+            randomBreakScript.addRb();
+        }
+        if (GUILayout.Button("break"))
+        {
+            randomBreakScript.BreakLeaf();
+        }
+    }
+}
+#endif

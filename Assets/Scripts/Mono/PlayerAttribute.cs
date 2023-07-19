@@ -35,6 +35,7 @@ namespace oct.ObjectBehaviors
         public UnityEvent<bool> Amored;
         public int combo;
         public bool in2d;
+        public Collider PositionCollider;
         public bool faceRight { get { return _faceRight; } set { if (_faceRight != value) { _faceRight = value; flip(value); } } }
         private bool _faceRight;
 
@@ -42,6 +43,18 @@ namespace oct.ObjectBehaviors
 
         public bool UpdateVelocity;
         #region setVariable
+
+       public void playEffect(ParticleSystem effect)
+        {
+            if (faceRight)
+            {
+                effect.GetComponent<ParticleSystemRenderer>().flip = new Vector3(0,0,0);
+            }
+            else
+            {
+                effect.GetComponent<ParticleSystemRenderer>().flip = new Vector3(1, 0, 0);
+            }
+        }
         public void armoed(bool i)
         {
             onAmored?.Invoke("°ÔÌå", i);
@@ -140,11 +153,11 @@ namespace oct.ObjectBehaviors
         {
             if (toright)
             {
-                graphic.transform.rotation=Quaternion.Euler(0,0,0);
+                graphic.transform.localScale=new Vector3(1,1,1);
             }
             else
             {
-                graphic.transform.rotation = Quaternion.Euler(0, 180, 0);
+                graphic.transform.localScale = new Vector3(-1, 1, 1);
             }
         }
         #region ×Óµ¯
@@ -152,7 +165,8 @@ namespace oct.ObjectBehaviors
         {
             GameObject g = Instantiate(bulletPrefeb);
             g.transform.position = bulletPosition.position;
-            Bullet b = g.GetComponent<Bullet>();
+            g.transform.localScale = bulletPosition.lossyScale;
+            Bullet b = g.transform.GetChild(0).GetComponent<Bullet>();
             b.faceRight = faceRight;
             b.AtkValue = property.actualAtk;
             b.critcAtkRate= property.actualCritcRate;

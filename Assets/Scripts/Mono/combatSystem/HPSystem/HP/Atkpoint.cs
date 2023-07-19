@@ -1,6 +1,4 @@
-using Microsoft.Cci;
-using System.Collections;
-using System.Collections.Generic;
+using CombatSystem.shieldSystem;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,6 +15,8 @@ namespace CombatSystem
         public UnityEvent<Vector3> AddedForce;
         public Transform center;
         public Transform popupPosition;
+        [SerializeField]
+        private PlayerShieldContainer ShieldController;
         [SerializeField] string hitName;
         public bool armor;
 
@@ -30,8 +30,11 @@ namespace CombatSystem
         }
         public void addBuff(TeamBuff buff)
         {
-            if (!armor) { }
-               // container.addBuff(buff);
+                container.addBuff(buff);
+        }
+        public void addShield(shield shield)
+        {
+            ShieldController.addShield(shield);
         }
         public void addforceOfDirection(Vector3 direction)
         {
@@ -43,10 +46,14 @@ namespace CombatSystem
 
             ReciveATk?.Invoke();
             if (!armor) {
-                onHited.Invoke(hitName, true);
+                playerIndividualProperty.changePoise(damage.hardness);
+                
                 (int, bool) info = container.SelfDamage(damage);
                 int i = info.Item1;
                 bool b = info.Item2;
+                if (b) {
+                    onHited.Invoke(hitName, b);
+                }
                 if (container.getType() == TargetType.enemy)
                 {
                     if (damage.Critic)
@@ -70,7 +77,7 @@ namespace CombatSystem
                         VisualEffectController.DoDamagePopUp(i, VisualEffectController.DamagePopUpType.cure, popupPosition.position);
                     }
                 }
-                playerIndividualProperty.changePoise(damage.hardness);
+
                 return b;
             }
             return false;   

@@ -46,11 +46,9 @@ namespace oct.EnemyMovement
             interestsTemp = interest;
             return (danger, interest);
         }
-#if UNITY_EDITOR
         //gizmo parameters
         private Vector3 targetPositionCached;
         private float[] interestsTemp;
 
-#endif
     }
 }

@@ -169,10 +169,6 @@ namespace BehaviorControlling
         // 设置布尔类型的条件变量的值
         public bool setBoolVariable(string VariableName, bool result)
         {
-            if (VariableName == "被打")
-            {
-                Debug.Log(result);
-            }
             ConditionVariable f = behaviorObject.ConditionVariables.FirstOrDefault(x => x.name == VariableName);
                 if (f != null && f is BoolVariable)
                 {
