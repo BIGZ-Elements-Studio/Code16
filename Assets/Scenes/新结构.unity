@@ -1533,7 +1533,7 @@ GameObject:
   m_Component:
   - component: {fileID: 101135218}
   m_Layer: 3
-  m_Name: GameObject
+  m_Name: "\u77EB\u6B63position"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8368,7 +8368,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.14189085, g: 0.5660378, b: 0.26138908, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -12314,6 +12314,7 @@ MonoBehaviour:
       m_Calls: []
   combo: 0
   in2d: 0
+  PositionCollider: {fileID: 0}
   UpdateVelocity: 1
 --- !u!114 &939458310
 MonoBehaviour:
@@ -19430,7 +19431,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1519163078
 Transform:
   m_ObjectHideFlags: 0
@@ -22268,6 +22269,7 @@ MonoBehaviour:
         m_CallState: 2
   combo: 0
   in2d: 0
+  PositionCollider: {fileID: 1081052596}
   UpdateVelocity: 1
 --- !u!114 &1725943779
 MonoBehaviour:
