@@ -101,18 +101,15 @@ namespace oct.ObjectBehaviors
         {
            
             lockState(true);
-            Debug.Log("!!");
             controller.controlVelocity = false;
             yield return new WaitForFixedUpdate();
             controller.rb.AddForce(HitDirectiom);
             float time = 0;
-            Debug.Log("2!!");
             while (time < 0.2 || !controller.isGrounded())
             {
                 yield return new WaitForFixedUpdate();
                 time += Time.fixedDeltaTime;
             }
-            Debug.Log("3!!");
             controller.controlVelocity = true;
             lockState(false);
         }

@@ -76,7 +76,6 @@ namespace oct.ObjectBehaviors
 
 
 
-
         public int combo { get; private set; }
         public ParticleSystem ParticleSystem;
         public Vector3 flydirection;
@@ -339,7 +338,10 @@ namespace oct.ObjectBehaviors
             PlayerControllerr.SetAnimationNoRepeate(dashname);
             HitForDash=false;
             PlayerControllerr.dash(true);
+            PlayerControllerr.Collider.isTrigger = true;
+            PlayerControllerr.Rigidbody.isKinematic = true;
             Rigidbody rb= PlayerControllerr.positionBox.AddComponent<Rigidbody>();
+            yield return null;
             rb.isKinematic = false;
             rb.useGravity = false;
             rb.freezeRotation = true;
@@ -355,6 +357,8 @@ namespace oct.ObjectBehaviors
             PlayerControllerr.PositionCollider.isTrigger = true;
             PlayerControllerr.DamageBox.transform.position = PlayerControllerr.positionBox.transform.position;
             PlayerControllerr.positionBox.transform.localPosition = Vector3.zero;
+            PlayerControllerr.Collider.isTrigger = false;
+            PlayerControllerr.Rigidbody.isKinematic = false;
             PlayerControllerr.dash(false);
             if (HitForDash)
             {

@@ -15,6 +15,8 @@ public class RandonBreak : MonoBehaviour
     public List<quaternion> Rotation;
     public Vector3 RangeMax;
     public Vector3 RangeMin;
+    public Vector3 RangeMaxT;
+    public Vector3 RangeMinT;
     public void addRb()
     {
         rigidbodies = new List<Rigidbody>();
@@ -54,11 +56,16 @@ public class RandonBreak : MonoBehaviour
         // Give a random force by the range to all rigidbodies
         foreach (Rigidbody rb in rigidbodies)
         {
+            rb.isKinematic = false;
             Vector3 force = new Vector3(Random.Range(RangeMin.x, RangeMax.x),
                                         Random.Range(RangeMin.y, RangeMax.y),
                                         Random.Range(RangeMin.z, RangeMax.z));
             rb.AddForce(force, ForceMode.Impulse);
             rb.useGravity = true;
+            Vector3 torque = new Vector3(Random.Range(RangeMaxT.x, RangeMaxT.x),
+                                        Random.Range(RangeMaxT.y, RangeMaxT.y),
+                                        Random.Range(RangeMaxT.z, RangeMaxT.z));
+            rb.AddTorque(force);
         }
     }
 }

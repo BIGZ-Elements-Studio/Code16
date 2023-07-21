@@ -10,13 +10,15 @@ namespace CombatSystem
         private Vector3 playerActualposition { get { return team.CurrentCharacter.ActualTransform.position; } }
         [SerializeField]
         private playerTeamController team;
-        public static List<Transform> allEnemyTargets { get { List<Transform> a = new List<Transform>(); a.Add(Instance.player.transform);return a; } }
+        public static List<Transform> allEnemyTargets { get { List<Transform> a = new List<Transform>(); a.Add(Instance.player.transform); return a; } }
         private List<characterState> characterStates { get { return team.characterStates; } }
         public static List<characterState> CharacterStates
         {
             get { return Instance.characterStates; }
         }
-        
+        public static GameObject defaultEffect{ get { return instance.Effect; } }
+        [SerializeField]
+        GameObject Effect;
 
         private static combatController instance;
 

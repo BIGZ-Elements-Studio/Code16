@@ -13,7 +13,6 @@ namespace CombatSystem.boss.stoneperson
         public float skill1BHeight;
         public Vector3 currentPosion;
        public Transform Self;
-        public float normalHeight;
        public BoxBullet BoxBullet;
         public GameObject damagecircle;
         public MeshRenderer rd;
@@ -157,7 +156,6 @@ namespace CombatSystem.boss.stoneperson
                 holdTime += Time.fixedDeltaTime;
 
                 rb.MovePosition(holdCharaPosition.position+Vector3.forward*2f);
-                Debug.Log(holdCharaPosition.gameObject.name+ " "+(holdCharaPosition.position-rb.transform.position));
             }
             rb.isKinematic = false;
             yield return new WaitForFixedUpdate();
@@ -190,20 +188,22 @@ namespace CombatSystem.boss.stoneperson
         }
         public IEnumerator trySkill2()
         {
+            Debug.Log("trySkill2");
             yield return new WaitForSeconds(2f);
             while (true)
             {
-                
+                Debug.Log("called");
                 StartCoroutine(skill2());
                 yield return new WaitForSeconds(5f);
             }
         }
       public IEnumerator trySkill1()
         {
+            Debug.Log("trySkill1");
             yield return new WaitForSeconds(2f);
             while (true)
             {
-
+                Debug.Log("called");
                 StartCoroutine(skill1B());
                 yield return new WaitForSeconds(5f);
             
@@ -212,10 +212,11 @@ namespace CombatSystem.boss.stoneperson
 
         public IEnumerator trySkill3()
         {
+            Debug.Log("trySkill3");
             yield return new WaitForSeconds(2f);
             while (true)
             {
-
+                Debug.Log("called");
                 StartCoroutine(skill3());
                 yield return new WaitForSeconds(7f);
 

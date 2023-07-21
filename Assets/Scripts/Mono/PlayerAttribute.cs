@@ -24,6 +24,7 @@ namespace oct.ObjectBehaviors
         [SerializeField]
         public GameObject graphic;
         public Rigidbody Rigidbody;
+        public Collider Collider;
         public PlayerInput input;
         Vector3 direction;
         public float speed;
@@ -42,9 +43,10 @@ namespace oct.ObjectBehaviors
         public bool grounded { get { return isGrounded(); } }
 
         public bool UpdateVelocity;
+        public LayerMask GroundMask;
         #region setVariable
 
-       public void playEffect(ParticleSystem effect)
+        public void playEffect(ParticleSystem effect)
         {
             if (faceRight)
             {
@@ -92,8 +94,7 @@ namespace oct.ObjectBehaviors
             // Loop through all the hits to see if any of them are considered "ground"
             foreach (Collider hit in hits)
             {
-                
-                if (hit.gameObject != DamageBox&& hit.isTrigger==false)
+                if (hit.gameObject != DamageBox&& hit.isTrigger==false && ((GroundMask.value & (1 << hit.gameObject.layer)) > 0))
                 {
                     return true;
                 }
