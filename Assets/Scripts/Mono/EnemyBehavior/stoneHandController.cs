@@ -2,29 +2,43 @@ using oct.cameraControl;
 using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Events;
+
 namespace CombatSystem.boss.stoneperson
 {
     public class stoneHandController : MonoBehaviour
     {
-       public bool followCharacter;
-        float currentHeight;
+       public bool left;
+        [SerializeField]
+        SkeletonRenderer renderer;
         public Transform player { get {return combatController.Player.transform; } }
-        public float skill1BHeight;
-        public Vector3 currentPosion;
-       public Transform Self;
+        public SkeletonAnimation skeletonAnimation;
+
+        Spine.AnimationState spineAnimationState { get { return skeletonAnimation.AnimationState; } }
+
+
        public BoxBullet BoxBullet;
-        public GameObject damagecircle;
+
         public MeshRenderer rd;
        public BoxCollider BoxCollider;
+        public Rigidbody rb;
+        public Transform Self;
         public Transform skill1APosition;
         public Transform spawnStonePosition;
         public GameObject stonePrefab;
         public GameObject shockWave;
-        public SkeletonAnimation skeletonAnimation;
-        Spine.AnimationState spineAnimationState { get { return skeletonAnimation.AnimationState; } }
+        public GameObject HitEffect;
+        public GameObject damagecircle;
+
+        public float skill1BHeight;
+        public float Scale;
+        public float skill3releaseSpeed;
+        public float skill3totalHoldTime = 2;
+        
         [SpineAnimation]
-       public string skill1;
+        public string skill1;
         [SpineAnimation]
         public string idleAnimation;
         [SpineAnimation]
@@ -35,19 +49,28 @@ namespace CombatSystem.boss.stoneperson
         public string skill3Animation2;
         [SpineAnimation]
         public string Failed;
+        public bool followCharacter;
+        public Transform holdCharaPosition;
+        public Vector3 TargetPosition;
+        public Vector3 Skill2offsetPosition;
+        GameObject currentChara;
 
+        public UnityEvent skill3HitFloor;
+        float currentHeight;
+        Coroutine currrentC;
+        #region skills
         public IEnumerator skill1A()
         {
             followCharacter = false;
-
+            spineAnimationState.SetAnimation(0, idleAnimation, true);
             yield return new WaitForFixedUpdate();
-            currentPosion = skill1APosition.position;
+            TargetPosition = skill1APosition.position;
             Self.transform.position= skill1APosition.position;
             rd.enabled = true;
             BoxCollider.enabled = true;
             //setAnimation
         }
-       public Vector3 Skill2offsetPosition;
+
         public IEnumerator skill1B()
         {
             spineAnimationState.TimeScale = 1;
@@ -61,7 +84,7 @@ namespace CombatSystem.boss.stoneperson
 
             //索敌完成
             followCharacter = false;
-            currentPosion= Self.transform.position;
+            TargetPosition= Self.transform.position;
             damagecircle.transform.position = new Vector3(Self.transform.position.x, 0, Self.transform.position.z);
             damagecircle.SetActive(true);
             damagecircle.GetComponent<damageCircle>().time = 1f;
@@ -74,11 +97,13 @@ namespace CombatSystem.boss.stoneperson
             BoxCollider.enabled = true;
             while (time > 0)
             {
-                currentPosion = new Vector3(currentPosion.x, currentPosion.y - movePosition, currentPosion.z);
+                TargetPosition = new Vector3(TargetPosition.x, TargetPosition.y - movePosition, TargetPosition.z);
                 time-=Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
-           var g= Instantiate(shockWave);
+            HitEffect.transform.position = new Vector3(Self.position.x, 0, Self.position.z);
+            HitEffect.SetActive(true);
+            var g= Instantiate(shockWave);
             g.transform.position = new Vector3(Self.position.x, 0, Self.position.z);
             g.SetActive(true);
             yield return new WaitForSeconds(0.3f);
@@ -86,7 +111,7 @@ namespace CombatSystem.boss.stoneperson
             yield return new WaitForSeconds(1.2f);
             rd.enabled = false;
             BoxCollider.enabled = false;
-           
+            HitEffect.SetActive(false);
             damagecircle.SetActive(false);
         }
         public IEnumerator skill2()
@@ -96,28 +121,34 @@ namespace CombatSystem.boss.stoneperson
             rd.enabled = true;
             BoxCollider.enabled = false;
             yield return new WaitForFixedUpdate();
-            currentPosion = player.position+ Skill2offsetPosition;
+            if (left) {
+                TargetPosition = player.position + Skill2offsetPosition;
+            }
+            else
+            {
+                var flip = new Vector3(Skill2offsetPosition.x * -1, Skill2offsetPosition.y, Skill2offsetPosition.z);
+                TargetPosition = player.position + flip;
+            }
             int index = (MainCameraController.Instance.Movement3d as CameraMovementThreeDDefault).AddTarget(this.transform);
             (MainCameraController.Instance.Movement3d as CameraMovementThreeDDefault).ChangeWeight(index, 60, 1f);
             yield return new WaitForSeconds(0.7f);
             spineAnimationState.SetAnimation(0, skill2Animation, false);
              GameObject g= Instantiate(stonePrefab);
+            g.GetComponent<BoneFollower>().SkeletonRenderer = renderer;
             g.SetActive(true);
             yield return new WaitForSeconds(1.5f);
             (MainCameraController.Instance.Movement3d as CameraMovementThreeDDefault).RemoveTarget(index, 1f);
         }
-        #region skill3
 
-        public Transform holdCharaPosition;
-        public float Scale;
         public IEnumerator skill3()
         {
+            
             spineAnimationState.TimeScale = Scale;
             followCharacter = false;
             rd.enabled = true;
             BoxCollider.enabled = false;
             yield return new WaitForFixedUpdate();
-            currentPosion = player.position;
+            TargetPosition = player.position;
             yield return new WaitForSeconds(0.7f);
             yield return new WaitForSeconds(0.1f);
             spineAnimationState.SetAnimation(0, skill3Animation, false);
@@ -150,22 +181,21 @@ namespace CombatSystem.boss.stoneperson
             rb.isKinematic = true;
             float holdTime = 0;
             spineAnimationState.AddAnimation(0, skill3Animation2, false,0);
-            while (holdTime < totalHoldTime)
+            while (holdTime < skill3totalHoldTime)
             {
                 yield return new WaitForFixedUpdate();
                 holdTime += Time.fixedDeltaTime;
 
                 rb.MovePosition(holdCharaPosition.position+Vector3.forward*2f);
             }
+            skill3HitFloor?.Invoke();
             rb.isKinematic = false;
             yield return new WaitForFixedUpdate();
-            rb.velocity = new Vector3(0, velocity, 0);
+            rb.velocity = new Vector3(0, skill3releaseSpeed, 0);
             rb.useGravity = true;
 
         }
-        public float velocity;
-       public float totalHoldTime = 2;
-        public GameObject currentChara;
+
         public void getCharacter(Collider c)
         {
             if (c.GetComponent(typeof(DamageTarget))!=null) {
@@ -181,30 +211,22 @@ namespace CombatSystem.boss.stoneperson
             }
         }
         #endregion
-        Coroutine currrentC;
-        private void Start()
-        {
-            currrentC=StartCoroutine(trySkill2());
-        }
+        #region testSkill
         public IEnumerator trySkill2()
         {
-            Debug.Log("trySkill2");
             yield return new WaitForSeconds(2f);
             while (true)
             {
-                Debug.Log("called");
                 StartCoroutine(skill2());
                 yield return new WaitForSeconds(5f);
             }
         }
       public IEnumerator trySkill1()
         {
-            Debug.Log("trySkill1");
             yield return new WaitForSeconds(2f);
             while (true)
             {
-                Debug.Log("called");
-                StartCoroutine(skill1B());
+                StartCoroutine(skill1A());
                 yield return new WaitForSeconds(5f);
             
             }
@@ -212,17 +234,18 @@ namespace CombatSystem.boss.stoneperson
 
         public IEnumerator trySkill3()
         {
-            Debug.Log("trySkill3");
             yield return new WaitForSeconds(2f);
             while (true)
             {
-                Debug.Log("called");
                 StartCoroutine(skill3());
                 yield return new WaitForSeconds(7f);
 
             }
 
         }
+
+
+
         public void chageTo1()
         {
             if (currrentC!=null)
@@ -248,16 +271,16 @@ namespace CombatSystem.boss.stoneperson
             currrentC = StartCoroutine(trySkill3());
         }
   
-
+        #endregion        #endregion
         private void FixedUpdate()
         {
             if (followCharacter)
             {
-                Self.position =new Vector3(player.position.x, currentHeight, player.position.z);
+                rb.MovePosition(new Vector3(player.position.x, currentHeight, player.position.z));
             }
             else
             {
-                Self.position = currentPosion;
+                Self.position = TargetPosition;
 
             }
         }

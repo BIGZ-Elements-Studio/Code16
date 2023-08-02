@@ -54,13 +54,13 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
     private bool _faceRight;
     public int speed;
    public LayerMask groundMask;
+    public float groundCheckDistance;
     public string Groundname;
     public string cooldownname;
     public UnityEvent<string, bool> changeGround;
     public UnityEvent<string, bool> coolDown;
     private bool IsGrounded()
     {
-        float groundCheckDistance = 0.2f;
 
         Vector3 boxCenter = transform.position + c.center;
         Vector3 boxHalfExtents = c.size * 0.5f;
@@ -69,19 +69,23 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
         if (isGrounded) {
             coolDown?.Invoke(cooldownname, true);
         }
+        if (isGrounded) {
+            Debug.Log("g");
+        }
+        
         return isGrounded;
     }
     public IEnumerator inAir()
     {
         lockState(true);
+        yield return new WaitForFixedUpdate();
         SetAnimation(air);
         rb.useGravity = true;
-        yield return new WaitForFixedUpdate();
+        yield return new WaitForSecondsRealtime(0.5f);
         while (!IsGrounded())
         {
-            yield return new WaitForFixedUpdate();
+            yield return null;
         }
-
         // cheak grounded by waitforfixupdate in a while loop
         lockState(false);
     }
@@ -89,14 +93,14 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
     public IEnumerator jump()
     {
         lockState(true);
-        //set velocity
+        speed = 8;
+        //set skill3releaseSpeed
         SetAnimation(jumpc);
         yield return new WaitForSeconds(0.1f);
         float velocity = Mathf.Sqrt(2 * MinjumpHeight * Physics.gravity.magnitude);
         rb.velocity = new Vector3(direction * speed, velocity, 0);
         yield return new WaitForSeconds(0.1f);
-        IsGrounded();
-        SetAnimation(jumpd);
+        changeGround?.Invoke(Groundname, false);
         lockState(false);
     }
     PlayerInput inputActions;
@@ -105,6 +109,7 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
         inputActions = new PlayerInput();
         inputActions.In2d.Enable();
         inputActions.In2d.move.performed += ctx => { direction = ctx.ReadValue<float>(); };
+        inputActions.In2d.move.canceled += ctx => { direction =0 ; };
     }
     private void Start()
     {

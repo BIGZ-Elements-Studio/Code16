@@ -297,11 +297,33 @@ namespace oct.ObjectBehaviors
             PlayerControllerr.SetAnimation(flyanimation);
             yield return new WaitForFixedUpdate();
             float time = 0;
-            while (time < 0.2 || !PlayerControllerr.grounded)
+            bool groundedTimerStarted = false;
+            float groundedTimer = 0;
+            float waitTime = 0.07f;
+            Debug.Log("fly");
+            while (time < 0.2 || groundedTimer < waitTime)
             {
                 time += Time.fixedDeltaTime;
+                if (PlayerControllerr.grounded)
+                {
+                    if (!groundedTimerStarted)
+                    {
+                        groundedTimerStarted = true;
+                        groundedTimer = 0;
+                    }
+                    else
+                    {
+                        groundedTimer += Time.fixedDeltaTime;
+                    }
+                }
+                else
+                {
+                    groundedTimerStarted = false;
+                    groundedTimer = 0;
+                }
                 yield return new WaitForFixedUpdate();
             }
+            Debug.Log("end");
             PlayerControllerr.SetAnimationNoRepeate(flyanimation2);
             yield return new WaitForSecondsRealtime(1.3f);
             PlayerControllerr.UpdateVelocity = true;
@@ -325,7 +347,6 @@ namespace oct.ObjectBehaviors
             dashEffect =true;
             lockState(true);
             yield return null;
-            float time=0;
             PlayerControllerr.speed = 0;
             Vector3 target = new Vector3(DashDistance, 0,0);
             if (PlayerControllerr.faceRight)

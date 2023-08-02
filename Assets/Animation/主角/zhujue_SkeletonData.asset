@@ -28,11 +28,14 @@ MonoBehaviour:
   - jump_2
   - jump_3
   - idle
+  - jump_3
   toAnimation:
   - jump_3
   - idle
   - jump_1
+  - run
   duration:
+  - 0
   - 0
   - 0
   - 0

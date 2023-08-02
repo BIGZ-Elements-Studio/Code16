@@ -35,7 +35,7 @@ namespace CombatSystem.boss.stoneperson
             state1();
         }
         bool two;
-        public void changeBlood(string s,float hp)
+        public void changeBlood(float hp)
         {
             if (hp<500&& !two)
             {
@@ -55,20 +55,70 @@ namespace CombatSystem.boss.stoneperson
            // InvokeRepeating("skill1B", 5, 10);
 
         }
-        void skill1()
+        Coroutine currrentC;
+        public void skill1()
         {
-            controller1.StartCoroutine(controller1.skill1A());
-            controller2.StartCoroutine(controller2.skill1B());
+            if (currrentC != null)
+            {
+                StopCoroutine(currrentC);
+            }
+            currrentC = StartCoroutine(trySkill1());
         }
 
-        void skillC()
+       public void skill2()
         {
-
+            if (currrentC != null)
+            {
+                StopCoroutine(currrentC);
+            }
+            currrentC = StartCoroutine(trySkill2());
         }
-        void skill1B()
+        public void skill3()
         {
-            controller2.StartCoroutine(controller2.skill1A());
-            controller1.StartCoroutine(controller1.skill1B());
+            if (currrentC != null)
+            {
+                StopCoroutine(currrentC);
+            }
+            currrentC = StartCoroutine(trySkill3());
+        }
+
+        public IEnumerator trySkill2()
+        {
+            yield return new WaitForSeconds(2f);
+            while (true)
+            {
+                controller2.StartCoroutine(controller2.skill2());
+                yield return new WaitForSeconds(7f);
+                controller1.StartCoroutine(controller1.skill2());
+                yield return new WaitForSeconds(7f);
+            }
+        }
+        public IEnumerator trySkill1()
+        {
+            yield return new WaitForSeconds(2f);
+            while (true)
+            {
+                controller1.StartCoroutine(controller1.skill1A());
+                controller2.StartCoroutine(controller2.skill1B());
+                yield return new WaitForSeconds(5f);
+                controller1.StartCoroutine(controller1.skill1B());
+                controller2.StartCoroutine(controller2.skill1A());
+                yield return new WaitForSeconds(5f);
+
+            }
+        }
+
+        public IEnumerator trySkill3()
+        {
+            yield return new WaitForSeconds(2f);
+            while (true)
+            {
+                controller2.StartCoroutine(controller2.skill3());
+                yield return new WaitForSeconds(7f);
+                controller1.StartCoroutine(controller1.skill3());
+                yield return new WaitForSeconds(7f);
+            }
+
         }
     }
 }

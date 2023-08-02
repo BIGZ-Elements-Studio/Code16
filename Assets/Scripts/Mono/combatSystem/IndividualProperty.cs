@@ -19,44 +19,40 @@ namespace CombatSystem {
         public UnityEvent<int, int> onSpChangeWithMaxSp;
         public UnityEvent<int, int> onColorChangeWithMaxColor;
         public int colorBar;
+        public FieldForCharacterBuff buffField;
         public int MaxSp
         {
             get { return controller.MaxSp; }
         }
         public int actualAtk
         {
-            get { return controller.Atk; }
+            get { return (int)((controller.Atk + buffField.Atk) *( (controller.AtkPercent + buffField.AtkPercentage)/100f)); }
         }
-
-        public float moveSpeedFactor
+        public int actualDef
         {
-            get { return controller.moveSpeedFactor+ extraMoveFactor; }
+            get { return (int)((controller.Def + buffField.Def) * ((controller.DefPercent + buffField.DefPercentage)/100f)); }
         }
 
-        public float extraMoveFactor;
         public int actualCritcRate
         {
-            get { return controller.CritcAtkRate; }
+            get { return controller.CritcAtkRate+buffField.criticAttackRate; }
         }
 
         public int actualCritcDamage
         {
-            get { return controller.CritcAtkDamage; }
-        }
-        public int actualDef
-        {
-            get { return Container.def; }
+            get { return controller.CritcAtkDamage+buffField.criticAttackDamage; }
         }
 
-        public float AtkSpeed;
+        public float moveSpeedFactor{get { return controller.moveSpeedFactor+ buffField.moveSpeedFactor; }}
+        public float AtkSpeed { get { return controller.AtkSpeed + buffField.ATkSpeedFactor; }}
         private void Start()
         {
             currentsp = 0;
             currentpoise = Container.basePoise;
             onPoiseChange?.Invoke(PoiseName, currentpoise);
-            onSpChange.Invoke(spName, currentpoise);
-            onSpChangeWithMaxSp.Invoke(controller.MaxSp, currentsp);
-            onColorChangeWithMaxColor.Invoke(colorBar,10);
+            onSpChange?.Invoke(spName, currentpoise);
+            onSpChangeWithMaxSp?.Invoke(controller.MaxSp, currentsp);
+            onColorChangeWithMaxColor?.Invoke(colorBar,10);
         }
         public void changePoise(int change)
         {
@@ -74,10 +70,6 @@ namespace CombatSystem {
             currentsp = Mathf.Clamp(currentsp, 0, MaxSp);
             onSpChange?.Invoke(spName, currentsp);
             onSpChangeWithMaxSp.Invoke(MaxSp, currentsp);
-        }
-        void arm(bool b)
-        {
-
         }
         public void gainColor(int amount )
         {

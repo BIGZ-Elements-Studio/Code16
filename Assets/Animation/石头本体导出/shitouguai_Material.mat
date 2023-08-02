@@ -11,6 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: 9f253724b2d29a3438eeea48277c25cb, type: 3}
   m_ValidKeywords:
   - _ALPHABLEND_ON
+  - _FOG
   - _OLD_HARD_RAMP
   m_InvalidKeywords:
   - _USE8NEIGHBOURHOOD_ON

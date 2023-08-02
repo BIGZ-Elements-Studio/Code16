@@ -25,6 +25,15 @@ public class SimpleAtkPoint : MonoBehaviour, DamageTarget
     public void addBuff(TeamBuff buff)
     {
     }
+    public void ForceaddBuff(CharacterBuff buff)
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public void ForceaddBuff(TeamBuff buff)
+    {
+        //throw new System.NotImplementedException();
+    }
     public void addforceOfDirection(Vector3 direction)
     {
         AddedForce.Invoke(direction);
@@ -73,5 +82,7 @@ public class SimpleAtkPoint : MonoBehaviour, DamageTarget
     {
         return CombatColor;
     }
+
+
 }
 

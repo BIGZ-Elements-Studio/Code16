@@ -9,7 +9,7 @@ namespace CombatSystem
     {
         public TargetType type;
         public HPContainer HpInfo;
-        public AttackAttributeController AttackAttributeHp;
+        public FieldForTeamBuff AttackAttributeHp;
         List<TeamBuff> buffs = new List<TeamBuff>();
 
       public  List<BuffIconDisplay.DisplayInfo> BuffIcons = new List<BuffIconDisplay.DisplayInfo>();
@@ -24,13 +24,13 @@ namespace CombatSystem
                 {
                     TeamBuff overlayedbuff = buffs[i];
                     buffs[i] = buff;
-                    buff.overlying(b, this);
+                    buff.overlying(b, AttackAttributeHp);
                     overlayedbuff.overlayed();
                     return;
                 }
             }
             buffs.Add(buff);
-            buff.initiate(this);
+            buff.initiate(AttackAttributeHp);
         }
 
         // add buff icon Ui

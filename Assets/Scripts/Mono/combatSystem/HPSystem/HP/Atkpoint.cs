@@ -26,11 +26,21 @@ namespace CombatSystem
         }
         public void addBuff(CharacterBuff buff)
         {
+            if (!armor) {
+                charaBuffContainer.addBuff(buff);
+            }
+        }
+        public void ForceaddBuff(CharacterBuff buff)
+        {
             charaBuffContainer.addBuff(buff);
         }
         public void addBuff(TeamBuff buff)
         {
-                container.addBuff(buff);
+            container.addBuff(buff);
+        }
+        public void ForceaddBuff(TeamBuff buff)
+        {
+            container.ForceaddBuff(buff);
         }
         public void addShield(shield shield)
         {
@@ -47,38 +57,18 @@ namespace CombatSystem
             ReciveATk?.Invoke();
             if (!armor) {
                 playerIndividualProperty.changePoise(damage.hardness);
-                
-                (int, bool) info = container.SelfDamage(damage);
-                int i = info.Item1;
-                bool b = info.Item2;
-                if (b) {
-                    onHited.Invoke(hitName, b);
-                }
-                if (container.getType() == TargetType.enemy)
-                {
-                    if (damage.Critic)
-                    {
-                        VisualEffectController.DoDamagePopUp(i, VisualEffectController.DamagePopUpType.criticDamage, popupPosition.position);
-                    }
-                    else
-                    {
-                        VisualEffectController.DoDamagePopUp(i, VisualEffectController.DamagePopUpType.damage, popupPosition.position);
-                    }
-
-                }
-                else if (container.getType() == TargetType.player)
-                {
-                    if (damage.damage > 0)
-                    {
-                        VisualEffectController.DoDamagePopUp(i, VisualEffectController.DamagePopUpType.damagePlayer, popupPosition.position);
-                    }
-                    else if (damage.damage < 0)
-                    {
-                        VisualEffectController.DoDamagePopUp(i, VisualEffectController.DamagePopUpType.cure, popupPosition.position);
-                    }
+                int actualDamage = DamageUtility.calculateDamage(playerIndividualProperty.actualDef, damage.damage, 0);
+                (int, bool) info = container.SelfDamage(actualDamage);
+                int CalculatedDamage = info.Item1;
+                bool Successful = info.Item2;
+                if (Successful) {
+                    onHited.Invoke(hitName, true);
                 }
 
-                return b;
+                VisualEffectController.DoDamagePopUp(CalculatedDamage, container.getType(), damage.Critic, popupPosition.position);
+                   
+
+                return Successful;
             }
             return false;   
         }
@@ -110,5 +100,7 @@ namespace CombatSystem
         {
             return container.getColor();
         }
+
+
     }
 }

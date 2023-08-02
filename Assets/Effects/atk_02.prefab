@@ -4855,8 +4855,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1923836811
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_RenderMode: 4
   m_MeshDistribution: 0
@@ -4899,7 +4899,6 @@ GameObject:
   - component: {fileID: 1654203200508050338}
   - component: {fileID: 6086606000678609429}
   - component: {fileID: 3074620341663137805}
-  - component: {fileID: 8693398952897173457}
   m_Layer: 0
   m_Name: atk_02
   m_TagString: Untagged
@@ -9671,8 +9670,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1923836811
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -9704,17 +9703,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!210 &8693398952897173457
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2949107190966307799}
-  m_Enabled: 1
-  m_SortingLayerID: -1923836811
-  m_SortingLayer: 2
-  m_SortingOrder: 0
 --- !u!1 &3292477234023456514
 GameObject:
   m_ObjectHideFlags: 0
@@ -14597,8 +14585,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1923836811
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_RenderMode: 4
   m_MeshDistribution: 0
@@ -19467,8 +19455,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1923836811
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_RenderMode: 1
   m_MeshDistribution: 0

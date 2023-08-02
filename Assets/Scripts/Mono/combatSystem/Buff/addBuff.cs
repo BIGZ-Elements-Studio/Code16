@@ -1,9 +1,7 @@
-using CombatSystem;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-namespace CombatSystem {
+namespace CombatSystem
+{
     public class addBuff : MonoBehaviour
     {
         public string buffName;
@@ -11,7 +9,7 @@ namespace CombatSystem {
         public CharacterBuff buff;
         public void Add(DamageTarget hP)
         {
-                hP.addBuff(BuffFactory.CreateBuff(buffName));
+            hP.addBuff(BuffFactory.CreateBuff(buffName));
         }
     }
 }

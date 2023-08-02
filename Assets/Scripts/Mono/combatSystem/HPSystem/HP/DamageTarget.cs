@@ -11,6 +11,8 @@ public interface DamageTarget
     public TargetType getType();
     public void addBuff(CharacterBuff buff);
     public void addBuff(TeamBuff buff);
+    public void ForceaddBuff(CharacterBuff buff);
+    public void ForceaddBuff(TeamBuff buff);
     public  void addforce(Vector3 originalWorldPosition,float magnitude);
     public void addforceOfDirection(Vector3 direction);
     // Method to apply damage to HP

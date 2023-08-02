@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,7 +38,10 @@ namespace CombatSystem
                 BuffContainer.addBuff(buff);
             }
         }
-
+        internal void ForceaddBuff(TeamBuff buff)
+        {
+            BuffContainer.addBuff(buff);
+        }
         private void setAmount()
         {
             
@@ -68,23 +72,24 @@ namespace CombatSystem
             HP = MaxHP;
         }
         // Method to apply damage to HP
-        public (int, bool) SelfDamage(DamageObject damage)
+        public (int, bool) SelfDamage(int ActualDamage)
         {
-            int remainingDamage = damage.damage - ShieldAmount;
+            int remainingDamage = ActualDamage - ShieldAmount;
+            
             if (ShieldAmount!=0&& remainingDamage<=0)
             {
                 //damage can be shieldSystem;
-                ShieldAmount -= damage.damage;
+                ShieldAmount -= ActualDamage;
                 return (0, false);
             }
             shieldBreak?.Invoke();
-            damage.damage = remainingDamage;
+            ActualDamage = remainingDamage;
             ShieldAmount = 0;
             
             onHited.Invoke(hitName, true);
             if (!armor)
             {
-                HP -= damage.damage;
+                HP -= ActualDamage;
                 if (HP < 0)
                 {
                     HP = 0;
@@ -94,7 +99,7 @@ namespace CombatSystem
                 onHPChangeWithMaxHP?.Invoke(MaxHP, HP);
             }
             // Check if HP is below 0 and reset it to 0
-            return (damage.damage,!armor);
+            return (ActualDamage, !armor);
         }
         public bool Damage(DamageObject damage,CombatColor damageColor)
         {
@@ -149,29 +154,10 @@ namespace CombatSystem
         {
             return type;
         }
-
-
-        public Vector3 getCenterPosition()
-        {
-            return DamagePoint.position;
-        }
-
-        public void addforce(Vector3 originalWorldPosition, float magnitude)
-        {
-        }
-
-        public void addforceOfDirection(Vector3 direction)
-        {
-        }
-
         public CombatColor getColor()
         {
             return color;
         }
 
-        public void addBuff(CharacterBuff buff)
-        {
-          //  throw new System.NotImplementedException();
-        }
     }
 }

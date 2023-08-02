@@ -25,7 +25,7 @@ public class colorball : MonoBehaviour
         }
     }
     // Start is called before the first frame update
-    private void OnTriggerEnter(Collider other)
+    public void Enter(Collider other)
     {
         IndividualProperty individualProperty=other.GetComponent<IndividualProperty>();
         if (individualProperty!=null&& individualProperty.color==color)
