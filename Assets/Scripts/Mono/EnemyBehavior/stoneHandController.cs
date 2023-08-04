@@ -49,6 +49,8 @@ namespace CombatSystem.boss.stoneperson
         public string skill3Animation2;
         [SpineAnimation]
         public string Failed;
+        [SpineAnimation]
+        public string fade;
         public bool followCharacter;
         public Transform holdCharaPosition;
         public Vector3 TargetPosition;
@@ -101,6 +103,7 @@ namespace CombatSystem.boss.stoneperson
                 time-=Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
+            skill3HitFloor?.Invoke();
             HitEffect.transform.position = new Vector3(Self.position.x, 0, Self.position.z);
             HitEffect.SetActive(true);
             var g= Instantiate(shockWave);
@@ -174,7 +177,7 @@ namespace CombatSystem.boss.stoneperson
                 spineAnimationState.SetAnimation(0, Failed, false);
                 yield break;    
             }
-
+            rd.sortingOrder += 1;
             yield return new WaitForFixedUpdate();
             var rb = Target.GetComponent<Rigidbody>();
             rb.useGravity = false;
@@ -193,7 +196,6 @@ namespace CombatSystem.boss.stoneperson
             yield return new WaitForFixedUpdate();
             rb.velocity = new Vector3(0, skill3releaseSpeed, 0);
             rb.useGravity = true;
-
         }
 
         public void getCharacter(Collider c)
@@ -209,6 +211,11 @@ namespace CombatSystem.boss.stoneperson
             {
                 currentChara = null;
             }
+        }
+
+        public void Dofade()
+        {
+            spineAnimationState.SetAnimation(0, fade, false);
         }
         #endregion
         #region testSkill
@@ -270,8 +277,13 @@ namespace CombatSystem.boss.stoneperson
             }
             currrentC = StartCoroutine(trySkill3());
         }
-  
+
         #endregion        #endregion
+
+        private void Start()
+        {
+            Dofade();
+        }
         private void FixedUpdate()
         {
             if (followCharacter)

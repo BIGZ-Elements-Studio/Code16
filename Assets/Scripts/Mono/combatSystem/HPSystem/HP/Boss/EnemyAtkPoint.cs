@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using static EnemyHPContainner;
 
 public class EnemyAtkPoint : MonoBehaviour,DamageTarget
@@ -13,6 +14,7 @@ public class EnemyAtkPoint : MonoBehaviour,DamageTarget
     Transform center;
     [SerializeField]
     Transform popupPosition;
+    public UnityEvent<CombatColor> shieldBreak;
     public void addBuff(CharacterBuff buff)
     {
        // throw new System.NotImplementedException();
@@ -56,7 +58,7 @@ public class EnemyAtkPoint : MonoBehaviour,DamageTarget
 
     private void MakeColorBall(CombatColor shieldColor)
     {
-       // throw new NotImplementedException();
+        shieldBreak?.Invoke(shieldColor);
     }
 
     public void DamageByPercent(int percent, CombatColor damageColor)

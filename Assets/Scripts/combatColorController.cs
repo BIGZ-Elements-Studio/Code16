@@ -1,7 +1,6 @@
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 namespace CombatSystem
 {
     public class combatColorController : MonoBehaviour
@@ -14,7 +13,15 @@ namespace CombatSystem
         Color YellowShieldColor;
         [SerializeField]
         Color EmptyColor;
-       public GameObject ColorBall;
+        [SerializeField]
+        Sprite redColorballSprite;
+        [SerializeField]
+        Sprite BlueColorballSprite;
+        [SerializeField]
+        Sprite YellowColorballSprite;
+        [SerializeField]
+        Sprite emptyColorballSprite;
+        public GameObject ColorBall;
         private static combatColorController instance;
 
         public static combatColorController Instance
@@ -28,7 +35,6 @@ namespace CombatSystem
                 return instance;
             }
         }
-
       public static  Color getShieldColor(CombatColor color)
         {
             if (color==CombatColor.red)
@@ -47,5 +53,31 @@ namespace CombatSystem
                 return Instance.EmptyColor;
             }
         }
+        public static Sprite GetSprite(CombatColor color)
+        {
+            if (color == CombatColor.red)
+            {
+                return Instance.redColorballSprite;
+            }
+            else if (color == CombatColor.blue)
+            {
+                return Instance.BlueColorballSprite;
+            }
+            else if (color == CombatColor.yellow)
+            {
+                return Instance.YellowColorballSprite;
+            }
+            else
+            {
+                return Instance.YellowColorballSprite;
+            }
+        }
+
+
+
+
+
+
+
     }
 }

@@ -19,14 +19,14 @@ public class EnemyShieldContainner : MonoBehaviour
     public bool reduceShield(DamageObject amount)
     {
         CurrentShield-=amount.damage;
-        if(CurrentShield < 0&& maxShield>0)
+        if(CurrentShield <= 0&& maxShield>0)
         {
             maxShield = 0;
             CurrentShield = 0;
             charaBuff.removeBuff(Buff);
             ShieldBreak?.Invoke(color);
             ShieldChanged.Invoke(0);
-            return false;
+            return true;
         }
         if (maxShield>0) {
             ShieldChanged.Invoke((float)CurrentShield / (float)maxShield);
@@ -35,7 +35,7 @@ public class EnemyShieldContainner : MonoBehaviour
         {
             ShieldChanged.Invoke(0);
         }
-        return true;
+        return false;
     }
 
     public void setShield(CombatColor Shieldcolor, int amount)

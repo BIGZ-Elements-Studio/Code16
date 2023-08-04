@@ -1,7 +1,10 @@
 using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.UIElements;
+
 namespace CombatSystem.boss.stoneperson
 {
     public class EnemyHandsControl : MonoBehaviour
@@ -10,13 +13,14 @@ namespace CombatSystem.boss.stoneperson
         public stoneHandController controller2;
         [SerializeField]
         public SkeletonAnimation skeletonAnimation;
-
+        public EnemyShieldContainner ShieldContainner;
         [SpineAnimation]
         public string changeAnimation;
         [SpineAnimation]
         public string idle1;
         [SpineAnimation]
         public string idle2;
+        
         public void SetAnimation(string s)
         {
             spineAnimationState.SetAnimation(0, s, true);
@@ -51,8 +55,8 @@ namespace CombatSystem.boss.stoneperson
         Spine.AnimationState spineAnimationState { get { return skeletonAnimation.AnimationState; } }
         private void Start()
         {
-         //   InvokeRepeating("skill1", 0, 10);
-           // InvokeRepeating("skill1B", 5, 10);
+            addshield();
+            ShieldContainner.ShieldBreak.AddListener(delegate { StartCoroutine(OnShieldBreak()); });
 
         }
         Coroutine currrentC;
@@ -119,6 +123,37 @@ namespace CombatSystem.boss.stoneperson
                 yield return new WaitForSeconds(7f);
             }
 
+        }
+
+        public IEnumerator OnShieldBreak()
+        {
+            yield return new WaitForSeconds(3f);
+            addshield();
+        }
+
+        void addshield()
+        {
+            ShieldContainner.setShield(CombatColor.blue,100);
+        }
+        public Transform origion;
+        public float range;
+        float MaxDistance=40;
+        public void shootColotballToPlayer(CombatColor c)
+        {
+            Debug.Log("called");
+            float randomAngle = Random.Range(0f, Mathf.PI * 2f);
+            Vector3 offset = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle))* range;
+            GameObject g = Instantiate((combatColorController.Instance.ColorBall));
+            g.transform.position = origion.position;
+            Vector3 distanceBetween = (combatController.PlayerActualPosition - origion.position) + offset;
+            Vector3 targetAngle = distanceBetween.normalized;
+            float distance = distanceBetween.magnitude;
+            Debug.Log(distance);
+            float distancePercentage = distance / 60;
+            float actualSpeed = MaxDistance * distancePercentage;
+            float hight = 10;
+            g.GetComponent<Rigidbody>().velocity = new Vector3(targetAngle.x * actualSpeed, hight, targetAngle.z * actualSpeed);
+            g.GetComponent<colorball>().color = c;
         }
     }
 }
