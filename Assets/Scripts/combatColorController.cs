@@ -14,14 +14,13 @@ namespace CombatSystem
         [SerializeField]
         Color EmptyColor;
         [SerializeField]
-        Sprite redColorballSprite;
+        GameObject redColorball;
         [SerializeField]
-        Sprite BlueColorballSprite;
+        GameObject BlueColorball;
         [SerializeField]
-        Sprite YellowColorballSprite;
+        GameObject YellowColorball;
         [SerializeField]
-        Sprite emptyColorballSprite;
-        public GameObject ColorBall;
+        GameObject emptyColorball;
         private static combatColorController instance;
 
         public static combatColorController Instance
@@ -53,23 +52,23 @@ namespace CombatSystem
                 return Instance.EmptyColor;
             }
         }
-        public static Sprite GetSprite(CombatColor color)
+        public static GameObject GetColorBall(CombatColor color)
         {
             if (color == CombatColor.red)
             {
-                return Instance.redColorballSprite;
+                return Instance.redColorball;
             }
             else if (color == CombatColor.blue)
             {
-                return Instance.BlueColorballSprite;
+                return Instance.BlueColorball;
             }
             else if (color == CombatColor.yellow)
             {
-                return Instance.YellowColorballSprite;
+                return Instance.YellowColorball;
             }
             else
             {
-                return Instance.YellowColorballSprite;
+                return Instance.YellowColorball;
             }
         }
 

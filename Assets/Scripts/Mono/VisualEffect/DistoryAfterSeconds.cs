@@ -12,10 +12,18 @@ public class DistoryAfterSeconds : MonoBehaviour
     float targetScale;
     [SerializeField]
     float MaxTime;
+    public bool DontapplyScaleChange;
     void Start()
     {
-        StartCoroutine(wait());
-
+        if (DontapplyScaleChange)
+        {
+            StartCoroutine(wait2());
+        }
+        else
+        {
+            StartCoroutine(wait());
+        }
+        
     }
 
     IEnumerator wait()
@@ -38,6 +46,10 @@ public class DistoryAfterSeconds : MonoBehaviour
         }
         Destroy(gameObject);
     }
-
+    IEnumerator wait2()
+    {
+        yield return new WaitForSeconds(waitTime);
+        Destroy(gameObject);
+    }
 
 }

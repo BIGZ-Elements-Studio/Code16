@@ -9,12 +9,14 @@ public class playerTeamController : MonoBehaviour
 {
     public List<GameObject> prefab=new List<GameObject>();
     public List<PlayerInTeam> playerInTeams = new List<PlayerInTeam>();
-    public PlayerInTeam Chara2d;
+    public PlayerInTeamTwoD Chara2d;
     public UnityEvent<int> CharacterChanged;
     [SerializeField]
     private int CurrentCharacterIndex;
     public bool allowChange=true;
-    public PlayerInTeam CurrentCharacter { get { if (GameModeController.Is2d) { return Chara2d; } return playerInTeams[CurrentCharacterIndex]; } }
+    public PlayerInTeam CurrentCharacter { get { if (GameModeController.Is2d) { return null; } return playerInTeams[CurrentCharacterIndex]; } }
+    public Transform CurrentCharacterActualPosition { get { if (GameModeController.Is2d) { return Chara2d.ActualTransform; } return playerInTeams[CurrentCharacterIndex].ActualTransform; } }
+
     public List<characterState> characterStates { get { return playerInTeams[CurrentCharacterIndex].characterStates; } }
     #region Ui
     public UnityEvent<int, int> onSpChangeWithMaxSp;
@@ -69,11 +71,12 @@ public class playerTeamController : MonoBehaviour
             playerInTeams[CurrentCharacterIndex].ActiveCharacter(false, playerInTeams[CurrentCharacterIndex].position, playerInTeams[CurrentCharacterIndex].faceright);
             Chara2d.ActiveCharacter(true, playerInTeams[CurrentCharacterIndex].position, playerInTeams[CurrentCharacterIndex].faceright);
         }
-        else {
-            playerInTeams[CurrentCharacterIndex].ActiveCharacter(true, Chara2d.position,false);
-            Chara2d.ActiveCharacter(false, playerInTeams[CurrentCharacterIndex].position,false);
-        }
+        else
+        {
+            Chara2d.ActiveCharacter(false, playerInTeams[CurrentCharacterIndex].position, Chara2d.faceright);
+            playerInTeams[CurrentCharacterIndex].ActiveCharacter(true, Chara2d.position, Chara2d.faceright);
 
+        }
     }
     void loadTeam()
     {

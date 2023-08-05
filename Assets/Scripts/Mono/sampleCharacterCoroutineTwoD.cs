@@ -51,7 +51,7 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
         }
     }
 
-    private bool _faceRight;
+    private bool _faceRight=true;
     public int speed;
    public LayerMask groundMask;
     public float groundCheckDistance;
@@ -68,9 +68,6 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
         changeGround?.Invoke(Groundname,isGrounded);
         if (isGrounded) {
             coolDown?.Invoke(cooldownname, true);
-        }
-        if (isGrounded) {
-            Debug.Log("g");
         }
         
         return isGrounded;

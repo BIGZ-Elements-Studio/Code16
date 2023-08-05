@@ -12,7 +12,7 @@ public class SetColorSlider : MonoBehaviour
     Slider slider;
     [SerializeField]
     Image Image;
-    private void Start()
+    private void Awake()
     {
         controller.onColorChangeWithMaxColor.AddListener(changeValue);
         controller.onChangeColor.AddListener(changeColor);

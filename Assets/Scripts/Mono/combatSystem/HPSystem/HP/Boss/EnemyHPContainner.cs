@@ -39,7 +39,7 @@ public class EnemyHPContainner : MonoBehaviour
     public damageInfo Damage(DamageObject damage, CombatColor damageColor)
     {
         
-        int actualDamage = DamageUtility.calculateDamage(def, damage.damage, 0);Debug.Log(damage.damage+ " "+actualDamage+" "+ HP);
+        int actualDamage = DamageUtility.calculateDamage(def, damage.damage, 0);
         damageInfo info;
             HP -= actualDamage;
             if (HP < 0)

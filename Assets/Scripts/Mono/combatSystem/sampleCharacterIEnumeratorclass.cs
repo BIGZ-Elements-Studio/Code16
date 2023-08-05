@@ -300,7 +300,6 @@ namespace oct.ObjectBehaviors
             bool groundedTimerStarted = false;
             float groundedTimer = 0;
             float waitTime = 0.07f;
-            Debug.Log("fly");
             while (time < 0.2 || groundedTimer < waitTime)
             {
                 time += Time.fixedDeltaTime;
@@ -323,7 +322,6 @@ namespace oct.ObjectBehaviors
                 }
                 yield return new WaitForFixedUpdate();
             }
-            Debug.Log("end");
             PlayerControllerr.SetAnimationNoRepeate(flyanimation2);
             yield return new WaitForSecondsRealtime(1.3f);
             PlayerControllerr.UpdateVelocity = true;

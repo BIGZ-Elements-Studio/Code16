@@ -20,7 +20,7 @@ namespace CombatSystem.boss.stoneperson
         public string idle1;
         [SpineAnimation]
         public string idle2;
-        
+       public GameObject vineBullet;
         public void SetAnimation(string s)
         {
             spineAnimationState.SetAnimation(0, s, true);
@@ -85,7 +85,14 @@ namespace CombatSystem.boss.stoneperson
             }
             currrentC = StartCoroutine(trySkill3());
         }
-
+        public void skill4()
+        {
+            if (currrentC != null)
+            {
+                StopCoroutine(currrentC);
+            }
+            currrentC = StartCoroutine(trySkill4());
+        }
         public IEnumerator trySkill2()
         {
             yield return new WaitForSeconds(2f);
@@ -124,7 +131,18 @@ namespace CombatSystem.boss.stoneperson
             }
 
         }
+        public IEnumerator trySkill4()
+        {
+            yield return new WaitForSeconds(2f);
+            while (true)
+            {
+               GameObject g= Instantiate(vineBullet);
+                g.transform.position = combatController.Player.transform.position;
+                g.SetActive(true);
+               yield return new WaitForSeconds(3f);
+            }
 
+        }
         public IEnumerator OnShieldBreak()
         {
             yield return new WaitForSeconds(3f);
@@ -143,7 +161,7 @@ namespace CombatSystem.boss.stoneperson
             Debug.Log("called");
             float randomAngle = Random.Range(0f, Mathf.PI * 2f);
             Vector3 offset = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle))* range;
-            GameObject g = Instantiate((combatColorController.Instance.ColorBall));
+            GameObject g = Instantiate((combatColorController.GetColorBall(c)));
             g.transform.position = origion.position;
             Vector3 distanceBetween = (combatController.PlayerActualPosition - origion.position) + offset;
             Vector3 targetAngle = distanceBetween.normalized;
@@ -153,7 +171,6 @@ namespace CombatSystem.boss.stoneperson
             float actualSpeed = MaxDistance * distancePercentage;
             float hight = 10;
             g.GetComponent<Rigidbody>().velocity = new Vector3(targetAngle.x * actualSpeed, hight, targetAngle.z * actualSpeed);
-            g.GetComponent<colorball>().color = c;
         }
     }
 }

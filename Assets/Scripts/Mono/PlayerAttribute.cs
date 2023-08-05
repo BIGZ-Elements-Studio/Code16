@@ -38,7 +38,7 @@ namespace oct.ObjectBehaviors
         public bool in2d;
         public Collider PositionCollider;
         public bool faceRight { get { return _faceRight; } set { if (_faceRight != value) { _faceRight = value; flip(value); } } }
-        private bool _faceRight;
+        private bool _faceRight=true;
 
         public bool grounded { get { return isGrounded(); } }
 

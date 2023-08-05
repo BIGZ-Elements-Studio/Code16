@@ -21,9 +21,6 @@ public class BoxBullet : MonoBehaviour
     public bool affectPlayer;
     public Transform origialPoint;
     public float ForceMagnitude;
-    //   public UnityEvent<bool> hit;
-    // public UnityEvent<int> gainSp;
-    //  public UnityEvent<DamageTarget> hitTarget;
     public bool actived;
     private void OnTriggerEnter(Collider other)
     {
@@ -94,8 +91,6 @@ public class BoxBullet : MonoBehaviour
 
     bool DamageTarget(DamageTarget target, DamageObject d)
     {
-
-        // target.addforce((origialPoint.position- targe.transform.position).normalized*-ForceMagnitude);
         target.addforceOfDirection((origialPoint.position - target.getCenterPosition()).normalized * -ForceMagnitude);
         return target.Damage(d, color);
     }

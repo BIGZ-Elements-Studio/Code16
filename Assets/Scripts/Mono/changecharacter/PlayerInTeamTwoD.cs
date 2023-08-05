@@ -12,10 +12,25 @@ public class PlayerInTeamTwoD : MonoBehaviour
     BehaviorController controller;
     [SerializeField]
     public Transform ActualTransform;
-    public IndividualProperty properties;
+
     public bool faceright;
+    [SerializeField]
+    sampleCharacterCoroutineTwoD a;
     public void ActiveCharacter(bool active, Vector3 TargetPosition, bool TofaceRight)
     {
+        if (!active)
+        {
+            if (a != null)
+            {
+                faceright = a.faceRight;
+            }
+            gameObject.SetActive(false);
+            return;
+        }
+        if (a != null)
+        {
+            a.faceRight = TofaceRight;
+        }
         gameObject.SetActive(true);
         gameObject.transform.position = TargetPosition;
         controller.LockState = false;
