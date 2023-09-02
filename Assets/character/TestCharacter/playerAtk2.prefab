@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: 1
-  BasedOnFixedTime: 0
+  BasedOnFixedTime: 1
   delay: 0.24
   last: 0.5
   interval: 0.1
@@ -324,6 +324,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: atk_02
       objectReference: {fileID: 0}
+    - target: {fileID: 4302432555223202987, guid: 79a369231dba83149baa061de2c724db, type: 3}
+      propertyPath: useUnscaledTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5830802328860032626, guid: 79a369231dba83149baa061de2c724db, type: 3}
       propertyPath: m_SortingLayer
       value: 0
@@ -339,6 +343,14 @@ PrefabInstance:
     - target: {fileID: 6463081193318891018, guid: 79a369231dba83149baa061de2c724db, type: 3}
       propertyPath: m_SortingLayerID
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6556343603147219948, guid: 79a369231dba83149baa061de2c724db, type: 3}
+      propertyPath: useUnscaledTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7319933604527431209, guid: 79a369231dba83149baa061de2c724db, type: 3}
+      propertyPath: useUnscaledTime
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8417634681989942304, guid: 79a369231dba83149baa061de2c724db, type: 3}
       propertyPath: m_LocalScale.x
@@ -390,7 +402,7 @@ ParticleSystem:
   looping: 0
   prewarm: 0
   playOnAwake: 1
-  useUnscaledTime: 0
+  useUnscaledTime: 1
   autoRandomSeed: 1
   startDelay:
     serializedVersion: 2

@@ -3,42 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class SetColorSlider : MonoBehaviour
+namespace CombatSystem.team.UI
 {
-    [SerializeField]
-    playerTeamController controller;
-    [SerializeField]
-    Slider slider;
-    [SerializeField]
-    Image Image;
-    private void Awake()
+    public class SetColorSlider : MonoBehaviour
     {
-        controller.onColorChangeWithMaxColor.AddListener(changeValue);
-        controller.onChangeColor.AddListener(changeColor);
-    }
-    void changeColor(CombatColor color)
-    {
-        if (color==CombatColor.yellow)
+        [SerializeField]
+        playerTeamController controller;
+        [SerializeField]
+        Slider slider;
+        [SerializeField]
+        Image Image;
+        private void Awake()
         {
-            Image.color = Color.yellow;
+            controller.onColorChangeWithMaxColor.AddListener(changeValue);
+            controller.onChangeColor.AddListener(changeColor);
         }
-        else if (color == CombatColor.red)
+        void changeColor(CombatColor color)
         {
-            Image.color = Color.red;
+            if (color == CombatColor.yellow)
+            {
+                Image.color = Color.yellow;
+            }
+            else if (color == CombatColor.red)
+            {
+                Image.color = Color.red;
+            }
+            else if (color == CombatColor.blue)
+            {
+                Image.color = Color.blue;
+            }
+
         }
-        else if (color == CombatColor.blue)
+        // Start is called before the first frame update
+        public void changeValue(int s, int value)
         {
-            Image.color = Color.blue;
-        }
-        
-    }
-    // Start is called before the first frame update
-    public void changeValue(int s, int value)
-    {
-        if (s != 0)
-        {
-            slider.value = (float)value / s;
+            if (s != 0)
+            {
+                slider.value = (float)value / s;
+            }
         }
     }
 }

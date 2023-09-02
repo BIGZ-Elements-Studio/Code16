@@ -1,4 +1,5 @@
 using CombatSystem;
+using EZCameraShake;
 using oct.ObjectBehaviors;
 using Spine.Unity;
 using System;
@@ -29,7 +30,8 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
     BoxCollider c;
     public bool UpdateVelocity;
     public float MinjumpHeight;
-   public float direction;
+    public float MaxJumpTime;
+    public float direction;
     public bool faceRight { get { return _faceRight; } set { if (_faceRight != value) { _faceRight = value; flip(value); } } }
     [SerializeField]
     public SkeletonAnimation skeletonAnimation;
@@ -68,16 +70,33 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
         changeGround?.Invoke(Groundname,isGrounded);
         if (isGrounded) {
             coolDown?.Invoke(cooldownname, true);
+          StartCoroutine(  DoShake(-rb.velocity.y));
         }
         
         return isGrounded;
+    }
+    IEnumerator DoShake(float velocityY)
+    {
+        // yield return new WaitForSeconds(0.15f);
+        while (!Physics.BoxCast(transform.position + c.center, c.size * 0.5f, Vector3.down, Quaternion.identity, 0.5f, groundMask))
+        {
+            Debug.Log("notYet");
+            yield return new WaitForFixedUpdate();
+        } 
+         if (velocityY > 15){
+            CameraShaker.Instance.ShakeOnce(1, 1.5f, 0.2f, 0.2f);
+        }else if (velocityY>5)
+        {
+           
+            CameraShaker.Instance.ShakeOnce(0.5f, 1, 0.1f, 0.1f);
+        }
     }
     public IEnumerator inAir()
     {
         lockState(true);
         yield return new WaitForFixedUpdate();
         SetAnimation(air);
-        rb.useGravity = true;
+        //rb.useGravity = true;
         yield return new WaitForSecondsRealtime(0.5f);
         while (!IsGrounded())
         {
@@ -86,19 +105,42 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
         // cheak grounded by waitforfixupdate in a while loop
         lockState(false);
     }
-
+    bool justJumped;
+    bool alreadyCanceled;
     public IEnumerator jump()
     {
         lockState(true);
         speed = 8;
+        justJumped=true;
+        alreadyCanceled=false;
         //set skill3releaseSpeed
-        SetAnimation(jumpc);
+        spineAnimationState.SetAnimation(0, jumpc, false);
         yield return new WaitForSeconds(0.1f);
         float velocity = Mathf.Sqrt(2 * MinjumpHeight * Physics.gravity.magnitude);
         rb.velocity = new Vector3(direction * speed, velocity, 0);
         yield return new WaitForSeconds(0.1f);
         changeGround?.Invoke(Groundname, false);
+        if (!alreadyCanceled) {
+            rb.useGravity = false;
+        }
+        StartCoroutine(floatMaxTime());
         lockState(false);
+    }
+    
+    IEnumerator cancelFLy()
+    {
+        yield return null;
+        alreadyCanceled=true;
+        if (justJumped)
+        {
+            rb.useGravity = true;
+        }
+        justJumped = false;
+    }
+    IEnumerator floatMaxTime()
+    {
+        yield return new WaitForSeconds(MaxJumpTime);
+      StartCoroutine(  cancelFLy());
     }
     PlayerInput inputActions;
     private void Awake()
@@ -108,10 +150,20 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
         inputActions.In2d.move.performed += ctx => { direction = ctx.ReadValue<float>(); };
         inputActions.In2d.move.canceled += ctx => { direction =0 ; };
     }
+    private void OnEnable()
+    {
+        inputActions?.In2d.Enable();
+    }
+    private void OnDisable()
+    {
+        inputActions.In2d.Disable();
+    }
     private void Start()
     {
         StartCoroutine(inAir());
+        inputActions.In2d.jump.canceled += ctx => {StartCoroutine( cancelFLy()); };
     }
+
     private void FixedUpdate()
     {
         
@@ -131,9 +183,10 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
         lockState(true);
         speed = 0;
         UpdateVelocity = true;
+        SetAnimation(idleb);
         yield return new WaitForSeconds(0.2f);
 
-        SetAnimation(idleb);
+       
     }
 
 

@@ -1,10 +1,7 @@
-using CombatSystem;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEngine.GraphicsBuffer;
-
+using CombatSystem.team;
 namespace CombatSystem.shieldSystem
 {
     public class PlayerShieldContainer : MonoBehaviour

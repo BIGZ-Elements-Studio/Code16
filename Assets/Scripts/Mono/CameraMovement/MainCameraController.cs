@@ -83,7 +83,7 @@ namespace oct.cameraControl
               //  desiredPosition = new Vector3(desiredPosition.x, desiredPosition.y, Z2d);
             }
             Vector3 desiredPosition = currentMovementController.GetDesirePosition();
-            Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, dammping);
+            Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, dammping*Time.timeScale);
            
             // 将相机的位置设置为平滑后的目标位置
             transform.position = smoothedPosition;

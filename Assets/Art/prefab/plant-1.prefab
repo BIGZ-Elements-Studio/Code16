@@ -216,6 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621b0203be42f645857f079857d5629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BreakTrigger: {fileID: 6904825416354275039}
   rigidbodies:
   - {fileID: 6904825416436355864}
   - {fileID: 6904825416335050075}
@@ -254,6 +255,8 @@ MonoBehaviour:
       w: 4.656613e-10
   RangeMax: {x: 10, y: 10, z: 10}
   RangeMin: {x: -10, y: 5, z: -10}
+  RangeMaxT: {x: 0, y: 0, z: 0}
+  RangeMinT: {x: 0, y: 0, z: 0}
 --- !u!114 &6904825416354275036
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -112,7 +112,9 @@ namespace oct.ObjectBehaviors
             input = new PlayerInput();
             input.Enable();
             input.In3d.run.performed += ctx => {  if (isActiveAndEnabled) { direction = (ctx.ReadValue<Vector2>()).normalized; } };
-                
+            ProgrammAnimateScale = 1;
+
+
         }
         private void OnEnable()
         {
@@ -125,21 +127,24 @@ namespace oct.ObjectBehaviors
         {
             input.Disable();
         }
-
+       public bool allowFlip = true;
         private void FixedUpdate()
         {
-            if (direction.x > 0)
+            if (allowFlip)
             {
-                faceRight=true;
-            }
-            else if (direction.x <0)
-            {
-                faceRight=false;
+                if (direction.x > 0)
+                {
+                    faceRight = true;
+                }
+                else if (direction.x < 0)
+                {
+                    faceRight = false;
+                }
             }
             if (UpdateVelocity) {
                 if (!in2d)
                 {
-                    Rigidbody.velocity = new Vector3(direction.x * speed* property.moveSpeedFactor, Rigidbody.velocity.y, direction.y * speed* property.moveSpeedFactor);
+                    Rigidbody.velocity = new Vector3(direction.x * speed* property.moveSpeedFactor, Rigidbody.velocity.y, direction.y * speed* property.moveSpeedFactor)/Time.timeScale;
                 }
                 else
                 {
@@ -182,7 +187,11 @@ namespace oct.ObjectBehaviors
             });
 
         }
-        
+        private void Update()
+        {
+            skeletonAnimation.timeScale = ProgrammAnimateScale*1/Time.timeScale;
+            
+        }
         private void Stagger(bool arg0,float time)
         {
 
@@ -191,11 +200,12 @@ namespace oct.ObjectBehaviors
                 StartCoroutine(stopAnimation(time));
             }
         }
+        public float ProgrammAnimateScale;
         IEnumerator stopAnimation(float time)
         {
-            skeletonAnimation.timeScale = 0;
+            ProgrammAnimateScale = 0;
             yield return new WaitForSecondsRealtime(time);
-            skeletonAnimation.timeScale = 1;
+            ProgrammAnimateScale = 1;
 
         }
         #endregion

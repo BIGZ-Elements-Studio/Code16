@@ -1,7 +1,7 @@
+using BehaviorControlling;
 using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -96,6 +96,8 @@ namespace CombatSystem.boss.stoneperson
         public IEnumerator trySkill2()
         {
             yield return new WaitForSeconds(2f);
+            controller1.Dofade();
+            controller2.Dofade();
             while (true)
             {
                 controller2.StartCoroutine(controller2.skill2());
@@ -107,6 +109,8 @@ namespace CombatSystem.boss.stoneperson
         public IEnumerator trySkill1()
         {
             yield return new WaitForSeconds(2f);
+            controller1.Dofade();
+            controller2.Dofade();
             while (true)
             {
                 controller1.StartCoroutine(controller1.skill1A());
@@ -122,6 +126,8 @@ namespace CombatSystem.boss.stoneperson
         public IEnumerator trySkill3()
         {
             yield return new WaitForSeconds(2f);
+            controller1.Dofade();
+            controller2.Dofade();
             while (true)
             {
                 controller2.StartCoroutine(controller2.skill3());
@@ -134,12 +140,16 @@ namespace CombatSystem.boss.stoneperson
         public IEnumerator trySkill4()
         {
             yield return new WaitForSeconds(2f);
+            controller1.StartCoroutine(controller1.skill4());
+                controller2.StartCoroutine(controller2.skill4());
+            yield return new WaitForSeconds(1f);
             while (true)
             {
                GameObject g= Instantiate(vineBullet);
                 g.transform.position = combatController.Player.transform.position;
                 g.SetActive(true);
-               yield return new WaitForSeconds(3f);
+                
+                yield return new WaitForSeconds(3f);
             }
 
         }
@@ -158,7 +168,6 @@ namespace CombatSystem.boss.stoneperson
         float MaxDistance=40;
         public void shootColotballToPlayer(CombatColor c)
         {
-            Debug.Log("called");
             float randomAngle = Random.Range(0f, Mathf.PI * 2f);
             Vector3 offset = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle))* range;
             GameObject g = Instantiate((combatColorController.GetColorBall(c)));
@@ -166,7 +175,6 @@ namespace CombatSystem.boss.stoneperson
             Vector3 distanceBetween = (combatController.PlayerActualPosition - origion.position) + offset;
             Vector3 targetAngle = distanceBetween.normalized;
             float distance = distanceBetween.magnitude;
-            Debug.Log(distance);
             float distancePercentage = distance / 60;
             float actualSpeed = MaxDistance * distancePercentage;
             float hight = 10;

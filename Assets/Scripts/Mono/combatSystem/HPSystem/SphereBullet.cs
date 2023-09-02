@@ -58,7 +58,6 @@ public class SphereBullet : MonoBehaviour
     {
         if (target != null)
         {
-            
             if ((affectEnemy && target.getType() == TargetType.enemy) || (affectPlayer && target.getType() == TargetType.player) || (affectObject && target.getType() == TargetType.other))
             {
                 DamageObject a = DamageObject.GetdamageObject();

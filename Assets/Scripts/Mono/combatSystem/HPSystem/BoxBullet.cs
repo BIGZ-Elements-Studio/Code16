@@ -47,7 +47,7 @@ public class BoxBullet : MonoBehaviour
             }
         }
     }
-    public void diable()
+    public void disable()
     {
         actived = false;
     }

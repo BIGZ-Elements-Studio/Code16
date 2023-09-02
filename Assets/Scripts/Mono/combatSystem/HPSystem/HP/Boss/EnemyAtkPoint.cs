@@ -15,6 +15,8 @@ public class EnemyAtkPoint : MonoBehaviour,DamageTarget
     [SerializeField]
     Transform popupPosition;
     public UnityEvent<CombatColor> shieldBreak;
+    public UnityEvent ReciveHit;
+    public bool active = true;
     public void addBuff(CharacterBuff buff)
     {
        // throw new System.NotImplementedException();
@@ -45,15 +47,18 @@ public class EnemyAtkPoint : MonoBehaviour,DamageTarget
 
     public bool Damage(DamageObject damage, CombatColor damageColor)
     {
-        
-        EnemyHPContainner.damageInfo info = (enemyHPContainner.Damage(damage, damageColor));
-       if(info.shieldBreak)
-        {
-            MakeColorBall(info.ShieldColor);
+        if (active) {
+            EnemyHPContainner.damageInfo info = (enemyHPContainner.Damage(damage, damageColor));
+            if (info.shieldBreak)
+            {
+                MakeColorBall(info.ShieldColor);
+            }
+            ReciveHit.Invoke();
+            int i = info.CalculatedDamage;
+            VisualEffectController.DoDamagePopUp(i, getType(), damage.Critic, popupPosition.position);
+            return info.successfulDamaged;
         }
-        int i= info.CalculatedDamage;
-        VisualEffectController.DoDamagePopUp(i, getType(), damage.Critic, popupPosition.position);
-        return info.successfulDamaged;
+        return false;
     }
 
     private void MakeColorBall(CombatColor shieldColor)
@@ -73,12 +78,11 @@ public class EnemyAtkPoint : MonoBehaviour,DamageTarget
 
     public CombatColor getColor()
     {
-        throw new System.NotImplementedException();
+        return enemyHPContainner.color;
     }
 
     public TargetType getType()
     {
-       return enemyHPContainner.TargetType;
        return enemyHPContainner.TargetType;
     }
 

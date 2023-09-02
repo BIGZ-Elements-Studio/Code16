@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class damageCircle : MonoBehaviour
@@ -12,11 +13,11 @@ public class damageCircle : MonoBehaviour
         var main = System.main;
         main.simulationSpeed = 1 / time;
         System.Play();
+        Invoke("stop", time);
     }
-    private void Start()
+
+    private void stop()
     {
-        var main = System.main;
-        main.simulationSpeed = 1 / time;
-        System.Play();
+        gameObject.SetActive(false);
     }
 }

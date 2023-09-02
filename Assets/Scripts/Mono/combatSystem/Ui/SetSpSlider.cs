@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
-namespace CombatSystem.Ui
+namespace CombatSystem.team.UI
 {
     public class SetSpSlider : MonoBehaviour
     {

@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class changecharacterButtom : MonoBehaviour
+namespace CombatSystem.team.UI
 {
-    public int num;
-  public  playerTeamController c;
-
-    public void change()
+    public class changecharacterButtom : MonoBehaviour
     {
-        c.swtichCharacter(num);
+        public int num;
+        public playerTeamController c;
+
+        public void change()
+        {
+            c.swtichCharacter(num);
+        }
     }
 }

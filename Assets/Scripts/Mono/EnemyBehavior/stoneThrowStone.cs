@@ -94,7 +94,6 @@ public class stoneThrowStone : MonoBehaviour
     public void HitGround(Collider other)
     {
         if(groundLayer == (groundLayer | (1 << other.gameObject.layer))){
-            Debug.Log(other.gameObject.name);
             StoneBreak();
         }
     }

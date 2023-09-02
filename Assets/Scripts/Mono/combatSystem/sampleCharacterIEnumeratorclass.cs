@@ -53,6 +53,10 @@ namespace oct.ObjectBehaviors
         public GameObject Atk1Bullet;
         public GameObject Atk2Bullet;
         public GameObject Atk3Bullet;
+        public GameObject Atk4Bullet;
+        public GameObject BoostAtk1Bullet;
+        public GameObject BoostAtk2Bullet;
+        public GameObject BoostAtk3Bullet;
         public GameObject boostBullet;
         public GameObject shieldEffect;
         [SerializeField]
@@ -90,6 +94,7 @@ namespace oct.ObjectBehaviors
         }
         public IEnumerator idle()
         {
+            PlayerControllerr.allowFlip = true;
             lockState(false);
             PlayerControllerr.UpdateVelocity = true;
             PlayerControllerr.speed = 0;
@@ -99,10 +104,11 @@ namespace oct.ObjectBehaviors
 
         public IEnumerator run()
         {
+            PlayerControllerr.allowFlip = true;
             PlayerControllerr.speed = MoveSpeed;
             PlayerControllerr.SetAnimation(runa);
             lockState(true);
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSecondsRealtime(0.1f);
             lockState(false);
             while (true)
                 {
@@ -114,9 +120,13 @@ namespace oct.ObjectBehaviors
 
         public IEnumerator ChargeProcess()
         {
+            PlayerControllerr.allowFlip = true;
             PlayerControllerr.SetAnimation(ChargeProcessAnimation);
+            PlayerControllerr.speed = 0;
+            
             yield return new WaitForSecondsRealtime(0.7f);
             finishCharge?.Invoke("蓄力结束",true) ;
+            PlayerControllerr.allowFlip = false;
             yield return new WaitForSecondsRealtime(0.4f);
             finishCharge?.Invoke("蓄力超时", true);
         }
@@ -126,31 +136,34 @@ namespace oct.ObjectBehaviors
             yield return null;
             finishCharge?.Invoke("蓄力结束", false);
             finishCharge?.Invoke("蓄力超时", false);
-            PlayerControllerr.createBullet(Atk1Bullet, bulletPosition, 0.07f);
+            PlayerControllerr.createBullet(Atk4Bullet, bulletPosition, 0.07f);
             if (property.colorBar>=1)
             {
                 property.gainColor(-1);
             }
             PlayerControllerr.SetAnimation(ChargedAtkProcessAnimation);
-            yield return new WaitForSeconds(0.7f);
+            yield return new WaitForSecondsRealtime(0.7f);
+            PlayerControllerr.allowFlip = true;
             lockState(false);
         } 
         #region 普通攻击
         public IEnumerator hit1()
         {
-
+            PlayerControllerr.allowFlip = true;
             if (canceling != null)
             {
                 StopCoroutine(canceling);
             }
             lockState(true);
+            
             PlayerControllerr.SetAnimationTimeScale(PlayerControllerr.property.AtkSpeed);
             yield return new WaitForSecondsRealtime(atk1time[0]/ PlayerControllerr.property.AtkSpeed);
             combo += 1;
             onComboChange?.Invoke("combo", combo);
-            PlayerControllerr.speed = atk1Distance/(atk1time[1] * Time.timeScale);
+            PlayerControllerr.speed = atk1Distance;
             PlayerControllerr.SetAnimationNoRepeate(atk1);
             yield return new WaitForSecondsRealtime(atk1time[1] / PlayerControllerr.property.AtkSpeed);
+            PlayerControllerr.allowFlip = false;
             if (!boost)
             {
                 PlayerControllerr.createBullet(Atk1Bullet, bulletPosition, 0.07f);
@@ -159,19 +172,22 @@ namespace oct.ObjectBehaviors
             {
                 PlayerControllerr.createBullet(boostBullet, bulletPosition, 0.07f);
             }
-
+            //PlayerControllerr.speed = (0);
             PlayerControllerr.speed =  (0);
             yield return new WaitForSecondsRealtime(atk1time[2] / PlayerControllerr.property.AtkSpeed);
             canceling = StartCoroutine(cancelCombo());
+            PlayerControllerr.allowFlip = true;
             lockState(false);
         }
         public IEnumerator hit2()
         {
+            PlayerControllerr.allowFlip = true;
             if (canceling != null)
             {
                 StopCoroutine(canceling);
             }
             lockState(true);
+           
             PlayerControllerr.SetAnimationTimeScale(PlayerControllerr.property.AtkSpeed);
             combo += 1;
             onComboChange?.Invoke("combo", combo);
@@ -179,20 +195,23 @@ namespace oct.ObjectBehaviors
             PlayerControllerr.speed = atk2Distance / (time * Time.timeScale);
             PlayerControllerr.SetAnimationNoRepeate(atk2);
             yield return new WaitForSecondsRealtime(time / PlayerControllerr.property.AtkSpeed);
+             PlayerControllerr.allowFlip = false;
             if (!boost)
             {
                 PlayerControllerr.createBullet(Atk2Bullet, bulletPosition, 0.07f);
             }
             else
             {
-                PlayerControllerr.createBullet(boostBullet, bulletPosition, 0.07f);
+                PlayerControllerr.createBullet(BoostAtk2Bullet, bulletPosition, 0.07f);
             }
             yield return new WaitForSecondsRealtime((0.7f-time) / PlayerControllerr.property.AtkSpeed);
             canceling = StartCoroutine(cancelCombo());
+            PlayerControllerr.allowFlip = true;
             lockState(false);
         }
         public IEnumerator hit3()
         {
+            PlayerControllerr.allowFlip = true;
             if (canceling != null)
             {
                 StopCoroutine(canceling);
@@ -206,15 +225,17 @@ namespace oct.ObjectBehaviors
             PlayerControllerr.SetAnimationNoRepeate(atk3);
 
             yield return new WaitForSecondsRealtime(time);
+            PlayerControllerr.allowFlip = false;
             if (!boost)
             {
                 PlayerControllerr.createBullet(Atk3Bullet, bulletPosition, 0.07f);
             }
             else
             {
-                PlayerControllerr.createBullet(boostBullet, bulletPosition, 0.07f);
+                PlayerControllerr.createBullet(BoostAtk3Bullet, bulletPosition, 0.07f);
             }
             yield return new WaitForSecondsRealtime(0.7f - time);
+            PlayerControllerr.allowFlip = true;
             lockState(false);
         }
 
@@ -339,7 +360,7 @@ namespace oct.ObjectBehaviors
         bool dashEffect;
         public IEnumerator dash()
         {
-
+            PlayerControllerr.allowFlip = true;
             PlayerControllerr.SetAnimationTimeScale(1);
             ParticleSystem.Play();
             dashEffect =true;
@@ -351,7 +372,7 @@ namespace oct.ObjectBehaviors
             {
                 target = target * -1;
             }
-            Vector3 v = target / 0.3f;
+            Vector3 v = target / 0.3f/Time.timeScale;
 
 
             PlayerControllerr.SetAnimationNoRepeate(dashname);

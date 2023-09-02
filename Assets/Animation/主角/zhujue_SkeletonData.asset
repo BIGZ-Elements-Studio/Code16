@@ -29,15 +29,18 @@ MonoBehaviour:
   - jump_3
   - idle
   - jump_3
+  - jump_2
   toAnimation:
   - jump_3
   - idle
   - jump_1
   - run
+  - idle
   duration:
   - 0
   - 0
   - 0
   - 0
+  - 0.3
   defaultMix: 0.2
   controller: {fileID: 0}
