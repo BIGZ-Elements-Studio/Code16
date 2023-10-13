@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using Unity.VisualScripting;
 using UnityEngine;
 namespace BehaviorControlling
 {
@@ -28,7 +27,7 @@ namespace BehaviorControlling
         public virtual void RemoveState()
         {
             if (stateCoroutine!=null) {
-                StopCoroutine(stateCoroutine); // Stop the current coroutine if running
+                StopCoroutine(stateCoroutine); // Stop the currentfollowingTarget coroutine if running
             }
         }
         private void OnDisable()

@@ -19,6 +19,10 @@ namespace CombatSystem
         private PlayerShieldContainer ShieldController;
         [SerializeField] string hitName;
         public bool armor;
+        public UnityEvent _OnLockDisappear;
+        public UnityEvent _OnLockHide;
+        public UnityEvent<bool> OnLockAppear { get => throw new System.NotImplementedException(); }
+        public UnityEvent OnLockDistory { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
         public void setArm(bool i)
         {
@@ -101,6 +105,9 @@ namespace CombatSystem
             return container.getColor();
         }
 
-
+        public Transform GetlockedEnemyTransform()
+        {
+            return null;
+        }
     }
 }

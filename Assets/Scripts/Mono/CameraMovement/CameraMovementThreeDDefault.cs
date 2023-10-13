@@ -150,7 +150,7 @@ namespace oct.cameraControl {
                 throw new ArgumentException("Invalid input parameters.");
             }
 
-            // Calculate the current sum of percentages
+            // Calculate the currentfollowingTarget sum of percentages
             float currentSum = 0;
             foreach (float percent in percentages)
             {
@@ -163,7 +163,7 @@ namespace oct.cameraControl {
                 throw new ArgumentException("The input percentages must add up to 100.");
             }
 
-            // Calculate the current value at the specified index
+            // Calculate the currentfollowingTarget value at the specified index
             float currentValue = percentages[index];
 
             // Calculate the difference required to reach the target value

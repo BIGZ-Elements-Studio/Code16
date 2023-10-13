@@ -1,14 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 namespace oct.cameraControl
 {
     public class MainCameraController : MonoBehaviour
     {
         public CameraMovementController Movement2d;
+        public CameraMovement2dDialogue Npc2dController;
         public CameraMovementController Movement3d;
         public CameraShakeBehavior ShakeBehavior;
-        private CameraMovementController currentMovementController;  
+        private CameraMovementController currentMovementController;
+        [SerializeField] Transform _CameraPosition;
+        public Transform CameraTransform { get { return _CameraPosition; } }
         public static MainCameraController Instance { get; private set; }
 
         public Camera Camera; // 相机对象
@@ -45,7 +48,7 @@ namespace oct.cameraControl
 
         private void Start()
         {
-            //Actualoffset = offset;
+            transform.position = currentMovementController.GetDesirePosition();
         }
 
         public static void ChangeMode(bool targetIs2D)
@@ -70,8 +73,36 @@ namespace oct.cameraControl
             }
             Instance.is2D = targetIs2D;
         }
-
-        private void Update()
+        public static void setToDialogueMode(Transform npc)
+        {
+            (Instance.Npc2dController).Npc = npc;
+           Instance. currentMovementController = Instance.Npc2dController;
+            Instance.StartCoroutine(Instance.ChangeFOV(Instance.Camera2.orthographicSize, Instance. targetFovInDialogue, 0.3f));
+        }
+       public float targetFovInDialogue;
+        public static void EndDialogueMode()
+        {
+            Instance.currentMovementController = Instance.Movement2d;
+            Instance.StartCoroutine(Instance. ChangeFOV(Instance.targetFovInDialogue, Instance.defautFieldOfView2d, 0.5f));
+        }
+        IEnumerator ChangeFOV(float start, float end, float duration)
+        {
+           float time = 0;
+            while (time < duration)
+            {
+                float t = time / duration;
+                Instance.Camera.orthographicSize = Mathf.Lerp(start, end, t);
+                Instance.Camera2.orthographicSize = Mathf.Lerp(start, end, t);
+                
+                time += Time.deltaTime;
+                yield return null;
+            }
+            // Ensure it ends at the exact 'end' value
+            Instance.Camera.orthographicSize = end;
+            Instance.Camera2.orthographicSize = end;
+        
+    }
+    private void Update()
         {
 
 

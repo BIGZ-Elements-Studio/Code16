@@ -1,7 +1,6 @@
 using CombatSystem;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
@@ -22,7 +21,6 @@ public class stoneShockWave : MonoBehaviour
     LayerMask obstrctionlayerMask;
     [SerializeField]
     ParticleSystem particleSystem;
-    public List<showWaveVisualEffect> things;
 
     public GameObject self;
     private void OnEnable()
@@ -32,25 +30,11 @@ public class stoneShockWave : MonoBehaviour
     }
     public IEnumerator process()
     {
-        for (int i = 0; i < things.Count; i++)
-        {
-            things[i].transform.localPosition =Vector3.zero;
-            things[i].disappear(false);
-        }
+        
         float currentTime=0;
         var Increment = targetRadius / (totalTime/Time.fixedDeltaTime);
         collider.radius = 0;
-        while (currentTime < totalTime)
-        {
-            for(int i = 0; i < things.Count; i++)
-            {
-                Vector3 movement= Increment* Directions.eightDirections[i];
-                things[i].transform.position += movement;
-            }
-            collider.radius+=Increment;
-            currentTime+=Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
-        }
+        yield return new WaitForSeconds(totalTime);
         Destroy(self);
     }
 

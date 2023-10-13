@@ -26,7 +26,7 @@ namespace oct.ObjectBehaviors
         public Rigidbody Rigidbody;
         public Collider Collider;
         public PlayerInput input;
-        Vector3 direction;
+       public Vector3 direction;
         public float speed;
         [SerializeField]
         public IndividualProperty property;
@@ -35,11 +35,10 @@ namespace oct.ObjectBehaviors
         public UnityEvent<string, bool> onAmored;
         public UnityEvent<bool> Amored;
         public int combo;
-        public bool in2d;
         public Collider PositionCollider;
         public bool faceRight { get { return _faceRight; } set { if (_faceRight != value) { _faceRight = value; flip(value); } } }
         private bool _faceRight=true;
-
+        public float directionMultiplier { get { if (faceRight) { return 1; } else { return -1; } } }
         public bool grounded { get { return isGrounded(); } }
 
         public bool UpdateVelocity;
@@ -142,15 +141,8 @@ namespace oct.ObjectBehaviors
                 }
             }
             if (UpdateVelocity) {
-                if (!in2d)
-                {
                     Rigidbody.velocity = new Vector3(direction.x * speed* property.moveSpeedFactor, Rigidbody.velocity.y, direction.y * speed* property.moveSpeedFactor)/Time.timeScale;
-                }
-                else
-                {
-                    Rigidbody.velocity = new Vector3(direction.x * speed, Rigidbody.velocity.y,0);
 
-                }
             }
         }
 

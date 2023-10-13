@@ -10,7 +10,7 @@ public class PlayerAttributeEditor : Editor
         base.OnInspectorGUI();
         if (GUILayout.Button("change"))
         {
-            ((PlayerAttribute)target).in2d = !((PlayerAttribute)target).in2d;
+          //  ((PlayerAttribute)target).in2d = !((PlayerAttribute)target).in2d;
         }
     }
 }

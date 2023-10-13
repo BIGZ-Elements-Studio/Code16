@@ -151,7 +151,7 @@ namespace EZCameraShake
         }
 
         /// <summary>
-        /// A normalized value (about 0 to about 1) that represents the current level of intensity.
+        /// A normalized value (about 0 to about 1) that represents the currentfollowingTarget level of intensity.
         /// </summary>
         public float NormalizedFadeTime
         { get { return currentFadeTime; } }
@@ -166,7 +166,7 @@ namespace EZCameraShake
         { get { return currentFadeTime < 1 && sustain && fadeInDuration > 0; } }
 
         /// <summary>
-        /// Gets the current state of the shake.
+        /// Gets the currentfollowingTarget state of the shake.
         /// </summary>
         public CameraShakeState CurrentState
         {

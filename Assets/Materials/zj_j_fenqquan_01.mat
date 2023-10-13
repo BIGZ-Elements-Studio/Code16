@@ -28,7 +28,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _DissolveTex:
-        m_Texture: {fileID: 2800000, guid: f21142d3f82df0d46b6300dd90b04618, type: 3}
+        m_Texture: {fileID: 2800000, guid: c2a2aef9002b67d4cb849a4245164aa8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DistortTex:
@@ -36,7 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: dcc24761025226f4fb94107d4d659a07, type: 3}
+        m_Texture: {fileID: 2800000, guid: 96cdcd50b19e3b4408b95d4b303b55b4, type: 3}
         m_Scale: {x: 1, y: 0.5}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -57,11 +57,11 @@ Material:
     - _CustomVTO: 0
     - _DepthFade: 1
     - _DissolveFactor: 0
-    - _DissolveSoft: 0.1
+    - _DissolveSoft: 0
     - _DissolveTexAR: 1
     - _DissolveTexUSpeed: 0
     - _DissolveTexVSpeed: 0
-    - _DissolveWide: 0.05
+    - _DissolveWide: 0
     - _DistortDissolveTex: 0
     - _DistortFactor: 0
     - _DistortMainTex: 0

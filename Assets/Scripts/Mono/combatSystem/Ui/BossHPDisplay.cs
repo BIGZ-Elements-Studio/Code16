@@ -4,11 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BossHPDisplay : MonoBehaviour
+public class BossHPDisplay : CustomProgressBar
 {
    public int saparationNum=2;
-    [SerializeField]
-    CustomProgressBar progressBar;
     [SerializeField]
     TextMeshProUGUI TextMeshPro;
     int remaining;
@@ -21,7 +19,7 @@ public class BossHPDisplay : MonoBehaviour
         remaining = saparationNum;
         TextMeshPro.text = remaining.ToString();
     }
-    public void changeValue(float ratio)
+    public override void SetValue(float ratio)
     {
         float newFloat = (ratio % each)/ each;
         
@@ -37,12 +35,12 @@ public class BossHPDisplay : MonoBehaviour
         }
         if (newRemaining < remaining)
         {
-            progressBar.SetValue(1);
-            progressBar.SetValue(newFloat);
+            base.SetValue(1);
+            base.SetValue(newFloat);
         }
         else
         {
-            progressBar.SetValue (newFloat);
+            base.SetValue (newFloat);
         }
        
         remaining = newRemaining;

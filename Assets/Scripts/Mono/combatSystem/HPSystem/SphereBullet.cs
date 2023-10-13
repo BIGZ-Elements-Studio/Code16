@@ -72,7 +72,7 @@ public class SphereBullet : MonoBehaviour
                     a.damage = calculateAmount(damagePercent * AtkValue / 100, critcAtkRate, false);
                     a.Critic = false;
                 }
-
+                Debug.Log((target as MonoBehaviour).gameObject.name);
                 DamageTarget(target, a);
                 hit?.Invoke(true);
             }

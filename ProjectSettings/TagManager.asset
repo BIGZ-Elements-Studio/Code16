@@ -19,7 +19,7 @@ TagManager:
   - DetectCharacterTrigger
   - InventoryObject
   - characterSelf
-  - 
+  - Walls
   - 
   - 
   - 
@@ -42,6 +42,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: backgroud1
+    uniqueID: 3379215129
+    locked: 0
+  - name: backgroud2
+    uniqueID: 3905622501
+    locked: 0
+  - name: backgroud3
+    uniqueID: 1009584379
+    locked: 0
   - name: ground
     uniqueID: 2716963209
     locked: 0
@@ -50,4 +59,10 @@ TagManager:
     locked: 0
   - name: objectsInScene
     uniqueID: 2371130485
+    locked: 0
+  - name: frontlayer1
+    uniqueID: 2586335041
+    locked: 0
+  - name: frontlayer2
+    uniqueID: 466692147
     locked: 0

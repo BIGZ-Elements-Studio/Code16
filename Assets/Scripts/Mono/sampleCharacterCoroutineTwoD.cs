@@ -1,15 +1,13 @@
-using CombatSystem;
+
 using EZCameraShake;
 using oct.ObjectBehaviors;
+using oct.world;
 using Spine.Unity;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
 {
@@ -61,26 +59,44 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
     public string cooldownname;
     public UnityEvent<string, bool> changeGround;
     public UnityEvent<string, bool> coolDown;
+    public bool CanTurn3d()
+    {
+        Vector3 boxCenter = transform.position + c.center;
+        Vector3 boxHalfExtents = c.size * 0.5f;
+        Collider[] hits = Physics.OverlapBox(boxCenter - new Vector3(0, groundCheckDistance, 0), boxHalfExtents, Quaternion.identity, groundMask);
+        foreach(Collider collider in hits)
+        {
+
+            if (collider.GetComponent<BlockConfig>() != null)
+            {
+                return collider.GetComponent<BlockConfig>().allow3d;
+            }
+        }
+        return false;
+    }
     private bool IsGrounded()
     {
 
         Vector3 boxCenter = transform.position + c.center;
         Vector3 boxHalfExtents = c.size * 0.5f;
-        bool isGrounded = Physics.BoxCast(boxCenter, boxHalfExtents, Vector3.down, Quaternion.identity, groundCheckDistance, groundMask);
-        changeGround?.Invoke(Groundname,isGrounded);
-        if (isGrounded) {
+        RaycastHit m_Hit;
+       // bool isGrounded = Physics.BoxCast(boxCenter, boxHalfExtents, Vector3.down, out m_Hit, Quaternion.identity, groundCheckDistance, groundMask);
+        Collider[] hits = Physics.OverlapBox(boxCenter - new Vector3(0, groundCheckDistance, 0), boxHalfExtents, Quaternion.identity, groundMask);
+        changeGround?.Invoke(Groundname, (hits.Count()>=1));
+        if ((hits.Count() >= 1)) {
+           
             coolDown?.Invoke(cooldownname, true);
-          StartCoroutine(  DoShake(-rb.velocity.y));
+        //  StartCoroutine(  DoShake(-rb.velocity.y));
         }
-        
-        return isGrounded;
+        return (hits.Count() >= 1);
     }
+    bool ground;
     IEnumerator DoShake(float velocityY)
     {
         // yield return new WaitForSeconds(0.15f);
         while (!Physics.BoxCast(transform.position + c.center, c.size * 0.5f, Vector3.down, Quaternion.identity, 0.5f, groundMask))
         {
-            Debug.Log("notYet");
+            //Debug.Log("notYet");
             yield return new WaitForFixedUpdate();
         } 
          if (velocityY > 15){
@@ -98,9 +114,9 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
         SetAnimation(air);
         //rb.useGravity = true;
         yield return new WaitForSecondsRealtime(0.5f);
-        while (!IsGrounded())
+        while (!ground)
         {
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
         // cheak grounded by waitforfixupdate in a while loop
         lockState(false);
@@ -143,6 +159,19 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
       StartCoroutine(  cancelFLy());
     }
     PlayerInput inputActions;
+    bool allowInput { get { return InputController.allow2dInput && enabled; } }
+    void refreshInputaction()
+    {
+        Debug.Log(allowInput);
+        if (allowInput)
+        {
+            inputActions.Enable();
+        }
+        else
+        {
+            inputActions.Disable();
+        }
+    }
     private void Awake()
     {
         inputActions = new PlayerInput();
@@ -160,6 +189,7 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
     }
     private void Start()
     {
+        InputController.allow2dInputChanged?.AddListener(delegate { refreshInputaction(); });
         StartCoroutine(inAir());
         inputActions.In2d.jump.canceled += ctx => {StartCoroutine( cancelFLy()); };
     }
@@ -176,6 +206,7 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
             faceRight = false;
         }
            rb.velocity = new Vector3(direction* speed, rb.velocity.y, 0);
+        ground= IsGrounded();
     }
 
     public IEnumerator idle()

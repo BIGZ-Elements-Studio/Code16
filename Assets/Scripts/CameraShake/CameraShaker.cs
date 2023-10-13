@@ -7,7 +7,7 @@ namespace EZCameraShake
     public class CameraShaker : MonoBehaviour
     {
         /// <summary>
-        /// The single instance of the CameraShaker in the current scene. Do not use if you have multiple instances.
+        /// The single instance of the CameraShaker in the currentfollowingTarget scene. Do not use if you have multiple instances.
         /// </summary>
         public static CameraShaker Instance;
         static Dictionary<string, CameraShaker> instanceList = new Dictionary<string, CameraShaker>();
@@ -170,7 +170,7 @@ namespace EZCameraShake
         }
 
         /// <summary>
-        /// Gets a copy of the list of current camera shake instances.
+        /// Gets a copy of the list of currentfollowingTarget camera shake instances.
         /// </summary>
         public List<CameraShakeInstance> ShakeInstances
         { get { return new List<CameraShakeInstance>(cameraShakeInstances); } }

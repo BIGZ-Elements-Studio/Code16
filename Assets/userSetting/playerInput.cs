@@ -308,6 +308,102 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""dialogue"",
+            ""id"": ""70c28ca8-c407-411d-9ebf-c00b16ac6dd2"",
+            ""actions"": [
+                {
+                    ""name"": ""next"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa4ed45a-09a9-42fe-9dc8-f9b5499807f9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""72deab5a-3972-499d-92ff-f427c9863a95"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""changeChara"",
+            ""id"": ""dc9e63ca-847c-4cf6-9104-6d1df561e26a"",
+            ""actions"": [
+                {
+                    ""name"": ""1"",
+                    ""type"": ""Button"",
+                    ""id"": ""25cf3b02-5f45-4f81-9a4c-2b549ab9825e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""2"",
+                    ""type"": ""Button"",
+                    ""id"": ""2794e5ef-e7f4-4a86-805d-1a8bd55ad391"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""3"",
+                    ""type"": ""Button"",
+                    ""id"": ""c2e376bb-18e5-474d-952e-0d221088ef44"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""30b71275-9ca9-4cb8-84a2-c5b389c271f7"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b468ae9f-3ee2-4a1a-92f7-23b925980918"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3d4923dd-177e-4701-a5ea-68e2266e4c13"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -324,6 +420,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_In2d = asset.FindActionMap("In2d", throwIfNotFound: true);
         m_In2d_move = m_In2d.FindAction("move", throwIfNotFound: true);
         m_In2d_jump = m_In2d.FindAction("jump", throwIfNotFound: true);
+        // dialogue
+        m_dialogue = asset.FindActionMap("dialogue", throwIfNotFound: true);
+        m_dialogue_next = m_dialogue.FindAction("next", throwIfNotFound: true);
+        // changeChara
+        m_changeChara = asset.FindActionMap("changeChara", throwIfNotFound: true);
+        m_changeChara__1 = m_changeChara.FindAction("1", throwIfNotFound: true);
+        m_changeChara__2 = m_changeChara.FindAction("2", throwIfNotFound: true);
+        m_changeChara__3 = m_changeChara.FindAction("3", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -521,6 +625,114 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public In2dActions @In2d => new In2dActions(this);
+
+    // dialogue
+    private readonly InputActionMap m_dialogue;
+    private List<IDialogueActions> m_DialogueActionsCallbackInterfaces = new List<IDialogueActions>();
+    private readonly InputAction m_dialogue_next;
+    public struct DialogueActions
+    {
+        private @PlayerInput m_Wrapper;
+        public DialogueActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @next => m_Wrapper.m_dialogue_next;
+        public InputActionMap Get() { return m_Wrapper.m_dialogue; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DialogueActions set) { return set.Get(); }
+        public void AddCallbacks(IDialogueActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DialogueActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DialogueActionsCallbackInterfaces.Add(instance);
+            @next.started += instance.OnNext;
+            @next.performed += instance.OnNext;
+            @next.canceled += instance.OnNext;
+        }
+
+        private void UnregisterCallbacks(IDialogueActions instance)
+        {
+            @next.started -= instance.OnNext;
+            @next.performed -= instance.OnNext;
+            @next.canceled -= instance.OnNext;
+        }
+
+        public void RemoveCallbacks(IDialogueActions instance)
+        {
+            if (m_Wrapper.m_DialogueActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDialogueActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DialogueActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DialogueActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DialogueActions @dialogue => new DialogueActions(this);
+
+    // changeChara
+    private readonly InputActionMap m_changeChara;
+    private List<IChangeCharaActions> m_ChangeCharaActionsCallbackInterfaces = new List<IChangeCharaActions>();
+    private readonly InputAction m_changeChara__1;
+    private readonly InputAction m_changeChara__2;
+    private readonly InputAction m_changeChara__3;
+    public struct ChangeCharaActions
+    {
+        private @PlayerInput m_Wrapper;
+        public ChangeCharaActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @_1 => m_Wrapper.m_changeChara__1;
+        public InputAction @_2 => m_Wrapper.m_changeChara__2;
+        public InputAction @_3 => m_Wrapper.m_changeChara__3;
+        public InputActionMap Get() { return m_Wrapper.m_changeChara; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ChangeCharaActions set) { return set.Get(); }
+        public void AddCallbacks(IChangeCharaActions instance)
+        {
+            if (instance == null || m_Wrapper.m_ChangeCharaActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_ChangeCharaActionsCallbackInterfaces.Add(instance);
+            @_1.started += instance.On_1;
+            @_1.performed += instance.On_1;
+            @_1.canceled += instance.On_1;
+            @_2.started += instance.On_2;
+            @_2.performed += instance.On_2;
+            @_2.canceled += instance.On_2;
+            @_3.started += instance.On_3;
+            @_3.performed += instance.On_3;
+            @_3.canceled += instance.On_3;
+        }
+
+        private void UnregisterCallbacks(IChangeCharaActions instance)
+        {
+            @_1.started -= instance.On_1;
+            @_1.performed -= instance.On_1;
+            @_1.canceled -= instance.On_1;
+            @_2.started -= instance.On_2;
+            @_2.performed -= instance.On_2;
+            @_2.canceled -= instance.On_2;
+            @_3.started -= instance.On_3;
+            @_3.performed -= instance.On_3;
+            @_3.canceled -= instance.On_3;
+        }
+
+        public void RemoveCallbacks(IChangeCharaActions instance)
+        {
+            if (m_Wrapper.m_ChangeCharaActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IChangeCharaActions instance)
+        {
+            foreach (var item in m_Wrapper.m_ChangeCharaActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_ChangeCharaActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public ChangeCharaActions @changeChara => new ChangeCharaActions(this);
     public interface IIn3dActions
     {
         void OnRun(InputAction.CallbackContext context);
@@ -534,5 +746,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+    }
+    public interface IDialogueActions
+    {
+        void OnNext(InputAction.CallbackContext context);
+    }
+    public interface IChangeCharaActions
+    {
+        void On_1(InputAction.CallbackContext context);
+        void On_2(InputAction.CallbackContext context);
+        void On_3(InputAction.CallbackContext context);
     }
 }

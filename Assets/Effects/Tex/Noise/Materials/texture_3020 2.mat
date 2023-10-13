@@ -82,7 +82,7 @@ Material:
     - _DissolveSoft: 0.1
     - _DissolveTexAR: 1
     - _DissolveTexUSpeed: 0
-    - _DissolveTexVSpeed: -1
+    - _DissolveTexVSpeed: -0.25
     - _DissolveWide: 0.04
     - _DistortDissolveTex: 0
     - _DistortFactor: 0

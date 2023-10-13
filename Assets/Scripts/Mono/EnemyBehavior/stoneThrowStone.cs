@@ -1,4 +1,6 @@
-using CombatSystem;using Spine.Unity;
+using CombatSystem;
+using CombatSystem.boss.stoneperson;
+using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +8,12 @@ using UnityEngine.Events;
 
 public class stoneThrowStone : MonoBehaviour
 {
+    public static UnityEvent HitBack=new UnityEvent();
     public GameObject target { get { return combatController.Player; } }
     public GameObject flipTarget;
     public GameObject self;
+    public GameObject effect;
+    public GameObject Breakeffect;
     public Rigidbody selfrb;
     public Transform initialPosition;
    public SphereBullet bullet;
@@ -27,11 +32,13 @@ public class stoneThrowStone : MonoBehaviour
     public List<Rigidbody> bodies;
     public float magnitude;
    public UnityEvent breakStone;
+    public GameObject DetectAreas;
     public void StoneBreak()
     {
         Hitable = false;
         StopAllCoroutines();
         spineAnimationState.SetAnimation(0, breakAnimation, true);
+        
         foreach (var body in bodies)
         {
             body.isKinematic = false;
@@ -60,21 +67,24 @@ public class stoneThrowStone : MonoBehaviour
         float FlyTime = 1f;
         Vector3 DistanceEachTime = distance / (FlyTime/ Time.fixedDeltaTime);
         float passedTime = 0;
-        while(passedTime < FlyTime)
+        while(true)
         {
-            passedTime += Time.fixedDeltaTime;
-            thisTramsform.position = thisTramsform.position + DistanceEachTime;
             yield return new WaitForFixedUpdate();
+            passedTime += Time.fixedDeltaTime;
+            selfrb.MovePosition( thisTramsform.position + DistanceEachTime);
+            DetectAreas.transform.position = thisTramsform.position;
+           
         }
         yield return new WaitForSeconds(0.5f);
-        Destroy(self);
+       // Destroy(self);
     }
 
-    private void Awake()
+    private void Start()
     {
         selfrb.maxAngularVelocity = 50;
         spineAnimationState.SetAnimation(0, idle, true);
         come = StartCoroutine(process());
+
     }
     private void FixedUpdate()
     {
@@ -84,31 +94,58 @@ public class stoneThrowStone : MonoBehaviour
     {
         handFollower.enabled = false;
         bullet.active();
-       StartCoroutine(process());
+      c= StartCoroutine(process());
     }
+    Coroutine c;
     public void HitPlayer(bool i)
     {
+       
+        if (!Hitable)
+        {
+            Debug.Log(1111);
+            control.hit();
+        }
         Hitable =false;
         StoneBreak();
     }
-    public void HitGround(Collider other)
+    public EnemyHandsControl control;
+    public Coroutine breakRoutine;
+    public void OnTriggerEnter(Collider other)
     {
+        
         if(groundLayer == (groundLayer | (1 << other.gameObject.layer))){
-            StoneBreak();
+            StopCoroutine(come);
+            breakStone?.Invoke();
+            selfrb.maxAngularVelocity = 0;
+            GameObject g = Instantiate(effect);
+            g.transform.position = transform.position+Vector3.down;
+            breakRoutine= StartCoroutine(Break());
         }
+    }
+    IEnumerator Break()
+    {
+        bullet.diable();
+        yield return new WaitForSeconds(2);
+        GameObject g = Instantiate(Breakeffect);
+        g.transform.position = transform.position + Vector3.down;
+        StoneBreak();
     }
     public IEnumerator flipProcess()
     {
+        yield return new WaitForFixedUpdate();
+        selfrb.maxAngularVelocity = 50;
         bullet.affectPlayer = false;
         bullet.affectEnemy = true;
          Vector3 distance = flipTarget.transform.position - thisTramsform.position;
         float FlyTime = 0.7f;
         Vector3 DistanceEachTime = distance / (FlyTime / Time.fixedDeltaTime);
         float passedTime = 0;
+        bullet.actived = true;
         while (passedTime < FlyTime)
         {
             passedTime += Time.fixedDeltaTime;
             thisTramsform.position = thisTramsform.position + DistanceEachTime;
+            DetectAreas.transform.position = thisTramsform.position;
             yield return new WaitForFixedUpdate();
         }
 
@@ -116,7 +153,8 @@ public class stoneThrowStone : MonoBehaviour
     }
    public void flip(string s, bool b)
     {
-        
+        if(breakRoutine!=null)
+        StopCoroutine(breakRoutine);
         if (!b|| !Hitable)
         {
             return;
@@ -126,6 +164,8 @@ public class stoneThrowStone : MonoBehaviour
         {
             StopCoroutine(come);
         }
+        Debug.Log("called");
+        HitBack?.Invoke();
         StartCoroutine(flipProcess());
     }
 }

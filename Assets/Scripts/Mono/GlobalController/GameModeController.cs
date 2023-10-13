@@ -1,3 +1,4 @@
+using CombatSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class GameModeController : MonoBehaviour
     public static handler ModeChangediFTo2D;
 
     public static bool allowChange=true;
+    public static bool allowChangeTo3d { get { return combatController.Team.TwoDScript.CanTurn3d(); } }
     static GameModeController g;
 
     private void Awake()
@@ -21,6 +23,12 @@ public class GameModeController : MonoBehaviour
     private void Start()
     {
         SetModeTo(true);
+       // Invoke("a", 0.1f);
+    }
+    void a()
+    {
+        Debug.Log("awa");
+        changeMode();
     }
     public static void changeMode()
     {
@@ -30,8 +38,16 @@ public class GameModeController : MonoBehaviour
     {
             if (allowChange&&IsTarget2D != Is2d)
             {
+            if (!IsTarget2D && allowChangeTo3d)
+            {
                 Is2d = IsTarget2D;
                 ModeChangediFTo2D?.Invoke(Is2d);
+            }
+            else if (IsTarget2D) 
+            {
+                Is2d = IsTarget2D;
+                ModeChangediFTo2D?.Invoke(Is2d);
+            }
             }
         return allowChange;
     }

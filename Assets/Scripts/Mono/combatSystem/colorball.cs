@@ -1,18 +1,20 @@
 using CombatSystem;
 using UnityEngine;
-
-public class colorball : MonoBehaviour
+namespace CombatSystem
 {
-    public CombatColor color;
-  public  GameObject g;
-    // Start is called before the first frame update
-    public void Enter(Collider other)
+    public class colorball : MonoBehaviour
     {
-        IndividualProperty individualProperty=other.GetComponent<IndividualProperty>();
-        if (individualProperty!=null&& individualProperty.color==color)
+        public CombatColor color;
+        public GameObject g;
+        // Start is called before the first frame update
+        public void Enter(Collider other)
         {
-            individualProperty.gainColor(1);
-            Destroy(g);
+            IndividualProperty individualProperty = other.GetComponent<IndividualProperty>();
+            if (individualProperty != null && individualProperty.color == color)
+            {
+                individualProperty.gainColor(1);
+                Destroy(g);
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ public class TwoAnimation : MonoBehaviour
     public string first;
     [SpineAnimation]
     public string second;
-    private void Awake()
+    private void OnEnable()
     {
         spineAnimationState.SetAnimation(0, first, false);
         spineAnimationState.AddAnimation(0, second, true,0);

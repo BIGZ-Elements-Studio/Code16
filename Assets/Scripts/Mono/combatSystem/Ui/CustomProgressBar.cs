@@ -36,7 +36,7 @@ public class CustomProgressBar : MonoBehaviour
         bufferFillImg.fillAmount = bufferValue;
     }
 
-    public void SetValue(float newValue)
+    public virtual void SetValue(float newValue)
     {
         if (newValue> targetValue)
         {

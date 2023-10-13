@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace CombatSystem
 {
@@ -114,6 +115,7 @@ namespace CombatSystem
                 }
                 onHPChange?.Invoke(hpName, HP);
                 onHPChangeWithMaxHP?.Invoke(MaxHP, HP);
+                Debug.Log("aa" + HP + " " + MaxHP);
                 if (type == TargetType.enemy)
                 {
                     if (damage.Critic)

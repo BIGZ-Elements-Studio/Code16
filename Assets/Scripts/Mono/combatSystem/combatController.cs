@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CombatSystem.team;
-using Unity.VisualScripting;
+using static UnityEngine.GraphicsBuffer;
+
 namespace CombatSystem
 {
     public class combatController : MonoBehaviour
@@ -10,6 +11,7 @@ namespace CombatSystem
         [SerializeField]
         private GameObject player { get { return team.CurrentCharacter.gameObject; } }
         private Vector3 playerActualposition { get { return team.CurrentCharacterActualPosition.position; } }
+        private Vector3 playerActualposition2D { get { return team.CharacterActualPosition2D.position; } }
         [SerializeField]
         private playerTeamController team;
         public static List<Transform> allEnemyTargets { get { List<Transform> a = new List<Transform>(); a.Add(Instance.player.transform); return a; } }
@@ -18,11 +20,15 @@ namespace CombatSystem
         {
             get { return Instance.characterStates; }
         }
+        public static playerTeamController Team
+        {
+            get { return Instance.team; }
+        }
         public static GameObject defaultEffect { get { return instance.Effect; } }
         [SerializeField]
         GameObject Effect;
         private static combatController instance;
-
+       public GameObject lockIcon;
         public static combatController Instance
         {
             get
@@ -49,40 +55,124 @@ namespace CombatSystem
                 return Instance.playerActualposition;
             }
         }
-        private void Awake()
+        public static Vector3 PlayerActualposition2D
         {
-            team.OnCharacterStateChange.AddListener(invokeVisualEvent);
+            get
+            {
+                return Instance.playerActualposition2D;
+            }
         }
+        public static float DetectionRadius=10;
 
-        private void invokeVisualEvent(List<characterState> states)
+        public static void TryFindEnemy()
         {
-            EventBus.Trigger("OnCharacterStatesChanged", states);
+            if (followingTargrtCashed == null)
+            {
+                FindLockEnemy(PlayerActualPosition, direction);
+            }
+        }
+        public static DamageTarget FindLockEnemy(Vector3 playerPosition,Vector2 playerDirection)
+        {
+            Collider[] colliders = Physics.OverlapSphere(playerPosition, DetectionRadius);
+            float maxWeight = -1;
+            DamageTarget maxtarget = null;
+            foreach (Collider collider in colliders)
+            {
+               // Debug.Log(collider.gameObject.name);
+                DamageTarget target=(DamageTarget)collider.GetComponent(typeof( DamageTarget));
+                if (target != null&&target.GetlockedEnemyTransform()!=null)
+                {
+                    Vector3 t = target.GetlockedEnemyTransform().position;
+                    Vector2 distance = new Vector2((t - playerPosition).x, (t - playerPosition).z);
+                    float weight = (Vector3.Dot(distance.normalized, playerDirection.normalized)-0.2f) + ((1-(distance.magnitude / DetectionRadius))*2);
+                    if (weight > maxWeight&& (Vector3.Dot(distance.normalized, playerDirection.normalized) - 0.2f)>0)
+                    {
+                       
+                        maxtarget = target;
+                        maxWeight = weight;
+
+                    }
+                }
+                
+                
+
+            }
+            if (maxWeight >0)
+            {
+                rejesterLock(maxtarget);
+                currentfollowingTarget = maxtarget;
+                followingTargrtCashed = currentfollowingTarget;
+                instance.lockIcon.GetComponent<FollowTransform>().target = maxtarget.GetlockedEnemyTransform();
+                instance.StartCoroutine(calculateWeight());
+                instance.lockIcon.SetActive(true);
+                return maxtarget;
+            }
+            return null; 
+        }
+        private void Start()
+        {
+            input = new PlayerInput();
+            input.Enable();
+            input.In3d.run.performed += ctx => { if (isActiveAndEnabled) { direction = (ctx.ReadValue<Vector2>()).normalized; } };
+        }
+       static Vector2 direction;
+        static public PlayerInput input;
+
+        public static  DamageTarget currentfollowingTarget;
+         static DamageTarget followingTargrtCashed;
+        static void rejesterLock(DamageTarget maxtarget)
+        {
+            maxtarget.OnLockDistory?.AddListener(DisjesterLock);
+            maxtarget.OnLockAppear?.AddListener(hide);
+        }
+        static void hide(bool i)
+        {
+            if (i)
+            {
+                instance.lockIcon.SetActive(true);
+                currentfollowingTarget = followingTargrtCashed;
+            }
+            else
+            {
+                instance.lockIcon.SetActive(false);
+                currentfollowingTarget =null;
+            }
+        }
+        static void DisjesterLock()
+        {
+            instance.lockIcon.SetActive(false);
+            followingTargrtCashed.OnLockDistory?.RemoveListener(DisjesterLock);
+            followingTargrtCashed.OnLockAppear?.RemoveListener(hide);
+             currentfollowingTarget=null;
+             followingTargrtCashed=null;
+    }
+        static float distanceThreadHold=8;
+       static IEnumerator calculateWeight()
+        {
+           float maxWeight = 2;
+            float currentWeight=0;
+            float detectionInterval=0.2f;
+            while (currentWeight< maxWeight)
+            {
+               // Debug.Log();
+                currentWeight += EnemyWeight(currentfollowingTarget.GetlockedEnemyTransform().position, combatController.PlayerActualPosition, direction)* detectionInterval;
+                yield return new WaitForSeconds(detectionInterval);
+            }
+            DisjesterLock();
+            
+        }
+       static float EnemyWeight(Vector3 enemyPosition,Vector3 playerPosition,Vector2 playerDirection)
+        {
+            Vector3 distance = (enemyPosition - playerPosition);
+            float distanceWeight = Mathf.Clamp((distance.magnitude - distanceThreadHold), 0, 10);
+            float directionWeight = 1-Vector3.Dot(playerDirection.normalized, distance.normalized);
+            if (directionWeight>=0.8)
+            {
+                distanceWeight = 2;
+            }
+            return distanceWeight* distanceWeight * directionWeight;
         }
     }
 
     
-}[UnitTitle("On Character States Changed")]//The Custom Scripting Event node to receive the Event. Add "On" to the node title as an Event naming convention.
-    [UnitCategory("Events\\MyEvents\\CombatSystem")]//Set the path to find the node in the fuzzy finder as Events > My Events.
-    public class ScriptablEventCharacterStateChange : EventUnit<List<characterState>>
-    {
-        [DoNotSerialize]// No need to serialize ports.
-        public ValueOutput result { get; private set; }// The Event output data to return when the Event is triggered.
-        protected override bool register => true;
-
-        // Add an EventHook with the name of the Event to the list of Visual Scripting Events.
-        public override EventHook GetHook(GraphReference reference)
-        {
-            return new EventHook("OnCharacterStatesChanged");
-        }
-        protected override void Definition()
-        {
-            base.Definition();
-            // Setting the value on our port.
-            result = ValueOutput<List<characterState>>(nameof(result));
-        }
-        // Setting the value on our port.
-        protected override void AssignArguments(Flow flow, List<characterState> data)
-        {
-            flow.SetValue(result, data);
-        }
-    }
+}

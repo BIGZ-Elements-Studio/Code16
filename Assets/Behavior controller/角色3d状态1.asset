@@ -24,7 +24,7 @@ MonoBehaviour:
     showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - show: 1
+  - show: 0
     stateName: dash
     priority: 6
     effect: 0
@@ -36,17 +36,17 @@ MonoBehaviour:
     showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - show: 0
+  - show: 1
     stateName: idle
     priority: 0
     effect: 0
     conditions: []
     tags: 08000000
-    showConditions: 0
+    showConditions: 1
     showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - show: 0
+  - show: 1
     stateName: E
     priority: 2
     effect: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
     showTags: 0
     allowBufferedInput: 1
     AllowReEnterDuringProcess: 0
-  - show: 0
+  - show: 1
     stateName: "\u653B\u51FB2"
     priority: 2
     effect: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
     showTags: 0
     allowBufferedInput: 1
     AllowReEnterDuringProcess: 0
-  - show: 0
+  - show: 1
     stateName: "\u653B\u51FB3"
     priority: 2
     effect: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
     - rid: 1997685619496321029
     - rid: 1997685619496321030
     tags: 0500000002000000
-    showConditions: 0
+    showConditions: 1
     showTags: 0
     allowBufferedInput: 1
     AllowReEnterDuringProcess: 0

@@ -22,4 +22,8 @@ public interface DamageTarget
     public void DamageByPercent(int percent, CombatColor damageColor);
 
     public Vector3 getCenterPosition();
+
+    public Transform GetlockedEnemyTransform();
+    public UnityEvent<bool> OnLockAppear { get; }
+    public UnityEvent OnLockDistory { get;}
 }

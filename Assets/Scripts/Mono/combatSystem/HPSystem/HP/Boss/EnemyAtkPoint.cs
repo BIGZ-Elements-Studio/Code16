@@ -2,6 +2,7 @@ using CombatSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.Events;
 using static EnemyHPContainner;
@@ -14,9 +15,16 @@ public class EnemyAtkPoint : MonoBehaviour,DamageTarget
     Transform center;
     [SerializeField]
     Transform popupPosition;
+    [SerializeField]
+    Transform _lockedEnemyTransform;
     public UnityEvent<CombatColor> shieldBreak;
     public UnityEvent ReciveHit;
     public bool active = true;
+    public UnityEvent<bool> _OnLockAppear;
+    public UnityEvent _OnLockDistory;
+    public UnityEvent<bool> OnLockAppear { get { return _OnLockAppear; } }
+    public UnityEvent OnLockDistory { get { return _OnLockDistory; }  }
+
     public void addBuff(CharacterBuff buff)
     {
        // throw new System.NotImplementedException();
@@ -86,5 +94,8 @@ public class EnemyAtkPoint : MonoBehaviour,DamageTarget
        return enemyHPContainner.TargetType;
     }
 
-
+    public Transform GetlockedEnemyTransform()
+    {
+        return _lockedEnemyTransform;
+    }
 }

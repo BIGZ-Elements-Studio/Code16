@@ -286,6 +286,102 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "dialogue",
+            "id": "70c28ca8-c407-411d-9ebf-c00b16ac6dd2",
+            "actions": [
+                {
+                    "name": "next",
+                    "type": "Button",
+                    "id": "aa4ed45a-09a9-42fe-9dc8-f9b5499807f9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "72deab5a-3972-499d-92ff-f427c9863a95",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "changeChara",
+            "id": "dc9e63ca-847c-4cf6-9104-6d1df561e26a",
+            "actions": [
+                {
+                    "name": "1",
+                    "type": "Button",
+                    "id": "25cf3b02-5f45-4f81-9a4c-2b549ab9825e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "2",
+                    "type": "Button",
+                    "id": "2794e5ef-e7f4-4a86-805d-1a8bd55ad391",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "3",
+                    "type": "Button",
+                    "id": "c2e376bb-18e5-474d-952e-0d221088ef44",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "30b71275-9ca9-4cb8-84a2-c5b389c271f7",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b468ae9f-3ee2-4a1a-92f7-23b925980918",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3d4923dd-177e-4701-a5ea-68e2266e4c13",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

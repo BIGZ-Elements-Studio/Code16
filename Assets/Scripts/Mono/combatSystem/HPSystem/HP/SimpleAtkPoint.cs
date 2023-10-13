@@ -19,6 +19,12 @@ public class SimpleAtkPoint : MonoBehaviour, DamageTarget
    public float maxHp;
     float currentHp;
     bool useHardness;
+    public Transform _lockedEnemyTransform;
+
+    public UnityEvent<bool> OnLockAppear { get { return _OnLockAppear; } }
+    public UnityEvent OnLockDistory { get { return _OnLockDistory; } }
+    public UnityEvent _OnLockDistory;
+    public UnityEvent<bool> _OnLockAppear;
     public void addBuff(CharacterBuff buff)
     {
     }
@@ -83,6 +89,9 @@ public class SimpleAtkPoint : MonoBehaviour, DamageTarget
         return CombatColor;
     }
 
-
+    public Transform GetlockedEnemyTransform()
+    {
+        return _lockedEnemyTransform;
+    }
 }
 

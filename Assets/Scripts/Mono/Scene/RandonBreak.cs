@@ -74,7 +74,9 @@ namespace Scene
 
         public IEnumerator stop()
         {
-            BreakTrigger.enabled = false;
+            if (BreakTrigger!=null) {
+                BreakTrigger.enabled = false;
+            }
             yield return new WaitForSeconds(3);
             foreach (Rigidbody rb in rigidbodies)
             {

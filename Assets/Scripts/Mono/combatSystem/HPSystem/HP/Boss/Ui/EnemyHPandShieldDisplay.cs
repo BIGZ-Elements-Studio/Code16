@@ -11,7 +11,7 @@ public class EnemyHPandShieldDisplay : MonoBehaviour
     [SerializeField]
     EnemyShieldContainner target2;
     [SerializeField]
-    BossHPDisplay HPSlider;
+    CustomProgressBar HPSlider;
     [SerializeField]
     Slider ShieldSlider;
     [SerializeField]
@@ -29,7 +29,9 @@ public class EnemyHPandShieldDisplay : MonoBehaviour
 
     void changeHp(int min,int max)
     {
-        HPSlider.changeValue((float)min/max);
+      
+        HPSlider.SetValue((float)min/max);
+        
     }
     void changeShield(float f)
     {
