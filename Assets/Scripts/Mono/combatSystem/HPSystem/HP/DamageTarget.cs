@@ -11,6 +11,8 @@ public interface DamageTarget
     public TargetType getType();
     public void addBuff(CharacterBuff buff);
     public void addBuff(TeamBuff buff);
+    public void ForceaddBuff(CharacterBuff buff);
+    public void ForceaddBuff(TeamBuff buff);
     public  void addforce(Vector3 originalWorldPosition,float magnitude);
     public void addforceOfDirection(Vector3 direction);
     // Method to apply damage to HP
@@ -20,4 +22,8 @@ public interface DamageTarget
     public void DamageByPercent(int percent, CombatColor damageColor);
 
     public Vector3 getCenterPosition();
+
+    public Transform GetlockedEnemyTransform();
+    public UnityEvent<bool> OnLockAppear { get; }
+    public UnityEvent OnLockDistory { get;}
 }

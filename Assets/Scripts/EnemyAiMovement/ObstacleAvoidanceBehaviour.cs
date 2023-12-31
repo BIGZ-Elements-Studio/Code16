@@ -22,7 +22,7 @@ namespace oct.EnemyMovement
                     = obstacleCollider.ClosestPoint(aiData.sceneInfo.yAtSceneY(transform.position)) - aiData.sceneInfo.yAtSceneY(transform.position);
                 float distanceToObstacle = directionToObstacle.magnitude;
 
-                //calculate weight based on the distance Enemy<--->Obstacle
+                //calculate weight based on the DetectionRadius Enemy<--->Obstacle
                 float weight
                     = distanceToObstacle <= agentColliderSize
                     ? 1
@@ -37,7 +37,7 @@ namespace oct.EnemyMovement
 
                     float valueToPutIn = result * weight;
 
-                    //override value only if it is higher than the current one stored in the danger array
+                    //override value only if it is higher than the currentfollowingTarget one stored in the danger array
                     if (valueToPutIn > danger[i])
                     {
                         danger[i] = valueToPutIn;

@@ -7,8 +7,8 @@ public class TeamHp : MonoBehaviour
     [SerializeField]
     HPContainer controller;
     [SerializeField]
-    Slider slider;
-    private void Start()
+    CustomProgressBar slider;
+    private void Awake()
     {
         controller.onHPChangeWithMaxHP.AddListener(changeValue);
     }

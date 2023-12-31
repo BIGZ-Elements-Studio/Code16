@@ -10,15 +10,35 @@ public class SimpleAtkPoint : MonoBehaviour, DamageTarget
     public CombatColor CombatColor;
     public Transform center;
     public UnityEvent<string, bool> onHited;
+    public UnityEvent ReciveHit;
+    public UnityEvent<float> HitRemainHp;
     public UnityEvent<Vector3> AddedForce;
     [SerializeField] string hitName;
     public bool armor;
     public bool returnAfterHit;
+   public float maxHp;
+    float currentHp;
+    bool useHardness;
+    public Transform _lockedEnemyTransform;
+
+    public UnityEvent<bool> OnLockAppear { get { return _OnLockAppear; } }
+    public UnityEvent OnLockDistory { get { return _OnLockDistory; } }
+    public UnityEvent _OnLockDistory;
+    public UnityEvent<bool> _OnLockAppear;
     public void addBuff(CharacterBuff buff)
     {
     }
     public void addBuff(TeamBuff buff)
     {
+    }
+    public void ForceaddBuff(CharacterBuff buff)
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public void ForceaddBuff(TeamBuff buff)
+    {
+        //throw new System.NotImplementedException();
     }
     public void addforceOfDirection(Vector3 direction)
     {
@@ -27,10 +47,22 @@ public class SimpleAtkPoint : MonoBehaviour, DamageTarget
 
     public bool Damage(DamageObject damage, CombatColor damageColor)
     {
+        if (!useHardness) {
+            currentHp -= damage.damage;
+        }
+        else
+        {
+            currentHp -= damage.hardness;
+        }
+        HitRemainHp?.Invoke(currentHp);
+        ReciveHit?.Invoke();
         onHited.Invoke(hitName, true);
         return returnAfterHit;
     }
-
+    private void Awake()
+    {
+        currentHp=maxHp;
+    }
     public void DamageByPercent(int percent, CombatColor damageColor)
     {
         onHited.Invoke(hitName, true);
@@ -55,6 +87,11 @@ public class SimpleAtkPoint : MonoBehaviour, DamageTarget
     public CombatColor getColor()
     {
         return CombatColor;
+    }
+
+    public Transform GetlockedEnemyTransform()
+    {
+        return _lockedEnemyTransform;
     }
 }
 

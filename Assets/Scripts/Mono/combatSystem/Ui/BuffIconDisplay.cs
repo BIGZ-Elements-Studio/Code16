@@ -26,7 +26,6 @@ public class BuffIconDisplay : MonoBehaviour
     }
     IEnumerator adding(float increment,float current)
     {
-        Debug.Log(increment+"  "+current);
         TimeBar.fillAmount = 1-current;
         yield return thing;
         while (current < 1)

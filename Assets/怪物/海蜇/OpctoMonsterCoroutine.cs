@@ -24,9 +24,11 @@ namespace oct.ObjectBehaviors
         [SerializeField]
         BehaviorController b;
         public Vector3 HitDirectiom;
+       public EnemyShieldContainner containner;
         private void Start()
         {
             StartCoroutine(RandomAtk());
+            StartCoroutine(addshield());
         }
         public void recevedForce(Vector3 vector3)
         {
@@ -44,6 +46,18 @@ namespace oct.ObjectBehaviors
                     yield return null;
                     b.setBoolVariable("¹¥»÷", false);
                 }
+            }
+        }
+        private IEnumerator addshield()
+        {
+            while (true)
+            {
+                
+                if (containner.maxShield<=0)
+                {
+                    containner.setShield(CombatColor.blue, 1000);
+                }
+                yield return new WaitForSeconds(10);
             }
         }
         public IEnumerator move()
@@ -99,6 +113,7 @@ namespace oct.ObjectBehaviors
         }
         public IEnumerator hited()
         {
+           
             lockState(true);
             controller.controlVelocity = false;
             yield return new WaitForFixedUpdate();

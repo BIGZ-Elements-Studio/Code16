@@ -77,7 +77,7 @@ public class AngleUtility
 
         float samllestAnfle = angleA - noiseRange;
         float biggestAnfle = angleA + noiseRange;
-        // Calculate the position along the noise range based on the current value
+        // Calculate the position along the noise range based on the currentfollowingTarget value
         float position = current * roughness;
 
         // Generate the noise value using Perlin noise

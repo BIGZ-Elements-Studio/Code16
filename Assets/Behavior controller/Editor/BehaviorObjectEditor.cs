@@ -60,6 +60,7 @@ public class BehaviorObjectEditor : Editor
             if (stateBehavior.showTags)
             {
                 EditorGUI.indentLevel++;
+
                 for (int i = 0; i < stateBehavior.tags.Count; i++)
                 {
                     EditorGUILayout.BeginHorizontal();

@@ -1,0 +1,20 @@
+
+VineBullet.png
+size: 171,710
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+18FD7F32C41010E94783162046EDA84B
+  rotate: true
+  xy: 116, 27
+  size: 308, 54
+  orig: 311, 57
+  offset: 1, 2
+  index: -1
+D34D5335CC9266480637D9DD292E217A
+  rotate: false
+  xy: 0, 1
+  size: 121, 710
+  orig: 191, 721
+  offset: 25, 0
+  index: -1

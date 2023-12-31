@@ -2,23 +2,22 @@ using BehaviorControlling;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 namespace CombatSystem {
     public class sampleBuffDeduceVelocity : CharacterBuff
     {
         CharaBuffContainer Controller;
-        IndividualProperty Property;
+        FieldForCharacterBuff Property;
         Coroutine Coroutine;
         int IconId;
         int buffNum;
         public void initiate(CharaBuffContainer target)
         {
             Controller = target;
-            Property = target.Property;
+            Property = target.FieldForBuff;
             if (Property != null)
             {
-                Property.extraMoveFactor -= 0.5f;
+                Property.moveSpeedFactor -= 0.5f;
                Coroutine= Controller.StartCoroutine(Wait());
             }
             buffNum = 1;
@@ -32,7 +31,7 @@ namespace CombatSystem {
         IEnumerator Wait()
         {
             yield return new WaitForSeconds(5);
-            Property.extraMoveFactor += 0.5f;
+            Property.moveSpeedFactor += 0.5f;
             Controller.removeBuff(this);
             Controller.RemoveBuffIcon(IconId);
         }
@@ -50,7 +49,7 @@ namespace CombatSystem {
         public void overlying(CharacterBuff overlayedBuff, CharaBuffContainer target)
         {
             Controller=target;
-            Property = target.Property;
+            Property = target.FieldForBuff;
             buffNum += (overlayedBuff as sampleBuffDeduceVelocity).buffNum+1;
             Coroutine = target.StartCoroutine(Wait());
             BuffIconDisplay.DisplayInfo displayInfo = new BuffIconDisplay.DisplayInfo();
@@ -62,15 +61,13 @@ namespace CombatSystem {
 
         }
 
-
-        public void Add(Atkpoint hP)
+        public void OnRemoved()
         {
-            if (!hP.armor)
-            {
-                hP.addBuff(this);
-            }
+            
         }
     }
+
+   
     public class BuffFactory
     {
         public static CharacterBuff CreateBuff(string buffType)

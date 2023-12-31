@@ -1,0 +1,139 @@
+
+StoneMonsterHand.png
+size: 2037,1305
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+back1
+  rotate: false
+  xy: 1660, 866
+  size: 368, 440
+  orig: 368, 440
+  offset: 0, 0
+  index: -1
+back2
+  rotate: false
+  xy: 417, 141
+  size: 152, 181
+  orig: 152, 181
+  offset: 0, 0
+  index: -1
+back3
+  rotate: false
+  xy: 1895, 20
+  size: 141, 153
+  orig: 141, 153
+  offset: 0, 0
+  index: -1
+back4
+  rotate: false
+  xy: 959, 113
+  size: 428, 386
+  orig: 428, 390
+  offset: 0, 2
+  index: -1
+back5
+  rotate: false
+  xy: 552, 500
+  size: 552, 805
+  orig: 552, 806
+  offset: 0, 1
+  index: -1
+front1
+  rotate: false
+  xy: 1106, 2
+  size: 131, 109
+  orig: 132, 109
+  offset: 0, 0
+  index: -1
+front2
+  rotate: 270
+  xy: 1389, 75
+  size: 370, 441
+  orig: 370, 441
+  offset: 0, 0
+  index: -1
+front3
+  rotate: true
+  xy: 118, 20
+  size: 152, 181
+  orig: 152, 181
+  offset: 0, 0
+  index: -1
+front4
+  rotate: 270
+  xy: 356, 1
+  size: 141, 153
+  orig: 141, 153
+  offset: 0, 0
+  index: -1
+front5
+  rotate: false
+  xy: 552, 71
+  size: 439, 428
+  orig: 439, 434
+  offset: 0, 4
+  index: -1
+front6
+  rotate: false
+  xy: 1106, 500
+  size: 552, 805
+  orig: 554, 808
+  offset: 1, 2
+  index: -1
+side1
+  rotate: true
+  xy: 1712, 21
+  size: 152, 181
+  orig: 152, 181
+  offset: 0, 0
+  index: -1
+side10
+  rotate: false
+  xy: 0, 356
+  size: 550, 949
+  orig: 552, 951
+  offset: 1, 1
+  index: -1
+side4
+  rotate: false
+  xy: 1660, 430
+  size: 324, 434
+  orig: 324, 434
+  offset: 0, 0
+  index: -1
+side5
+  rotate: false
+  xy: 1239, 4
+  size: 130, 107
+  orig: 130, 107
+  offset: 0, 0
+  index: -1
+side6
+  rotate: false
+  xy: 899, 34
+  size: 206, 140
+  orig: 206, 140
+  offset: 0, 0
+  index: -1
+side7
+  rotate: false
+  xy: 1832, 175
+  size: 176, 253
+  orig: 176, 253
+  offset: 0, 0
+  index: -1
+side8
+  rotate: false
+  xy: 202, 125
+  size: 213, 230
+  orig: 214, 231
+  offset: 1, 1
+  index: -1
+side9
+  rotate: false
+  xy: 0, 143
+  size: 238, 213
+  orig: 238, 214
+  offset: 0, 1
+  index: -1

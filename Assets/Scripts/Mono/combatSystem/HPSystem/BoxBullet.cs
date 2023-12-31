@@ -21,13 +21,10 @@ public class BoxBullet : MonoBehaviour
     public bool affectPlayer;
     public Transform origialPoint;
     public float ForceMagnitude;
-    //   public UnityEvent<bool> hit;
-    // public UnityEvent<int> gainSp;
-    //  public UnityEvent<DamageTarget> hitTarget;
-    public bool actived;
+    public int hardness = 10;
     private void OnTriggerEnter(Collider other)
     {
-        if (actived)
+        if (enabled)
         {
             DamageTarget target = other.GetComponent(typeof(DamageTarget)) as DamageTarget;
             if (target != null)
@@ -37,9 +34,8 @@ public class BoxBullet : MonoBehaviour
         }
     }
 
-    public void active()
+    public void OnEnable()
     {
-        actived = true;
         Collider[] cs = Physics.OverlapBox(transform.position, selfCollider.size / 2, transform.rotation);
         foreach (Collider other in cs)
         {
@@ -50,10 +46,6 @@ public class BoxBullet : MonoBehaviour
             }
         }
     }
-    public void diable()
-    {
-        actived = false;
-    }
 
     void damage(DamageTarget target)
     {
@@ -62,7 +54,7 @@ public class BoxBullet : MonoBehaviour
                 if ((affectEnemy && target.getType() == TargetType.enemy) || (affectPlayer && target.getType() == TargetType.player) || (affectObject && target.getType() == TargetType.other))
                 {
                     DamageObject a = DamageObject.GetdamageObject();
-                    a.hardness = 10;
+                    a.hardness = hardness;
                     if (Random.value < critcAtkRate / 100f)
                     {
                         a.damage = calculateAmount(damagePercent * AtkValue / 100, critcAtkRate, true);
@@ -94,8 +86,6 @@ public class BoxBullet : MonoBehaviour
 
     bool DamageTarget(DamageTarget target, DamageObject d)
     {
-
-        // target.addforce((origialPoint.position- targe.transform.position).normalized*-ForceMagnitude);
         target.addforceOfDirection((origialPoint.position - target.getCenterPosition()).normalized * -ForceMagnitude);
         return target.Damage(d, color);
     }

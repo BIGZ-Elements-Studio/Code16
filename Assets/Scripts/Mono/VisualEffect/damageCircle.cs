@@ -12,6 +12,11 @@ public class damageCircle : MonoBehaviour
         var main = System.main;
         main.simulationSpeed = 1 / time;
         System.Play();
+        Invoke("stop", time);
     }
 
+    private void stop()
+    {
+        gameObject.SetActive(false);
+    }
 }

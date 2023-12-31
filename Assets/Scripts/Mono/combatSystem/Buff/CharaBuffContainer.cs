@@ -1,3 +1,5 @@
+using CombatSystem.shieldSystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +11,7 @@ namespace CombatSystem
     //also control extra script such as buff
     public class CharaBuffContainer : MonoBehaviour
     {
-        [SerializeField]
-       public IndividualProperty Property;
-        public TargetType type;
+        public FieldForCharacterBuff FieldForBuff;
         List<CharacterBuff> buffs = new List<CharacterBuff>();
 
        public List<BuffIconDisplay.DisplayInfo> BuffIcons = new List<BuffIconDisplay.DisplayInfo>();
@@ -58,7 +58,10 @@ namespace CombatSystem
 
         public void removeBuff(CharacterBuff buff)
         {
+            buff.OnRemoved();
             buffs.Remove(buff);
+
         }
+
     }
 }

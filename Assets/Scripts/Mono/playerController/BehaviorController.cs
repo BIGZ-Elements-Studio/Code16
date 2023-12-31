@@ -4,11 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 using oct.ObjectBehaviors;
-using System.Reflection;
 using System;
-using Unity.VisualScripting;
 using UnityEngine.Events;
-
 namespace BehaviorControlling
 {
 
@@ -103,20 +100,30 @@ namespace BehaviorControlling
         {
             CheakCondition();
         }
+
+       public UnityEvent<List<characterState>> OnStateChange;
+        private void changeCharacterState(List<characterState> states)
+        {
+           if(!characterStates.Equals(states))
+            {
+                OnStateChange?.Invoke(states);
+            }
+            //check if the states differ to characterStates, if so call a unity event UnityEvent<List<characterState>> OnCharacterStateChange; with the states
+            characterStates = states;
+        }
         private void changtoState(int index)
         {
             if (CoroutineList[index] != null && CoroutineList[index]!="") {
                 Func<IEnumerator> coroutineDelegate = (Func<IEnumerator>)Delegate.CreateDelegate(typeof(Func<IEnumerator>), targetCode, CoroutineList[index]);
-                characterStates = behaviorObject.stateBehaviors[index].tags;
+                changeCharacterState(behaviorObject.stateBehaviors[index].tags);
                 statechange.Invoke(behaviorObject.stateBehaviors[index].tags);
-                if (behaviorObject.stateBehaviors[index].effect)
+              /*  if (behaviorObject.stateBehaviors[index].effect)
                 {
                     StartCoroutine(coroutineDelegate());
                 }
-                else if (behaviorObject.stateBehaviors[index].AllowReEnterDuringProcess)
+                else*/ if (behaviorObject.stateBehaviors[index].AllowReEnterDuringProcess)
                 {
                     if (SetState(coroutineDelegate)){
-                        Debug.Log(1);
                         currentState = index;
                     }
                 }
@@ -201,7 +208,10 @@ namespace BehaviorControlling
 
         public void changeBoolForFrame(string target, bool result)
         {
-            StartCoroutine(Process( target,  result));
+            setBoolVariable(target, result);
+
+            setBoolVariable(target, !result);
+            //StartCoroutine(Process( target,  result));
         }
         IEnumerator Process(string target, bool result)
         {

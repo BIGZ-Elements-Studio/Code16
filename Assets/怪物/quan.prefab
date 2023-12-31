@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4639667067343397076}
   - component: {fileID: 4639667067343397074}
   - component: {fileID: 4639667067343397077}
+  - component: {fileID: 2858598699610343618}
   m_Layer: 0
   m_Name: quan
   m_TagString: Untagged
@@ -4814,6 +4815,17 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!210 &2858598699610343618
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4639667067343397079}
+  m_Enabled: 1
+  m_SortingLayerID: -929120889
+  m_SortingLayer: 1
+  m_SortingOrder: 0
 --- !u!1 &4639667068534624908
 GameObject:
   m_ObjectHideFlags: 0

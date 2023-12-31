@@ -1,3 +1,4 @@
+using CombatSystem;
 using System;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.Layouts;
@@ -6,8 +7,7 @@ namespace UnityEngine.InputSystem.OnScreen
     public class AtkButton : OnScreenControl, IPointerDownHandler, IPointerUpHandler
     {
 
-
-
+        
         public void OnPointerUp(PointerEventData eventData)
         { 
             if (eventData.button == PointerEventData.InputButton.Left) {

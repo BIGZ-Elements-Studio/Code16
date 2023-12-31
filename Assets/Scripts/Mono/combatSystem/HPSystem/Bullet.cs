@@ -35,6 +35,9 @@ namespace CombatSystem
         public UnityEvent<bool> hit;
         public UnityEvent<int> gainSp;
         public UnityEvent<DamageTarget> hitTarget;
+
+        [SerializeField]
+        GameObject bulletObject;
         private void Start()
         {
             StartCoroutine(process());
@@ -47,21 +50,50 @@ namespace CombatSystem
         IEnumerator process()
         {
             float totalTimePassed = 0;
-            yield return new WaitForSeconds(delay);
+            if (BasedOnFixedTime) {
+                yield return new WaitForSecondsRealtime(delay);
+            }
+            else
+            {
+                yield return new WaitForSeconds(delay);
+            }
             while (totalTimePassed <= time)
             {
                 Damage();
                 if (interval>0.1) {
-                    yield return new WaitForSeconds(interval);
+                    if (BasedOnFixedTime)
+                    {
+                        yield return new WaitForSecondsRealtime(interval);
+                    }
+                    else
+                    {
+                        yield return new WaitForSeconds(interval);
+
+                    }
                 }
                 else
                 {
-                    yield return new WaitForSeconds(0.1f);
+                    if (BasedOnFixedTime)
+                    {
+                        yield return new WaitForSecondsRealtime(0.1f);
+                    }
+                    else
+                    {
+                        yield return new WaitForSeconds(0.1f);
+
+                    }
                 }
                 totalTimePassed += Time.deltaTime;
             }
-            yield return new WaitForSeconds(last);
-            Destroy(gameObject);
+            if (BasedOnFixedTime)
+            {
+                yield return new WaitForSecondsRealtime(last);
+            }
+            else
+            {
+                yield return new WaitForSeconds(last);
+            }
+            Destroy(bulletObject);
 
         }
 

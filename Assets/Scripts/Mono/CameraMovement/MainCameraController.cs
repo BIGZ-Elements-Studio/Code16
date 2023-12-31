@@ -1,137 +1,124 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MainCameraController : MonoBehaviour
+namespace oct.cameraControl
 {
-    public static MainCameraController Instance { get; private set; }
-
-    public Camera Camera; // 相机对象
-    public Camera Camera2;
-    public Transform target; // 跟随的目标
-    public Vector3 offset; // 相机距离目标的偏移量
-    public float smoothSpeed = 0.1f; // 相机移动的平滑度
-    // 2D模式下，两个角度y轴差异
-    public float DOffset;
-    // 3D模式下，相机角度
-    public float Angle;
-
-    public float defautFieldOfView2d;
-    public float defautFieldOfView3d;
-    private Vector3 Actualoffset; // 实际使用的偏移量
-
-    public Vector3 shakeOffset;
-    public float Z2d;
-    public bool is2D { get; private set; } // 当前是否为2D模式
-    private Vector3 velocity = Vector3.zero;
-    private void Awake()
+    public class MainCameraController : MonoBehaviour
     {
-        GameModeController.ModeChangediFTo2D += ChangeMode;
-        if (Instance == null)
+        public CameraMovementController Movement2d;
+        public CameraMovement2dDialogue Npc2dController;
+        public CameraMovementController Movement3d;
+        public CameraShakeBehavior ShakeBehavior;
+        private CameraMovementController currentMovementController;
+        [SerializeField] Transform _CameraPosition;
+        public Transform CameraTransform { get { return _CameraPosition; } }
+        public static MainCameraController Instance { get; private set; }
+
+        public Camera Camera; // 相机对象
+        public Camera Camera2;
+      //  public Transform target; // 跟随的目标
+     //   public Vector3 offset; // 相机距离目标的偏移量
+        public float dammping = 0.1f; // 相机移动的平滑度
+                                         // 2D模式下，两个角度y轴差异
+        public float DOffset;
+        // 3D模式下，相机角度
+        public float Angle;
+
+        public float defautFieldOfView2d;
+        public float defautFieldOfView3d;
+        public float Z2d;
+        public bool is2D { get; private set; } // 当前是否为2D模式
+        private Vector3 velocity = Vector3.zero;
+        private void Awake()
         {
-            Instance = this;
+            GameModeController.ModeChangediFTo2D += ChangeMode;
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+            Instance.Camera.orthographicSize = Instance.defautFieldOfView2d;
+            Instance.Camera2.orthographicSize = Instance.defautFieldOfView2d;
+            currentMovementController = Movement2d;
         }
-        else
+
+
+        private void Start()
         {
-            Destroy(gameObject);
+            transform.position = currentMovementController.GetDesirePosition();
         }
-        Instance.Camera.orthographicSize = Instance.defautFieldOfView2d;
-        Instance.Camera2.orthographicSize = Instance.defautFieldOfView2d;
-    }
 
-    public void SetOffset()
-    {
-        // 设置相机的偏移量为相机位置与目标位置之间的差值
-        offset = transform.position - target.position;
-    }
-
-    private void Start()
-    {
-        Actualoffset = offset;
-    }
-
-    public static void ChangeMode(bool targetIs2D)
-    {
-        if (targetIs2D)
+        public static void ChangeMode(bool targetIs2D)
         {
-            // 切换为2D模式时，调整相机的偏移量、旋转和投影模式
-            Instance.Actualoffset = new Vector3(Instance.Actualoffset.x, Instance.Actualoffset.y - Instance.DOffset, Instance.Actualoffset.z);
-            Instance.transform.rotation = Quaternion.identity;
-            Instance.Camera.orthographic = true;
-            Instance.Camera2.orthographic = true;
+            if (targetIs2D)
+            {
+
+                Instance.transform.rotation = Quaternion.identity;
+                Instance.Camera.orthographic = true;
+                Instance.Camera2.orthographic = true;
+                Instance.currentMovementController = Instance.Movement2d;
+            }
+            else
+            {
+                // 切换为3D模式时，调整相机的旋转、偏移量和投影模式
+                Instance.transform.rotation = Quaternion.Euler(Instance.Angle, 0, 0);
+                Instance.Camera.orthographic = false;
+                Instance.Camera2.orthographic = false;
+                Instance.Camera.fieldOfView = Instance.defautFieldOfView3d;
+                Instance.Camera2.fieldOfView = Instance.defautFieldOfView3d;
+                Instance.currentMovementController = Instance.Movement3d;
+            }
+            Instance.is2D = targetIs2D;
         }
-        else
+        public static void setToDialogueMode(Transform npc)
         {
-            // 切换为3D模式时，调整相机的旋转、偏移量和投影模式
-            Instance.transform.rotation = Quaternion.Euler(Instance.Angle, 0, 0);
-            Instance.Actualoffset = Instance.offset;
-            Instance.Camera.orthographic = false;
-            Instance.Camera2.orthographic = false;
-            Instance.Camera.fieldOfView = Instance.defautFieldOfView3d;
-            Instance.Camera2.fieldOfView = Instance.defautFieldOfView3d;
-
+            (Instance.Npc2dController).Npc = npc;
+           Instance. currentMovementController = Instance.Npc2dController;
+            Instance.StartCoroutine(Instance.ChangeFOV(Instance.Camera2.orthographicSize, Instance. targetFovInDialogue, 0.3f));
         }
-        Instance.is2D = targetIs2D;
-    }
-
-    private void Update()
-    {
-        // 根据偏移量计算相机的目标位置
+       public float targetFovInDialogue;
+        public static void EndDialogueMode()
+        {
+            Instance.currentMovementController = Instance.Movement2d;
+            Instance.StartCoroutine(Instance. ChangeFOV(Instance.targetFovInDialogue, Instance.defautFieldOfView2d, 0.5f));
+        }
+        IEnumerator ChangeFOV(float start, float end, float duration)
+        {
+           float time = 0;
+            while (time < duration)
+            {
+                float t = time / duration;
+                Instance.Camera.orthographicSize = Mathf.Lerp(start, end, t);
+                Instance.Camera2.orthographicSize = Mathf.Lerp(start, end, t);
+                
+                time += Time.deltaTime;
+                yield return null;
+            }
+            // Ensure it ends at the exact 'end' value
+            Instance.Camera.orthographicSize = end;
+            Instance.Camera2.orthographicSize = end;
         
-        Vector3 desiredPosition = target.position + Actualoffset;
-        if (is2D)
-        {
-            desiredPosition = new Vector3(desiredPosition.x, desiredPosition. y, Z2d);
-        }
-        Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition,ref velocity, smoothSpeed);
-
-        // 将相机的位置设置为平滑后的目标位置
-        transform.position = smoothedPosition;
-        Camera.transform.localPosition = shakeOffset;
     }
-    private static Coroutine changeCoroutine;
-    private static shiftInfo originalShiftObj;
-    private static float originalDuration;
-
-    public static void DoShake(shiftInfo shiftObj, float duration,float backTime)
-    {
-        if (changeCoroutine != null)
+    private void Update()
         {
-            Instance.StopCoroutine(changeCoroutine);
-        }
-        // Start the new shift coroutine
-        changeCoroutine = Instance.StartCoroutine(Instance.DoChangeCoroutine(shiftObj, duration, backTime));
-    }
 
-    private IEnumerator DoChangeCoroutine(shiftInfo shiftObj, float duration,float backTime)
-    {
-        float elapsedTime = 0f;
-        // Lerp the camera parameters over time
-        while (elapsedTime < duration)
-        {
-            float t = elapsedTime / duration;
-            Instance.shakeOffset = Vector3.Lerp(shiftObj.desireShift, shiftObj.desireShift,t);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
 
-        // Set the camera parameters to their final values
-        Instance.shakeOffset = shiftObj.desireShift;
-        elapsedTime = 0;
-        while (elapsedTime < backTime)
-        {
-            float t = elapsedTime / backTime;
-            Instance.shakeOffset = Vector3.Lerp(shiftObj.desireShift,Vector3.zero, t);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            // 根据偏移量计算相机的目标位置
+           
+           // Vector3 desiredPosition = target.position + Actualoffset;
+            if (is2D)
+            {
+              //  desiredPosition = new Vector3(desiredPosition.x, desiredPosition.y, Z2d);
+            }
+            Vector3 desiredPosition = currentMovementController.GetDesirePosition();
+            Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, dammping*Time.timeScale);
+           
+            // 将相机的位置设置为平滑后的目标位置
+            transform.position = smoothedPosition;
         }
-    }
-
-    public class shiftInfo
-    {
-        public float additionalFieldOfView;
-        public Vector2 desireShift;
-        public float desireAngle;
 
     }
 }

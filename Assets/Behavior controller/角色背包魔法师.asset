@@ -1,0 +1,443 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d598390b6ebaf15479d584aef99339cf, type: 3}
+  m_Name: "\u89D2\u8272\u80CC\u5305\u9B54\u6CD5\u5E08"
+  m_EditorClassIdentifier: 
+  stateBehaviors:
+  - show: 0
+    stateName: run
+    priority: 1
+    effect: 0
+    conditions:
+    - rid: 4152961250104442882
+    tags: 07000000
+    showConditions: 0
+    showTags: 0
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - show: 0
+    stateName: dash
+    priority: 6
+    effect: 0
+    conditions:
+    - rid: 4152961250104442887
+    - rid: 4829176287206572044
+    tags: 06000000
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - show: 1
+    stateName: idle
+    priority: 0
+    effect: 0
+    conditions: []
+    tags: 08000000
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - show: 1
+    stateName: E
+    priority: 2
+    effect: 0
+    conditions:
+    - rid: 4152961250104442889
+    tags: 0500000002000000
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 1
+    AllowReEnterDuringProcess: 0
+  - show: 0
+    stateName: Q
+    priority: 2
+    effect: 0
+    conditions:
+    - rid: 4152961250104442890
+    - rid: 4152961250104442892
+    tags: 0500000002000000
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 1
+    AllowReEnterDuringProcess: 0
+  - show: 0
+    stateName: "\u6253\u65AD"
+    priority: 5
+    effect: 0
+    conditions:
+    - rid: 4829176279541481480
+    - rid: 4829176287206572033
+    - rid: 4829176287206572037
+    - rid: 4829176287206572041
+    tags: 00000000
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - show: 1
+    stateName: "\u51FB\u98DE"
+    priority: 6
+    effect: 0
+    conditions:
+    - rid: 4829176279541481481
+    - rid: 4829176287206572034
+    - rid: 4829176287206572038
+    - rid: 4829176287206572042
+    tags: 01000000
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 1
+  - show: 0
+    stateName: "\u95EA\u907F\u6210\u529F"
+    priority: 7
+    effect: 1
+    conditions:
+    - rid: 4829176287206572039
+    - rid: 4829176287206572040
+    tags: 
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - show: 0
+    stateName: "\u653B\u51FB1"
+    priority: 2
+    effect: 0
+    conditions:
+    - rid: 1997685619496321024
+    - rid: 1997685619496321027
+    tags: 0500000003000000
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 1
+    AllowReEnterDuringProcess: 0
+  - show: 1
+    stateName: "\u653B\u51FB2"
+    priority: 2
+    effect: 0
+    conditions:
+    - rid: 1997685619496321026
+    - rid: 1997685619496321028
+    tags: 0500000003000000
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 1
+    AllowReEnterDuringProcess: 0
+  - show: 1
+    stateName: "\u653B\u51FB3"
+    priority: 2
+    effect: 0
+    conditions:
+    - rid: 1997685619496321029
+    - rid: 1997685619496321030
+    tags: 0500000002000000
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 1
+    AllowReEnterDuringProcess: 0
+  - show: 0
+    stateName: "\u84C4\u529B\u4E2D"
+    priority: 3
+    effect: 0
+    conditions:
+    - rid: 7910368267162353667
+    - rid: 7910368267162353668
+    tags: 
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - show: 0
+    stateName: "\u84C4\u529B\u653B\u51FB"
+    priority: 2
+    effect: 0
+    conditions:
+    - rid: 7910368269409714177
+    - rid: 7910368285030612993
+    tags: 
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - show: 0
+    stateName: "\u84C4\u529B\u653B\u51FB2"
+    priority: 2
+    effect: 0
+    conditions:
+    - rid: 7910368285030612995
+    - rid: 7910368285030612996
+    tags: 
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - show: 1
+    stateName: "\u653B\u51FB4"
+    priority: 2
+    effect: 0
+    conditions:
+    - rid: 9096489929817194496
+    - rid: 9096489929817194497
+    tags: 
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 1
+    AllowReEnterDuringProcess: 0
+  ConditionVariables:
+  - rid: 4829176268193267720
+  - rid: 4829176268193267721
+  - rid: 4829176268193267722
+  - rid: 4829176268193267723
+  - rid: 4829176268193267724
+  - rid: 4829176268969738241
+  - rid: 4829176279541481476
+  - rid: 4829176287206572032
+  - rid: 4829176287206572035
+  - rid: 4829176287206572036
+  - rid: 1997685619496321025
+  - rid: 7910368267162353665
+  - rid: 7910368269409714176
+  - rid: 7910368285030612992
+  references:
+    version: 2
+    RefIds:
+    - rid: 1997685619496321024
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u653B\u51FB"
+        conditionValue: 1
+    - rid: 1997685619496321025
+      type: {class: FloatVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: combo
+        type: 1
+    - rid: 1997685619496321026
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u653B\u51FB"
+        conditionValue: 1
+    - rid: 1997685619496321027
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: combo
+        conditionValue: 0
+        comparisonType: 0
+    - rid: 1997685619496321028
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: combo
+        conditionValue: 1
+        comparisonType: 0
+    - rid: 1997685619496321029
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: combo
+        conditionValue: 2
+        comparisonType: 0
+    - rid: 1997685619496321030
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u653B\u51FB"
+        conditionValue: 1
+    - rid: 4152961250104442882
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u79FB\u52A8"
+        conditionValue: 1
+    - rid: 4152961250104442887
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u95EA\u907F"
+        conditionValue: 1
+    - rid: 4152961250104442889
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u6280\u80FD"
+        conditionValue: 1
+    - rid: 4152961250104442890
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u5927\u62DB"
+        conditionValue: 1
+    - rid: 4152961250104442892
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: sp
+        conditionValue: 70
+        comparisonType: 1
+    - rid: 4829176268193267720
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u95EA\u907F"
+        type: 0
+    - rid: 4829176268193267721
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u5927\u62DB"
+        type: 0
+    - rid: 4829176268193267722
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u653B\u51FB"
+        type: 0
+    - rid: 4829176268193267723
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u6280\u80FD"
+        type: 0
+    - rid: 4829176268193267724
+      type: {class: FloatVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: sp
+        type: 1
+    - rid: 4829176268969738241
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u79FB\u52A8"
+        type: 0
+    - rid: 4829176279541481476
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u88AB\u6253"
+        type: 0
+    - rid: 4829176279541481480
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u88AB\u6253"
+        conditionValue: 1
+    - rid: 4829176279541481481
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u88AB\u6253"
+        conditionValue: 1
+    - rid: 4829176287206572032
+      type: {class: FloatVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u97E7\u6027"
+        type: 1
+    - rid: 4829176287206572033
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u97E7\u6027"
+        conditionValue: 30
+        comparisonType: 2
+    - rid: 4829176287206572034
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u97E7\u6027"
+        conditionValue: 10
+        comparisonType: 2
+    - rid: 4829176287206572035
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u95EA\u907F\u4E2D"
+        type: 0
+    - rid: 4829176287206572036
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u9738\u4F53"
+        type: 0
+    - rid: 4829176287206572037
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u95EA\u907F\u4E2D"
+        conditionValue: 0
+    - rid: 4829176287206572038
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u95EA\u907F\u4E2D"
+        conditionValue: 0
+    - rid: 4829176287206572039
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u95EA\u907F\u4E2D"
+        conditionValue: 1
+    - rid: 4829176287206572040
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u88AB\u6253"
+        conditionValue: 1
+    - rid: 4829176287206572041
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u9738\u4F53"
+        conditionValue: 0
+    - rid: 4829176287206572042
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u9738\u4F53"
+        conditionValue: 0
+    - rid: 4829176287206572044
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u88AB\u6253"
+        conditionValue: 0
+    - rid: 7910368267162353665
+      type: {class: FloatVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u6309\u4F4F\u653B\u51FB"
+        type: 1
+    - rid: 7910368267162353667
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u6309\u4F4F\u653B\u51FB"
+        conditionValue: 0.3
+        comparisonType: 1
+    - rid: 7910368267162353668
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u6309\u4F4F\u653B\u51FB"
+        conditionValue: 3
+        comparisonType: 2
+    - rid: 7910368269409714176
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u84C4\u529B\u7ED3\u675F"
+        type: 0
+    - rid: 7910368269409714177
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u84C4\u529B\u7ED3\u675F"
+        conditionValue: 1
+    - rid: 7910368285030612992
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u84C4\u529B\u8D85\u65F6"
+        type: 0
+    - rid: 7910368285030612993
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u6309\u4F4F\u653B\u51FB"
+        conditionValue: 0.1
+        comparisonType: 2
+    - rid: 7910368285030612995
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u84C4\u529B\u7ED3\u675F"
+        conditionValue: 1
+    - rid: 7910368285030612996
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u84C4\u529B\u8D85\u65F6"
+        conditionValue: 1
+    - rid: 9096489929817194496
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u653B\u51FB"
+        conditionValue: 1
+    - rid: 9096489929817194497
+      type: {class: FloatCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: combo
+        conditionValue: 3
+        comparisonType: 0

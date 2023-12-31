@@ -34,7 +34,7 @@ MonoBehaviour:
     tags: 06000000
     showConditions: 1
     showTags: 0
-    allowBufferedInput: 1
+    allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
   - show: 0
     stateName: idle
@@ -42,8 +42,8 @@ MonoBehaviour:
     effect: 0
     conditions: []
     tags: 08000000
-    showConditions: 0
-    showTags: 0
+    showConditions: 1
+    showTags: 1
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
   - show: 0
@@ -93,7 +93,7 @@ MonoBehaviour:
     - rid: 4829176287206572038
     - rid: 4829176287206572042
     tags: 01000000
-    showConditions: 1
+    showConditions: 0
     showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 1
@@ -129,7 +129,7 @@ MonoBehaviour:
     - rid: 1997685619496321026
     - rid: 1997685619496321028
     tags: 0500000003000000
-    showConditions: 1
+    showConditions: 0
     showTags: 0
     allowBufferedInput: 1
     AllowReEnterDuringProcess: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
     showTags: 0
     allowBufferedInput: 1
     AllowReEnterDuringProcess: 0
-  - show: 1
+  - show: 0
     stateName: "\u84C4\u529B\u4E2D"
     priority: 3
     effect: 0
@@ -153,7 +153,7 @@ MonoBehaviour:
     - rid: 7910368267162353667
     - rid: 7910368267162353668
     tags: 
-    showConditions: 1
+    showConditions: 0
     showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
@@ -169,7 +169,7 @@ MonoBehaviour:
     showTags: 0
     allowBufferedInput: 0
     AllowReEnterDuringProcess: 0
-  - show: 1
+  - show: 0
     stateName: "\u84C4\u529B\u653B\u51FB2"
     priority: 2
     effect: 0
@@ -177,6 +177,17 @@ MonoBehaviour:
     - rid: 7910368285030612995
     - rid: 7910368285030612996
     tags: 
+    showConditions: 1
+    showTags: 0
+    allowBufferedInput: 0
+    AllowReEnterDuringProcess: 0
+  - show: 1
+    stateName: "\u6B7B\u4EA1"
+    priority: 10
+    effect: 0
+    conditions:
+    - rid: 1304630404599775234
+    tags: 09000000
     showConditions: 1
     showTags: 0
     allowBufferedInput: 0
@@ -196,9 +207,20 @@ MonoBehaviour:
   - rid: 7910368267162353665
   - rid: 7910368269409714176
   - rid: 7910368285030612992
+  - rid: 1304630404599775233
   references:
     version: 2
     RefIds:
+    - rid: 1304630404599775233
+      type: {class: BoolVariable, ns: , asm: Assembly-CSharp}
+      data:
+        name: "\u6B7B\u4EA1"
+        type: 0
+    - rid: 1304630404599775234
+      type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: "\u6B7B\u4EA1"
+        conditionValue: 1
     - rid: 1997685619496321024
       type: {class: BoolCondition, ns: , asm: Assembly-CSharp}
       data:
