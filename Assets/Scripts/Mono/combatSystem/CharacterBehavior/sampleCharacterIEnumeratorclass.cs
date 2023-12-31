@@ -7,6 +7,8 @@ using Unity.Burst.Intrinsics;
 using CombatSystem;
 using UnityEngine.Events;
 using CombatSystem.shieldSystem;
+using System.Reflection;
+
 namespace oct.ObjectBehaviors
 {
 
@@ -82,12 +84,15 @@ namespace oct.ObjectBehaviors
         public int combo { get; private set; }
         public ParticleSystem DashParticleSystem;
         public ParticleSystem ChargeParticleEffect;
+        public ParticleSystem UltraStart;
+        public ParticleSystem UltraContinue;
         public Vector3 flydirection;
         [SerializeField]
         UnityEvent<string, float> onComboChange;
         [SerializeField]
         UnityEvent<string, bool> finishCharge;
         private bool boost;
+        
        public void SetFly(Vector3 vector3)
         {
             flydirection=vector3;
@@ -348,8 +353,6 @@ namespace oct.ObjectBehaviors
         }
         #endregion
         #region ¼¼ÄÜ
-
-        GameObject shield;
         public IEnumerator E()
         {
             lockState(true);
@@ -357,12 +360,6 @@ namespace oct.ObjectBehaviors
             PlayerControllerr.SetAnimation(skillAnimation);
             PlayerControllerr.createBullet(skillBullet, bulletPosition, 0.07f);
             yield return new WaitForSecondsRealtime(skillDuration);
-          //  shield s = new shield(150, false, 10);
-        //    point.addShield(s);
-        //    shield = Instantiate(shieldEffect);
-         //   shield.SetActive(true);
-         //   s.shieldBreak.AddListener(delegate { Destroy(shield); });
-          //  s.shieldReplaced.AddListener(delegate { Destroy(shield); });
             lockState(false);
 
         }
@@ -370,9 +367,11 @@ namespace oct.ObjectBehaviors
         public IEnumerator ultraSkill()
         {
             lockState(true);
+            UltraStart.Play();
+            UltraContinue.Play();
             PlayerControllerr.property.GainSp(-70);
             PlayerControllerr.speed = 0;
-            PlayerControllerr.SetAnimation(UltraAnimation);
+            //PlayerControllerr.SetAnimation(UltraAnimation);
             StartCoroutine(boostProcess());
             yield return new WaitForSecondsRealtime(UltraDuration);
             lockState(false);
@@ -384,6 +383,7 @@ namespace oct.ObjectBehaviors
             boost = true;
             yield return new WaitForSecondsRealtime(10f);
             boost = false;
+            UltraContinue.Stop();
         }
         #endregion
         #region ´ò¶Ï
@@ -408,7 +408,18 @@ namespace oct.ObjectBehaviors
             PlayerControllerr.allowFlip = true;
             lockState(false);
         }
-
+        private void Start()
+        {
+            StartCoroutine(increasePoise());
+        }
+        IEnumerator increasePoise()
+        {
+            while (true)
+            {
+                yield return new WaitForSecondsRealtime(1);
+                property.changePoise(-2);
+            }
+        }
         public IEnumerator fly()
         {
             PlayerControllerr.SetAnimationTimeScale(1);
@@ -451,6 +462,7 @@ namespace oct.ObjectBehaviors
             StartCoroutine(arm());
             PlayerControllerr.allowFlip = true;
             lockState(false);
+            property.changePoise(-50);
         }
         private IEnumerator arm()
         {

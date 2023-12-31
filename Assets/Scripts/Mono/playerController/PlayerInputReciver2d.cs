@@ -1,6 +1,4 @@
 using BehaviorControlling;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -27,15 +25,15 @@ public class PlayerInputReciver2d : MonoBehaviour
     }
     private void OnEnable()
     {
+        
+        controller2d.setBoolVariable("ÒÆ¶¯", false);
         refreshInputaction();
-
-
     }
 
     bool allowInput { get {return InputController.allow2dInput && enabled; } }
     void refreshInputaction()
     {
-        Debug.Log(allowInput);
+
         if (allowInput)
         {
             inputActions.Enable();

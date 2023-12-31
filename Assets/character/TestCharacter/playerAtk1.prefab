@@ -200,9 +200,9 @@ MonoBehaviour:
   interval: 0.1
   time: 0
   size: {x: 7.9, y: 4.51, z: 4.68}
-  damagePercent: 150
+  damagePercent: 110
   AtkValue: 100
-  critcAtkRate: 100
+  critcAtkRate: 50
   critcAtkDamage: 150
   Sp: 7
   faceRight: 0
@@ -412,7 +412,7 @@ SortingGroup:
   m_GameObject: {fileID: 7650827079457296704}
   m_Enabled: 1
   m_SortingLayerID: -1923836811
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 0
 --- !u!4 &7650827079457296705 stripped
 Transform:

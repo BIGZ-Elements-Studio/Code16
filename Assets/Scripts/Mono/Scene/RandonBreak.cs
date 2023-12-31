@@ -83,7 +83,27 @@ namespace Scene
                 rb.gameObject.SetActive(false);
             }
         }
+        public void resume()
+        {// Re-enable the BreakTrigger if it exists
+            if (BreakTrigger != null)
+            {
+                BreakTrigger.enabled = true;
+            }
+
+            foreach (Rigidbody rb in rigidbodies)
+            {
+                rb.isKinematic = true;
+                rb.useGravity = false;
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+                int index = rigidbodies.IndexOf(rb); // Find the corresponding index in the lists
+                rb.rotation = Rotation[index];
+                rb.position = position[index];
+                rb.gameObject.SetActive(true);
+            }
+        }
     }
+
 
 #if UNITY_EDITOR
     [CustomEditor(typeof(RandonBreak))]

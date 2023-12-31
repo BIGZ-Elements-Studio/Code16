@@ -10,6 +10,7 @@ namespace CombatSystem {
         public CombatColor color;
         public int currentsp;
         public int currentpoise;
+        public int Maxpoise;
         public AttackAttributeController controller;
         public HPContainer Container;
         public string PoiseName;
@@ -60,6 +61,11 @@ namespace CombatSystem {
             if (currentpoise < 0)
             {
                 currentpoise = 0;
+
+            }
+            if (currentpoise > Maxpoise)
+            {
+                currentpoise = Maxpoise;
 
             }
             onPoiseChange?.Invoke(PoiseName, currentpoise);

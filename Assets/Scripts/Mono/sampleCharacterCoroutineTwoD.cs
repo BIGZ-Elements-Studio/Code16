@@ -162,7 +162,6 @@ public class sampleCharacterCoroutineTwoD : MoveableControlCoroutine
     bool allowInput { get { return InputController.allow2dInput && enabled; } }
     void refreshInputaction()
     {
-        Debug.Log(allowInput);
         if (allowInput)
         {
             inputActions.Enable();

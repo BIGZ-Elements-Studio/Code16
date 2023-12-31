@@ -2,6 +2,7 @@ using CombatSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameModeController : MonoBehaviour
 {
@@ -13,9 +14,10 @@ public class GameModeController : MonoBehaviour
     public static bool allowChange=true;
     public static bool allowChangeTo3d { get { return combatController.Team.TwoDScript.CanTurn3d(); } }
     static GameModeController g;
-
+    public static UnityEvent gameRestart;
     private void Awake()
     {
+        gameRestart = new UnityEvent();
         Is2d = false;
         g = this;
         isCharacerActive = true;
@@ -25,10 +27,9 @@ public class GameModeController : MonoBehaviour
         SetModeTo(true);
        // Invoke("a", 0.1f);
     }
-    void a()
+    public static void restat()
     {
-        Debug.Log("awa");
-        changeMode();
+        gameRestart?.Invoke();
     }
     public static void changeMode()
     {
@@ -48,21 +49,11 @@ public class GameModeController : MonoBehaviour
                 Is2d = IsTarget2D;
                 ModeChangediFTo2D?.Invoke(Is2d);
             }
+            
             }
         return allowChange;
     }
 
-  /*  public static bool ForceSetModeTo(bool IsTarget2D)
-    {
-
-        if (IsTarget2D != Is2d)
-        {
-            Is2d = IsTarget2D;
-            ModeChangediFTo2D?.Invoke(Is2d);
-        }
-
-        return TeamController.currentCharaGrounded;
-    }*/
     #endregion
 
     #region changeCharacterActivation: GameModeController.CharacterChangedIfToActive(ifChangeToActive)

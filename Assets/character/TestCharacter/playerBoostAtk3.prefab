@@ -201,8 +201,8 @@ MonoBehaviour:
   time: 0
   size: {x: 9.67, y: 4.51, z: 4.68}
   damagePercent: 150
-  AtkValue: 100
-  critcAtkRate: 100
+  AtkValue: 400
+  critcAtkRate: 50
   critcAtkDamage: 150
   Sp: 7
   faceRight: 0

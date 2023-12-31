@@ -19,8 +19,6 @@ public class EnemyHPContainner : MonoBehaviour
 
     public int def { get { return baseDef+ characterBuff.Def; } }
     public int baseDef = 100;
-    public int basePoise = 100;
-   // public Transform DamagePoint;
     public string hpName;
     public string hitName;
     public bool armor;
@@ -30,11 +28,12 @@ public class EnemyHPContainner : MonoBehaviour
     public UnityEvent<int, int> onHPChangeWithMaxHP;
     public UnityEvent shieldBreak;
     public UnityEvent<float> HPChanged;
-    private void Start()
+    public UnityEvent Dead;
+    public void Reset()
     {
-        
-    }
+        HP = MaxHP;
 
+    }
     //successful Damaged, CalculatedDamage, shieldBreak,ShieldColor
     public damageInfo Damage(DamageObject damage, CombatColor damageColor)
     {
@@ -45,7 +44,7 @@ public class EnemyHPContainner : MonoBehaviour
             if (HP < 0)
             {
                 HP = 0;
-
+            Dead?.Invoke();
             }
 
         onHPChange?.Invoke(hpName, HP);

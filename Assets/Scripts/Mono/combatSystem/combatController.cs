@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CombatSystem.team;
 using static UnityEngine.GraphicsBuffer;
+using UnityEngine.Events;
 
 namespace CombatSystem
 {
@@ -109,10 +110,11 @@ namespace CombatSystem
             }
             return null; 
         }
-        private void Start()
+        private void Awake()
         {
             input = new PlayerInput();
             input.Enable();
+            OnCharaDie = new UnityEvent();
             input.In3d.run.performed += ctx => { if (isActiveAndEnabled) { direction = (ctx.ReadValue<Vector2>()).normalized; } };
         }
        static Vector2 direction;
@@ -172,6 +174,13 @@ namespace CombatSystem
             }
             return distanceWeight* distanceWeight * directionWeight;
         }
+        public static void CharaDie()
+        {
+            Debug.Log("dieed");
+            OnCharaDie?.Invoke();
+        }
+        
+        public static UnityEvent OnCharaDie;
     }
 
     

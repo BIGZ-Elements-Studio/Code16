@@ -133,6 +133,6 @@ using UnityEngine;
 
 public enum characterState
 {
-    stun,fly,smash,hit,bow,nearAtk,dash,move,idle
+    stun,fly,smash,hit,bow,nearAtk,dash,move,idle,die
 }
 

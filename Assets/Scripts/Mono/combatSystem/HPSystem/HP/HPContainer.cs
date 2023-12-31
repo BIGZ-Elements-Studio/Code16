@@ -60,8 +60,6 @@ namespace CombatSystem
         void Start()
         {
             Reset();
-            onHPChange?.Invoke(hpName, HP);
-            onHPChangeWithMaxHP?.Invoke(MaxHP,HP);
             if (attribute!=null) {
                 setAmount();
             }
@@ -71,6 +69,8 @@ namespace CombatSystem
         public void Reset()
         {
             HP = MaxHP;
+            onHPChange?.Invoke(hpName, HP);
+            onHPChangeWithMaxHP?.Invoke(MaxHP, HP);
         }
         // Method to apply damage to HP
         public (int, bool) SelfDamage(int ActualDamage)

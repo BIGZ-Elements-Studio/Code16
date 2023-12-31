@@ -19,7 +19,7 @@ public class GameAppController : MonoBehaviour
     void Start()
     {
         //SetResizeavkeWindow();
-        ChangeScreenSize(Level.one);
+        ChangeScreenSize(Level.full);
     }
     //#if UNITY_WIN
     public enum Level

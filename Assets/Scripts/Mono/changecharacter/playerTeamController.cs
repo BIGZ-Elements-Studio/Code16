@@ -12,6 +12,7 @@ namespace CombatSystem.team
 {
     public class playerTeamController : MonoBehaviour
     {
+        public HPContainer container;
         public List<GameObject> prefab = new List<GameObject>();
         public List<PlayerInTeam> playerInTeams = new List<PlayerInTeam>();
         public PlayerInTeamTwoD Chara2d;
@@ -21,7 +22,7 @@ namespace CombatSystem.team
         public bool allowChange = true;
         public float TwoDZ;
         public PlayerInTeam CurrentCharacter { get { if (GameModeController.Is2d) { return null; } return playerInTeams[CurrentCharacterIndex]; } }
-        public Transform CurrentCharacterActualPosition { get { if (GameModeController.Is2d) { return Chara2d.ActualTransform; } return playerInTeams[CurrentCharacterIndex].ActualTransform; } }
+        public Transform CurrentCharacterActualPosition { get { if (GameModeController.Is2d) {  return Chara2d.ActualTransform; }  return playerInTeams[CurrentCharacterIndex].ActualTransform; } }
         public Transform CharacterActualPosition2D { get { return Chara2d.ActualTransform; } }
         public UnityEvent CurrentCharacterStateChange;
         public sampleCharacterCoroutineTwoD TwoDScript;
@@ -34,6 +35,30 @@ namespace CombatSystem.team
         public UnityEvent<int, int> onHPChangeWithMaxHP;
        public ParticleSystem changePeopleParticle;
         #endregion
+        public void setPosition(Vector3 position)
+        {
+            if (CurrentCharacter != null) { 
+                CurrentCharacter.transform.position = position;
+        }
+            Chara2d.transform.position = new Vector3(position.x, position.y, TwoDZ);
+        }
+       public void LoadTeam()
+        {
+            
+            for(int i=0;i< playerInTeams.Count; i++)
+            {
+                Destroy(playerInTeams[0].gameObject);
+            }
+            playerInTeams.Clear();
+            foreach (GameObject g in prefab)
+            {
+                GameObject instance = Instantiate(g,transform);
+
+                playerInTeams.Add(instance.GetComponent<PlayerInTeam>());
+            }
+            CurrentCharacterIndex = 0;
+            container.Reset();
+        }
         public bool swtichCharacter(int index)
         {
             if (!allowChange)
